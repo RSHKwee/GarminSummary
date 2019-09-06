@@ -1,0 +1,10 @@
+http://maps.googleapis.com/maps/api/geocode/json?latlng=52.093392,5.108171&sensor=true
+
+{
+   "error_message" : "You must use an API key to authenticate each request to Google Maps Platform APIs. For additional information, please refer to http://g.co/dev/maps-no-account",
+   "results" : [],
+   "status" : "REQUEST_DENIED"
+}
+
+
+https://nominatim.openstreetmap.org/reverse?format=xml&lat=52.093392&lon=5.108171&zoom=18&addressdetails=1
