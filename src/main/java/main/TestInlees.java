@@ -13,7 +13,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -49,24 +48,34 @@ public class TestInlees {
 	}
 
 	public static void main(String[] args) {
-				try {
-			GPX gpx = GPX.reader(GPX.Version.V11).read("F:\\Users\\René\\OneDrive\\Documenten\\Auto\\Garmin\\Tracks\\2019\\Archive\\279.gpx");
-			
+		try {
+			GPX gpx = GPX.reader(GPX.Version.V11)
+			    .read("F:\\Users\\René\\OneDrive\\Documenten\\Auto\\Garmin\\Tracks\\2019\\Archive\\279.gpx");
+
 			System.out.println(gpx.toString());
-			
+
+			URL url = new URL(
+			    "https://nominatim.openstreetmap.org/reverse?format=json&lat=52.093392&lon=5.108171&zoom=18&addressdetails=1");
+			URLConnection hc = url.openConnection();
+			hc.setRequestProperty("User-Agent",
+			    "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+
+			System.out.println(hc.getContentType());
+
 			JSONObject json = readJsonFromUrl(
 			    "https://nominatim.openstreetmap.org/reverse?format=json&lat=52.093392&lon=5.108171&zoom=18&addressdetails=1");
-			
+
 			System.out.print(json.toString());
-			
-			URL url = new URL( "https://nominatim.openstreetmap.org/reverse?format=xml&lat=52.093392&lon=5.108171&zoom=18&addressdetails=1");
-			URLConnection conn = url.openConnection();
+
+			URL url1 = new URL(
+			    "https://nominatim.openstreetmap.org/reverse?format=xml&lat=52.093392&lon=5.108171&zoom=18&addressdetails=1");
+			URLConnection conn = url1.openConnection();
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document doc = builder.parse(conn.getInputStream());
 
-			TransformerFactory transformerFactory= TransformerFactory.newInstance();
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer xform = transformerFactory.newTransformer();
 
 			// that’s the default xform; use a stylesheet to get a real one
