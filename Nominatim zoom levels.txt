@@ -1,0 +1,84 @@
+Zoom 1
+{"place_id":82105692,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":27965205,"lat":"51.44944795","lon":"4.94191288390211","display_name":"Nederland - België","address":{"country":"Nederland - België","country_code":"nl"},"boundingbox":["51.445163","51.4537126","4.9330822","4.952758"]}
+
+Zoom 2
+{"place_id":82105692,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":27965205,"lat":"51.44944795","lon":"4.94191288390211","display_name":"Nederland - België","address":{"country":"Nederland - België","country_code":"nl"},"boundingbox":["51.445163","51.4537126","4.9330822","4.952758"]}
+
+Zoom 3
+{"place_id":82105692,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":27965205,"lat":"51.44944795","lon":"4.94191288390211","display_name":"Nederland - België","address":{"country":"Nederland - België","country_code":"nl"},"boundingbox":["51.445163","51.4537126","4.9330822","4.952758"]}
+
+Zoom 4
+{"place_id":82105692,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":27965205,"lat":"51.44944795","lon":"4.94191288390211","display_name":"Nederland - België","address":{"country":"Nederland - België","country_code":"nl"},"boundingbox":["51.445163","51.4537126","4.9330822","4.952758"]}
+
+Zoom 5
+{"place_id":198274408,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":47667,"lat":"52.037247","lon":"5.1859604","display_name":"Utrecht, Nederland","address":{"state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["51.8573607","52.3036813","4.7920404","5.6273145"]}
+
+Zoom 6
+{"place_id":198274408,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":47667,"lat":"52.037247","lon":"5.1859604","display_name":"Utrecht, Nederland","address":{"state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["51.8573607","52.3036813","4.7920404","5.6273145"]}
+
+Zoom 7
+{"place_id":198274408,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":47667,"lat":"52.037247","lon":"5.1859604","display_name":"Utrecht, Nederland","address":{"state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["51.8573607","52.3036813","4.7920404","5.6273145"]}
+
+Zoom 8
+{"place_id":198274408,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":47667,"lat":"52.037247","lon":"5.1859604","display_name":"Utrecht, Nederland","address":{"state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["51.8573607","52.3036813","4.7920404","5.6273145"]}
+
+Zoom 9
+{"place_id":198274408,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":47667,"lat":"52.037247","lon":"5.1859604","display_name":"Utrecht, Nederland","address":{"state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["51.8573607","52.3036813","4.7920404","5.6273145"]}
+
+Zoom 10
+{"place_id":198246620,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":419203,"lat":"52.0949753","lon":"5.109708","display_name":"Utrecht, Nederland","address":{"city":"Utrecht","state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["52.026282","52.1420506","4.970096","5.195155"]}
+
+Zoom 11
+{"place_id":198246620,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":419203,"lat":"52.0949753","lon":"5.109708","display_name":"Utrecht, Nederland","address":{"city":"Utrecht","state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["52.026282","52.1420506","4.970096","5.195155"]}
+
+Zoom 12
+{"place_id":198246620,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":419203,"lat":"52.0949753","lon":"5.109708","display_name":"Utrecht, Nederland","address":{"city":"Utrecht","state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["52.026282","52.1420506","4.970096","5.195155"]}
+
+Zoom 13
+{"place_id":198246620,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"relation","osm_id":419203,"lat":"52.0949753","lon":"5.109708","display_name":"Utrecht, Nederland","address":{"city":"Utrecht","state":"Utrecht","country":"Nederland","country_code":"nl"},"boundingbox":["52.026282","52.1420506","4.970096","5.195155"]}
+
+Zoom 14
+{"place_id":21696570,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2149436427,"lat":"52.0915112","lon":"5.1027401","display_name":"Lombok-Oost, Utrecht, Nederland, 3531PB, Nederland","address":{"neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3531PB","country":"Nederland","country_code":"nl"},"boundingbox":["52.0914112","52.0916112","5.1026401","5.1028401"]}
+
+Zoom 15
+{"place_id":21696570,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":2149436427,"lat":"52.0915112","lon":"5.1027401","display_name":"Lombok-Oost, Utrecht, Nederland, 3531PB, Nederland","address":{"neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3531PB","country":"Nederland","country_code":"nl"},"boundingbox":["52.0914112","52.0916112","5.1026401","5.1028401"]}
+
+Zoom 16
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 17
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 18
+Addressdetails=0
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+Addressdetails=1
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+Addressdetails=2
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 19
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 20
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 21
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 22
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 23
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 24
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 25
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+Zoom 26
+{"place_id":70681804,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"way","osm_id":7057423,"lat":"52.0933866205869","lon":"5.10820490843536","display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland","address":{"construction":"Nieuwe Daalstraat","neighbourhood":"Lombok-Oost","suburb":"Utrecht","city":"Utrecht","state":"Utrecht","postcode":"3511SX","country":"Nederland","country_code":"nl"},"boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]}
+
+
