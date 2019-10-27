@@ -1,1 +1,6 @@
 /target/
+*.prefs
+.classpath
+*.bak
+pom.properties
+MANIFEST.MF
