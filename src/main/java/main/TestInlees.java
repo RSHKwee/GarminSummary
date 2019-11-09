@@ -8,7 +8,12 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -28,6 +33,13 @@ public class TestInlees {
       sb.append((char) cp);
     }
     return sb.toString();
+  }
+
+  public static String formatDuration(Duration duration) {
+    long seconds = duration.getSeconds();
+    long absSeconds = Math.abs(seconds);
+    String positive = String.format("%d:%02d:%02d", absSeconds / 3600, (absSeconds % 3600) / 60, absSeconds % 60);
+    return seconds < 0 ? "-" + positive : positive;
   }
 
   public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
@@ -104,17 +116,31 @@ public class TestInlees {
             json0 = getJSON(
                 "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + v_waypoints.get(0).getLatitude()
                     + "&lon=" + v_waypoints.get(0).getLongitude() + "&zoom=18&addressdetails=1");
-            System.out.println("Start:" + json0.toString());
+            Optional<ZonedDateTime> v_starttime = v_waypoints.get(0).getTime();
+
+            ZonedDateTime utcZoned = ZonedDateTime.parse(v_starttime.get().toString());
+            ZoneId swissZone = ZoneId.of("Europe/Amsterdam");
+            ZonedDateTime swissZoned = utcZoned.withZoneSameInstant(swissZone);
+            LocalDateTime swissLocal = swissZoned.toLocalDateTime();
+
+            System.out.println("Start:" + swissLocal.toString() + json0.toString());
             JSONObject v_jsonobj = new JSONObject(json0);
             JSONObject v_address = v_jsonobj.getJSONObject("address");
             // JSONObject v_jsonobjadd = new JSONObject(v_jsonobj.get("address"));
             System.out.println(v_address.toString());
+            Optional<ZonedDateTime> v_endtime = v_waypoints.get(v_eind).getTime();
+            utcZoned = ZonedDateTime.parse(v_endtime.get().toString());
+            swissZone = ZoneId.of("Europe/Amsterdam");
+            swissZoned = utcZoned.withZoneSameInstant(swissZone);
+            LocalDateTime swissLocalend = swissZoned.toLocalDateTime();
 
             // json0.
             json0 = getJSON(
                 "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + v_waypoints.get(v_eind).getLatitude()
                     + "&lon=" + v_waypoints.get(v_eind).getLongitude() + "&zoom=18&addressdetails=1");
-            System.out.println("Eind :" + json0.toString());
+            System.out.println("Eind :" + swissLocalend.toString() + json0.toString());
+            Duration v_period = Duration.between(swissLocal, swissLocalend);
+            System.out.println(formatDuration(v_period));
 
           } catch (IOException e) {
             // TODO Auto-generated catch block
