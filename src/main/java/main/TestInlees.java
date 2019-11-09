@@ -72,10 +72,18 @@ public class TestInlees {
     return result.toString();
   }
 
+  /*
+   * Level of detail required for the address. Default: 18. This is a number that
+   * corresponds roughly to the zoom level used in map frameworks like Leaflet.js,
+   * Openlayers etc. In terms of address details the zoom levels are as follows:
+   * zoom address detail 3 country 5 state 8 county 10 city 14 suburb 16 major
+   * streets 17 major and minor streets 18 building
+   * 
+   */
   public static void main(String[] args) {
     try {
       GPX gpx = GPX.reader(GPX.Version.V11)
-          .read("F:\\Users\\René\\OneDrive\\Documenten\\Auto\\Garmin\\Tracks\\2019\\Archive\\279.gpx");
+          .read("D:\\Users\\René\\OneDrive\\Documenten\\Auto\\Garmin\\Tracks\\2019\\Archive\\279.gpx");
 
       List<Track> v_tracks = gpx.getTracks();
       v_tracks.forEach(v_track -> {
@@ -89,6 +97,29 @@ public class TestInlees {
           int v_eind = v_waypoints.size() - 1;
           System.out.println("Eind  Long: " + v_waypoints.get(v_eind).getLongitude() + " Lat: "
               + v_waypoints.get(v_eind).getLatitude());
+          System.out.println(gpx.toString());
+
+          String json0;
+          try {
+            json0 = getJSON(
+                "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + v_waypoints.get(0).getLatitude()
+                    + "&lon=" + v_waypoints.get(0).getLongitude() + "&zoom=18&addressdetails=1");
+            System.out.println("Start:" + json0.toString());
+            JSONObject v_jsonobj = new JSONObject(json0);
+            JSONObject v_address = v_jsonobj.getJSONObject("address");
+            // JSONObject v_jsonobjadd = new JSONObject(v_jsonobj.get("address"));
+            System.out.println(v_address.toString());
+
+            // json0.
+            json0 = getJSON(
+                "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + v_waypoints.get(v_eind).getLatitude()
+                    + "&lon=" + v_waypoints.get(v_eind).getLongitude() + "&zoom=18&addressdetails=1");
+            System.out.println("Eind :" + json0.toString());
+
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
         });
       });
 
