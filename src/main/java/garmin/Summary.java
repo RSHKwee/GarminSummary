@@ -15,7 +15,7 @@ import library.NominatimAPI;
 import library.TimeConversion;
 
 public class Summary {
-  private ArrayList<String> m_Regels = new ArrayList<String>();
+  private ArrayList<String> m_Regels;
   private String m_GPXFile;
 
   public Summary(String a_GPXFile) {
