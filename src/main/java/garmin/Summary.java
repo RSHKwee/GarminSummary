@@ -28,7 +28,7 @@ public class Summary {
   }
 
   public ArrayList<String> TripsSummary() {
-    m_Regels.clear();
+    m_Regels = new ArrayList<String>();
     System.out.println(" GPX-File:" + m_GPXFile);
     GPX gpx;
     try {
