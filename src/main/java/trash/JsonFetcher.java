@@ -1,4 +1,4 @@
-package main;
+package trash;
 
 import java.io.BufferedReader;
 import java.io.IOException;
