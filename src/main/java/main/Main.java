@@ -1,85 +1,61 @@
 package main;
 
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import io.jenetics.jpx.GPX;
+import io.jenetics.jpx.Track;
+import io.jenetics.jpx.TrackSegment;
+import io.jenetics.jpx.WayPoint;
 import library.Address;
-import library.NominatimReverseGeocodingJAPI;
+import library.NominatimAPI;
+import library.TimeConversion;
 
 public class Main {
+
   public static void main(String[] args) {
-    if (args.length < 1) {
-      System.out.println("use -help for instructions");
-    } else if (args.length < 2) {
-      if (args[0].equals("-help")) {
-        System.out.println("Mandatory parameters:");
-        System.out.println("   -lat [latitude]");
-        System.out.println("   -lon [longitude]");
-        System.out.println("\nOptional parameters:");
-        System.out.println("   -zoom [0-18] | from 0 (country) to 18 (street address), default 18");
-        System.out.println("   -osmid       | show also osm id and osm type of the address");
-        System.out.println("\nThis page:");
-        System.out.println("   -help");
-      } else
-        System.err.println("invalid parameters, use -help for instructions");
-    } else {
-      boolean latSet = false;
-      boolean lonSet = false;
-      boolean osm = false;
+    GPX gpx;
+    try {
+      gpx = GPX.reader(GPX.Version.V11)
+          .read("F:\\Users\\René\\OneDrive\\Documenten\\Auto\\Garmin\\Tracks\\2019\\Archive\\279.gpx");
+      List<Track> v_tracks = gpx.getTracks();
+      v_tracks.forEach(v_track -> {
+        List<TrackSegment> v_segments = v_track.getSegments();
+        v_segments.forEach(v_segment -> {
+          List<WayPoint> v_waypoints = v_segment.getPoints();
+          int v_eind = v_waypoints.size() - 1;
 
-      double lat = -200;
-      double lon = -200;
-      int zoom = 18;
+          NominatimAPI v_nomi = new NominatimAPI();
 
-      for (int i = 0; i < args.length; i++) {
-        if (args[i].equals("-lat")) {
-          try {
-            lat = Double.parseDouble(args[i + 1]);
-          } catch (NumberFormatException nfe) {
-            System.out.println("Invalid latitude");
-            return;
-          }
+          Address v_AdrStart = v_nomi.getAdress(v_waypoints.get(0).getLatitude().toDegrees(),
+              v_waypoints.get(0).getLongitude().toDegrees());
+          LocalDateTime v_StartTime = TimeConversion.timeZoned2Local(v_waypoints.get(0).getTime());
+          String[] v_starttijdparts = v_StartTime.toString().split("T");
 
-          latSet = true;
-          i++;
-          continue;
-        } else if (args[i].equals("-lon")) {
-          try {
-            lon = Double.parseDouble(args[i + 1]);
-          } catch (NumberFormatException nfe) {
-            System.out.println("Invalid longitude");
-            return;
-          }
+          Address v_AdrFinish = v_nomi.getAdress(v_waypoints.get(v_eind).getLatitude().toDegrees(),
+              v_waypoints.get(v_eind).getLongitude().toDegrees());
+          LocalDateTime v_FinishTime = TimeConversion.timeZoned2Local(v_waypoints.get(v_eind).getTime());
+          String[] v_eindtijdparts = v_FinishTime.toString().split("T");
 
-          lonSet = true;
-          i++;
-          continue;
-        } else if (args[i].equals("-zoom")) {
-          try {
-            zoom = Integer.parseInt(args[i + 1]);
-          } catch (NumberFormatException nfe) {
-            System.out.println("Invalid zoom");
-            return;
-          }
+          Duration v_period = Duration.between(v_StartTime, v_FinishTime);
 
-          i++;
-          continue;
-        } else if (args[i].equals("-osm")) {
-          osm = true;
-        } else {
-          System.err.println("invalid parameters, use -help for instructions");
-          return;
-        }
-      }
-
-      if (latSet && lonSet) {
-        NominatimReverseGeocodingJAPI nominatim = new NominatimReverseGeocodingJAPI(zoom);
-        Address address = nominatim.getAdress(lat, lon);
-        System.out.println(address);
-        if (osm) {
-          System.out.print("OSM type: " + address.getOsmType() + ", OSM id: " + address.getOsmId());
-        }
-      } else {
-        System.err.println("please specifiy -lat and -lon, use -help for instructions");
-      }
+          // Date (DD/MM/YYYY) Start Time Origin Longitude Origin Latitude Destination
+          // Longitude Destination Latitude Origin Destination Distance (km) Time (min)
+          // Fuel Economy (l/100km) Fuel Cost (EUR) Carbon Footprint (kg) ecoChallenge
+          // Overall ecoChallenge Speed ecoChallenge Acceleration ecoChallenge Braking
+          // ecoChallenge Fuel Economy
+          System.out.println(v_eindtijdparts[1] + ";" + v_starttijdparts[0] + ";" + v_starttijdparts[1] + ";"
+              + v_waypoints.get(0).getLongitude().toDegrees() + ";" + v_waypoints.get(0).getLatitude().toDegrees() + ";"
+              + v_waypoints.get(v_eind).getLongitude().toDegrees() + ";"
+              + v_waypoints.get(v_eind).getLatitude().toDegrees() + ";" + v_AdrStart.getDisplayName() + ";"
+              + v_AdrFinish.getDisplayName() + ";" + TimeConversion.formatDuration(v_period));
+        });
+      });
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
   }
-
 }

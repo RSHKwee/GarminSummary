@@ -1,4 +1,4 @@
-package library;
+package trash;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONObject;
 
 public class NominatimQuery {
+  private String DEFAULT_ZOOM = "18";
 
   /**
    * 
@@ -41,16 +42,26 @@ public class NominatimQuery {
    * @return JSONObject met adres informatie
    */
   public JSONObject getAdress(String a_Latitude, String a_Longitude) {
-    return getAdress(a_Latitude, a_Longitude, "18");
+    return getAdress(a_Latitude, a_Longitude, DEFAULT_ZOOM);
   }
 
   /**
-   * Level of detail required for the address. Default: 18. This is a number that
-   * corresponds roughly to the zoom level used in map frameworks like Leaflet.js,
-   * Openlayers etc. In terms of address details the zoom levels are as follows:
-   * zoom address detail 3 country 5 state 8 county 10 city 14 suburb 16 major
-   * streets 17 major and minor streets 18 building
+   * @formatter:off
    * 
+   * Level of detail required for the address. Default: 18. 
+   * This is a number that corresponds roughly to the zoom level used in map frameworks 
+   * like Leaflet.js, Openlayers etc. 
+   * In terms of address details the zoom levels are as follows: zoom address detail 
+   * 3 country 
+   * 5 state 
+   * 8 county 
+   * 10 city 
+   * 14 suburb 
+   * 16 major streets 
+   * 17 major and minor streets 
+   * 18 building
+   * 
+   * @formatter:on
    * 
    * @param a_Latitude  Latitude
    * @param a_Longitude Longitude

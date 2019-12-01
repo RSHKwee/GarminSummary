@@ -31,15 +31,33 @@ import javax.net.ssl.HttpsURLConnection;
  * @version 0.2
  *
  */
-public class NominatimReverseGeocodingJAPI {
+public class NominatimAPI {
   private final String NominatimInstance = "https://nominatim.openstreetmap.org";
 
+  /**
+   * @formatter:off
+   * 
+   * Level of detail required for the address. Default: 18. 
+   * This is a number that corresponds roughly to the zoom level used in map frameworks 
+   * like Leaflet.js, Openlayers etc. 
+   * In terms of address details the zoom levels are as follows: zoom address detail 
+   * 3 country 
+   * 5 state 
+   * 8 county 
+   * 10 city 
+   * 14 suburb 
+   * 16 major streets 
+   * 17 major and minor streets 
+   * 18 building
+   * 
+   * @formatter:on
+   */
   private int zoomLevel = 18;
 
-  public NominatimReverseGeocodingJAPI() {
+  public NominatimAPI() {
   }
 
-  public NominatimReverseGeocodingJAPI(int zoomLevel) {
+  public NominatimAPI(int zoomLevel) {
     if (zoomLevel < 0 || zoomLevel > 18) {
       System.err.println("invalid zoom level, using default value");
       zoomLevel = 18;
