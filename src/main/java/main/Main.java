@@ -14,7 +14,6 @@ public class Main {
 
     for (int i = 241; i < 284; i++) {
       v_Regels.addAll(v_sum.TripsSummary(v_Rootdir + "Tracks\\2019\\Archive\\" + i + ".gpx"));
-
     }
     TxtBestand.DumpBestand(v_Rootdir + "current_2019.csv", v_Regels);
 
