@@ -71,7 +71,6 @@ public class Summary {
         });
       });
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return m_Regels;
