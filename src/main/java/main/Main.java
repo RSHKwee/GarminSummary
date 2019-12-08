@@ -8,7 +8,7 @@ import library.TxtBestand;
 public class Main {
 
   public static void main(String[] args) {
-    String v_Rootdir = "D:\\Users\\René\\OneDrive\\Documenten\\Auto\\Garmin\\";
+    String v_Rootdir = "F:\\Users\\René\\OneDrive\\Documenten\\Auto\\Garmin\\";
     Summary v_sum = new Summary(v_Rootdir + "Tracks\\2019\\Archive\\240.gpx");
     ArrayList<String> v_Regels = v_sum.TripsSummary();
 
