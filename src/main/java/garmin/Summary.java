@@ -72,6 +72,8 @@ public class Summary {
       });
     } catch (IOException e) {
       e.printStackTrace();
+    } catch (java.lang.Exception e ) {
+      e.printStackTrace();    
     }
     return m_Regels;
   }
