@@ -1,8 +1,10 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 public class GarminGui {
 
@@ -38,6 +40,9 @@ public class GarminGui {
     frame = new JFrame();
     frame.setBounds(100, 100, 450, 300);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JScrollPane scrollPane = new JScrollPane();
+    frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
   }
 
 }
