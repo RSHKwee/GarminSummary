@@ -6,6 +6,7 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -13,13 +14,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import garmin.Summary;
+import library.TxtBestand;
+
 public class SwingTester {
+  static Summary m_sum = new Summary();
+  static ArrayList<String> m_Regels = new ArrayList<String>();
+
   public static void main(String[] args) {
     createWindow();
   }
 
   private static void createWindow() {
-    JFrame frame = new JFrame("Swing Tester");
+    JFrame frame = new JFrame("Garmin track summary");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     createUI(frame);
     frame.setSize(560, 200);
@@ -32,7 +39,7 @@ public class SwingTester {
     LayoutManager layout = new FlowLayout();
     panel.setLayout(layout);
 
-    JButton button = new JButton("Click Me!");
+    JButton button = new JButton("Kies bestanden");
     final JLabel label = new JLabel();
 
     button.addActionListener(new ActionListener() {
@@ -46,9 +53,13 @@ public class SwingTester {
           File[] files = fileChooser.getSelectedFiles();
           String fileNames = "";
           for (File file : files) {
-            fileNames += file.getName() + " ";
+            m_Regels.addAll(m_sum.TripsSummary(file.getPath()));
+
+            fileNames += file.getPath() + " ";
           }
           label.setText("File(s) Selected: " + fileNames);
+          TxtBestand.DumpBestand("D:\\" + "current_2019_3.csv", m_Regels);
+
         } else {
           label.setText("Open command canceled");
         }

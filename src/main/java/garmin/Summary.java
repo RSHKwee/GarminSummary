@@ -18,6 +18,9 @@ public class Summary {
   private ArrayList<String> m_Regels;
   private String m_GPXFile;
 
+  public Summary() {
+  }
+
   public Summary(String a_GPXFile) {
     m_GPXFile = a_GPXFile;
   }
@@ -72,8 +75,8 @@ public class Summary {
       });
     } catch (IOException e) {
       e.printStackTrace();
-    } catch (java.lang.Exception e ) {
-      e.printStackTrace();    
+    } catch (java.lang.Exception e) {
+      e.printStackTrace();
     }
     return m_Regels;
   }
