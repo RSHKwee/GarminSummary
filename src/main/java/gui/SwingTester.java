@@ -67,6 +67,17 @@ public class SwingTester {
     });
 
     panel.add(button);
+
+    JButton btnNewButton = new JButton("Output file");
+    btnNewButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        /**
+         * if(getDialogType() == SAVE_DIALOG) { if(f.exists()) { // your overwrite
+         * checking } else { super.approveSelection(); return; } }
+         */
+      }
+    });
+    panel.add(btnNewButton);
     panel.add(label);
     frame.getContentPane().add(panel, BorderLayout.CENTER);
   }
