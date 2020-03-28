@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 
 import garmin.Summary;
 import library.TxtBestand;
@@ -20,12 +21,13 @@ import library.TxtBestand;
 public class SwingTester {
   static Summary m_sum = new Summary();
   static ArrayList<String> m_Regels = new ArrayList<String>();
+  static String m_csvdir = "";
 
   public static void main(String[] args) {
     createWindow();
   }
 
-  private static void createWindow() {
+  static private void createWindow() {
     JFrame frame = new JFrame("Garmin track summary");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     createUI(frame);
@@ -34,7 +36,7 @@ public class SwingTester {
     frame.setVisible(true);
   }
 
-  private static void createUI(final JFrame frame) {
+  static private void createUI(final JFrame frame) {
     JPanel panel = new JPanel();
     LayoutManager layout = new FlowLayout();
     panel.setLayout(layout);
@@ -67,18 +69,50 @@ public class SwingTester {
     });
 
     panel.add(button);
+    panel.add(label);
 
     JButton btnNewButton = new JButton("Output file");
+    final JLabel outlabel = new JLabel();
+
     btnNewButton.addActionListener(new ActionListener() {
+
       public void actionPerformed(ActionEvent e) {
-        /**
-         * if(getDialogType() == SAVE_DIALOG) { if(f.exists()) { // your overwrite
-         * checking } else { super.approveSelection(); return; } }
-         */
+        JFileChooser fc = new JFileChooser();
+
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setFileFilter(new FileFilter() {
+          @Override
+          public boolean accept(File f) {
+            System.out.println(f.toString());
+            return f.isFile();
+          }
+
+          @Override
+          public String getDescription() {
+            System.out.println("Any file");
+            return "Any file";
+          }
+        });
+
+        fc.setDialogType(JFileChooser.SAVE_DIALOG);
+        fc.setApproveButtonText("Select");
+        fc.setCurrentDirectory(new File(m_csvdir));
+        int option = fc.showOpenDialog(frame);
+        System.out.println(" Option: " + option);
+        // fc.showDialog(m_GUILayout, "Kies CSV output bestand");
+
+        File dir = fc.getSelectedFile();
+        if (!dir.exists()) {
+          dir = dir.getParentFile();
+        } else {
+          m_csvdir = dir.toString();
+        }
+        System.out.println("Gekozen file: " + dir.toString());
+        outlabel.setText("CsvDir: " + m_csvdir);
       }
     });
     panel.add(btnNewButton);
-    panel.add(label);
+    panel.add(outlabel);
     frame.getContentPane().add(panel, BorderLayout.CENTER);
   }
 }

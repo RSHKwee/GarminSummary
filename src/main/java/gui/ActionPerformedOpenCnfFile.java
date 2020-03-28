@@ -79,7 +79,7 @@ public class ActionPerformedOpenCnfFile extends SwingWorker<Void, String> implem
         LOGGER.log(Level.INFO, file.getPath() + newline);
         // m_PostProj = sconf.readConfig(file.getPath());
       }
-      GUILayout.buildProjectenLijst(file, m_PostProj);
+//      GUILayout.buildProjectenLijst(file, m_PostProj);
 
     } else {
       LOGGER.log(Level.INFO, "Niets gekozen." + newline);
@@ -95,7 +95,7 @@ public class ActionPerformedOpenCnfFile extends SwingWorker<Void, String> implem
   @Override
   protected void done() {
     if (file != null) {
-      GUILayout.buildProjectenLijst(file, m_PostProj);
+//      GUILayout.buildProjectenLijst(file, m_PostProj);
       LOGGER.log(Level.FINE, "Config file ingelezen." + newline);
     }
   }
