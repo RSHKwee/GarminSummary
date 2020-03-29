@@ -22,6 +22,7 @@ public class SwingTester {
   static Summary m_sum = new Summary();
   static ArrayList<String> m_Regels = new ArrayList<String>();
   static String m_csvdir = "";
+  static String m_outpfile = "";
 
   public static void main(String[] args) {
     createWindow();
@@ -78,13 +79,13 @@ public class SwingTester {
 
       public void actionPerformed(ActionEvent e) {
         JFileChooser fc = new JFileChooser();
-
-        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setToolTipText("Geef uitvoerbestandsnaam.");
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fc.setFileFilter(new FileFilter() {
           @Override
           public boolean accept(File f) {
             System.out.println(f.toString());
-            return f.isFile();
+            return f.isFile() || f.isDirectory();
           }
 
           @Override
@@ -102,13 +103,15 @@ public class SwingTester {
         // fc.showDialog(m_GUILayout, "Kies CSV output bestand");
 
         File dir = fc.getSelectedFile();
+        String outp_file = fc.getSelectedFile().getName();
         if (!dir.exists()) {
           dir = dir.getParentFile();
+          m_outpfile = outp_file;
         } else {
-          m_csvdir = dir.toString();
+          m_outpfile = outp_file;
         }
-        System.out.println("Gekozen file: " + dir.toString());
-        outlabel.setText("CsvDir: " + m_csvdir);
+        System.out.println("Gekozen dir: " + dir.toString() + " file: " + m_outpfile);
+        outlabel.setText("CsvDir: " + dir.toString() + "\\" + m_outpfile);
       }
     });
     panel.add(btnNewButton);
