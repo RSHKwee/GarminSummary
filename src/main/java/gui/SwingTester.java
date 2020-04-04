@@ -23,6 +23,7 @@ public class SwingTester {
   static ArrayList<String> m_Regels = new ArrayList<String>();
   static String m_csvdir = "";
   static String m_outpfile = "";
+  static File[] m_files;
 
   public static void main(String[] args) {
     createWindow();
@@ -53,9 +54,9 @@ public class SwingTester {
 
         int option = fileChooser.showOpenDialog(frame);
         if (option == JFileChooser.APPROVE_OPTION) {
-          File[] files = fileChooser.getSelectedFiles();
+          m_files = fileChooser.getSelectedFiles();
           String fileNames = "";
-          for (File file : files) {
+          for (File file : m_files) {
             m_Regels.addAll(m_sum.TripsSummary(file.getPath()));
 
             fileNames += file.getPath() + " ";
@@ -76,7 +77,6 @@ public class SwingTester {
     final JLabel outlabel = new JLabel();
 
     btnNewButton.addActionListener(new ActionListener() {
-
       public void actionPerformed(ActionEvent e) {
         JFileChooser fc = new JFileChooser();
         fc.setToolTipText("Geef uitvoerbestandsnaam.");
