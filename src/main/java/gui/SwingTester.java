@@ -23,6 +23,7 @@ public class SwingTester {
   static ArrayList<String> m_Regels = new ArrayList<String>();
   static String m_csvdir = "";
   static String m_outpfile = "";
+  static String m_OutpDir = "";
   static File[] m_files;
 
   public static void main(String[] args) {
@@ -55,15 +56,6 @@ public class SwingTester {
         int option = fileChooser.showOpenDialog(frame);
         if (option == JFileChooser.APPROVE_OPTION) {
           m_files = fileChooser.getSelectedFiles();
-          String fileNames = "";
-          for (File file : m_files) {
-            m_Regels.addAll(m_sum.TripsSummary(file.getPath()));
-
-            fileNames += file.getPath() + " ";
-          }
-          label.setText("File(s) Selected: " + fileNames);
-          TxtBestand.DumpBestand("D:\\" + "current_2019_3.csv", m_Regels);
-
         } else {
           label.setText("Open command canceled");
         }
@@ -110,11 +102,36 @@ public class SwingTester {
         } else {
           m_outpfile = outp_file;
         }
-        System.out.println("Gekozen dir: " + dir.toString() + " file: " + m_outpfile);
-        outlabel.setText("CsvDir: " + dir.toString() + "\\" + m_outpfile);
+        m_OutpDir = dir.toString();
+        System.out.println("Gekozen dir: " + m_OutpDir + " file: " + m_outpfile);
+        outlabel.setText("OutpFile: " + m_OutpDir + "\\" + m_outpfile);
       }
     });
     panel.add(btnNewButton);
+
+    JButton btnNewButton_1 = new JButton("Uitvoer vullen");
+    btnNewButton_1.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        String fileNames = "";
+        // Date (DD/MM/YYYY) Start Time Origin Longitude Origin Latitude Destination
+        // Longitude Destination Latitude Origin Destination Distance (km) Time (min)
+        // Fuel Economy (l/100km) Fuel Cost (EUR) Carbon Footprint (kg) ecoChallenge
+        // Overall ecoChallenge Speed ecoChallenge Acceleration ecoChallenge Braking
+        // ecoChallenge Fuel Economy
+        m_Regels.clear();
+        m_Regels.add(
+            "#End Time;Date;Start Time;Origin Longitude;Origin Latitude;Destination Longitude;Destination Latitude;Origin Destination;Distance (km);Time (min);");
+        for (File file : m_files) {
+          m_Regels.addAll(m_sum.TripsSummary(file.getPath()));
+
+          fileNames += file.getPath() + " ";
+          label.setText("File(s) Selected: " + fileNames);
+        }
+        m_Regels.add("# " + fileNames);
+        TxtBestand.DumpBestand(m_OutpDir + "\\" + m_outpfile, m_Regels);
+      }
+    });
+    panel.add(btnNewButton_1);
     panel.add(outlabel);
     frame.getContentPane().add(panel, BorderLayout.CENTER);
   }

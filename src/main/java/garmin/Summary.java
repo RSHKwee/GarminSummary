@@ -1,6 +1,7 @@
 package garmin;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -64,11 +65,15 @@ public class Summary {
           // Overall ecoChallenge Speed ecoChallenge Acceleration ecoChallenge Braking
           // ecoChallenge Fuel Economy
 
+          NumberFormat fmt = NumberFormat.getInstance();
+          fmt.setGroupingUsed(false);
+          fmt.setMaximumIntegerDigits(9999);
+          fmt.setMaximumFractionDigits(9999);
           String v_regel = String.join(";", v_eindtijdparts[1], v_starttijdparts[0], v_starttijdparts[1],
-              Double.toString(v_waypoints.get(0).getLongitude().toDegrees()),
-              Double.toString(v_waypoints.get(0).getLatitude().toDegrees()),
-              Double.toString(v_waypoints.get(v_eind).getLongitude().toDegrees()),
-              Double.toString(v_waypoints.get(v_eind).getLatitude().toDegrees()), v_AdrStart.getDisplayName(),
+              fmt.format(v_waypoints.get(0).getLongitude().toDegrees()),
+              fmt.format(v_waypoints.get(0).getLatitude().toDegrees()),
+              fmt.format(v_waypoints.get(v_eind).getLongitude().toDegrees()),
+              fmt.format(v_waypoints.get(v_eind).getLatitude().toDegrees()), v_AdrStart.getDisplayName(),
               v_AdrFinish.getDisplayName(), TimeConversion.formatDuration(v_period));
           m_Regels.add(v_regel);
         });
