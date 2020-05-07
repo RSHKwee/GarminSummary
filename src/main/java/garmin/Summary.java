@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.jenetics.jpx.GPX;
+import io.jenetics.jpx.Length;
+import io.jenetics.jpx.Point;
 import io.jenetics.jpx.Track;
 import io.jenetics.jpx.TrackSegment;
 import io.jenetics.jpx.WayPoint;
+import io.jenetics.jpx.geom.Geoid;
 import library.Address;
 import library.NominatimAPI;
 import library.TimeConversion;
@@ -19,18 +22,37 @@ public class Summary {
   private ArrayList<String> m_Regels;
   private String m_GPXFile;
 
+  /**
+   * Default constructor
+   */
   public Summary() {
   }
 
+  /**
+   * Constructor waarbij de in te lezen GPX-file wordt opgegeven.
+   * 
+   * @param a_GPXFile
+   */
   public Summary(String a_GPXFile) {
     m_GPXFile = a_GPXFile;
   }
 
+  /**
+   * Creeer een samenvatting van tripjes voor de opgegeven GPX-file.
+   * 
+   * @param a_GPXFile Filenaam GPX
+   * @return Tekstregels.
+   */
   public ArrayList<String> TripsSummary(String a_GPXFile) {
     m_GPXFile = a_GPXFile;
     return TripsSummary();
   }
 
+  /**
+   * Creeer een samenvatting van tripjes.
+   * 
+   * @return Tekstregels.
+   */
   public ArrayList<String> TripsSummary() {
     m_Regels = new ArrayList<String>();
     System.out.println(" GPX-File:" + m_GPXFile);
@@ -39,11 +61,15 @@ public class Summary {
       gpx = GPX.reader(GPX.Version.V11).read(m_GPXFile);
 
       List<Track> v_tracks = gpx.getTracks();
+
       v_tracks.forEach(v_track -> {
         List<TrackSegment> v_segments = v_track.getSegments();
         v_segments.forEach(v_segment -> {
           List<WayPoint> v_waypoints = v_segment.getPoints();
           int v_eind = v_waypoints.size() - 1;
+          Double v_afstand = SegmentLengte(v_waypoints);
+          v_afstand = v_afstand / 1000.0;
+          // System.out.println("Afstand: " + v_afstand);
 
           NominatimAPI v_nomi = new NominatimAPI();
 
@@ -74,7 +100,7 @@ public class Summary {
               fmt.format(v_waypoints.get(0).getLatitude().toDegrees()),
               fmt.format(v_waypoints.get(v_eind).getLongitude().toDegrees()),
               fmt.format(v_waypoints.get(v_eind).getLatitude().toDegrees()), v_AdrStart.getDisplayName(),
-              v_AdrFinish.getDisplayName(), TimeConversion.formatDuration(v_period));
+              v_AdrFinish.getDisplayName(), fmt.format(v_afstand), TimeConversion.formatDuration(v_period));
           m_Regels.add(v_regel);
         });
       });
@@ -84,5 +110,27 @@ public class Summary {
       e.printStackTrace();
     }
     return m_Regels;
+  }
+
+  /**
+   * Bereken segment lengte door de agstanden tussen de afzonderlijke punten op te
+   * tellen.
+   * 
+   * @param a_waypoints Lijst van Waypoints.
+   * @return Afstand in meters.
+   */
+  private double SegmentLengte(List<WayPoint> a_waypoints) {
+    double v_length = 0.0;
+    int v_eind = a_waypoints.size() - 1;
+
+    for (int i = 0; i < v_eind; i++) {
+      Point start = WayPoint.of(a_waypoints.get(i).getLatitude().toDegrees(),
+          a_waypoints.get(i).getLongitude().toDegrees());
+      Point einde = WayPoint.of(a_waypoints.get(i + 1).getLatitude().toDegrees(),
+          a_waypoints.get(i + 1).getLongitude().toDegrees());
+      Length lengte = Geoid.WGS84.distance(start, einde);
+      v_length = v_length + lengte.doubleValue();
+    }
+    return v_length;
   }
 }

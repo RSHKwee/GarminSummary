@@ -120,7 +120,7 @@ public class SwingTester {
         // ecoChallenge Fuel Economy
         m_Regels.clear();
         m_Regels.add(
-            "#End Time;Date;Start Time;Origin Longitude;Origin Latitude;Destination Longitude;Destination Latitude;Origin Destination;Distance (km);Time (min);");
+            "#End Time;Date;Start Time;Origin Longitude;Origin Latitude;Destination Longitude;Destination Latitude;Origin;Destination;Distance (km);Time (min);");
         for (File file : m_files) {
           m_Regels.addAll(m_sum.TripsSummary(file.getPath()));
 
