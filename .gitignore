@@ -4,3 +4,4 @@
 *.bak
 pom.properties
 MANIFEST.MF
+/bin/
