@@ -1,4 +1,4 @@
-package garmin;
+package library;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -16,9 +16,6 @@ import io.jenetics.jpx.Track;
 import io.jenetics.jpx.TrackSegment;
 import io.jenetics.jpx.WayPoint;
 import io.jenetics.jpx.geom.Geoid;
-import library.Address;
-import library.NominatimAPI;
-import library.TimeConversion;
 
 public class Summary {
 	private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
