@@ -311,6 +311,8 @@ public class GUILayout extends JPanel implements ItemListener {
 		btnConvert.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				m_param.save();
+
 				Summary v_sum = new Summary();
 				ArrayList<String> v_Regels = new ArrayList<String>();
 				m_param.save();
