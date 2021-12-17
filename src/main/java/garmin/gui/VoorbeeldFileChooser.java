@@ -1,3 +1,5 @@
+package garmin.gui;
+
 // : c14:FileChooserTest.java
 // Demonstration of File dialog boxes.
 // From 'Thinking in Java, 3rd ed.' (c) Bruce Eckel 2002
@@ -8,6 +10,7 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -15,12 +18,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class FileChooserTest extends JFrame {
+public class VoorbeeldFileChooser extends JFrame {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+
   private JTextField filename = new JTextField(), dir = new JTextField();
 
   private JButton open = new JButton("Open"), save = new JButton("Save");
 
-  public FileChooserTest() {
+  public VoorbeeldFileChooser() {
     JPanel p = new JPanel();
     open.addActionListener(new OpenL());
     p.add(open);
@@ -40,9 +48,12 @@ public class FileChooserTest extends JFrame {
   class OpenL implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       JFileChooser c = new JFileChooser();
+      c.setMultiSelectionEnabled(true);
       // Demonstrate "Open" dialog:
-      int rVal = c.showOpenDialog(FileChooserTest.this);
+      int rVal = c.showOpenDialog(VoorbeeldFileChooser.this);
+      File[] files = c.getSelectedFiles();
       if (rVal == JFileChooser.APPROVE_OPTION) {
+        System.out.println(files.toString());
         filename.setText(c.getSelectedFile().getName());
         dir.setText(c.getCurrentDirectory().toString());
       }
@@ -57,7 +68,7 @@ public class FileChooserTest extends JFrame {
     public void actionPerformed(ActionEvent e) {
       JFileChooser c = new JFileChooser();
       // Demonstrate "Save" dialog:
-      int rVal = c.showSaveDialog(FileChooserTest.this);
+      int rVal = c.showSaveDialog(VoorbeeldFileChooser.this);
       if (rVal == JFileChooser.APPROVE_OPTION) {
         filename.setText(c.getSelectedFile().getName());
         dir.setText(c.getCurrentDirectory().toString());
@@ -70,7 +81,7 @@ public class FileChooserTest extends JFrame {
   }
 
   public static void main(String[] args) {
-    run(new FileChooserTest(), 250, 110);
+    run(new VoorbeeldFileChooser(), 250, 110);
   }
 
   public static void run(JFrame frame, int width, int height) {
@@ -78,4 +89,4 @@ public class FileChooserTest extends JFrame {
     frame.setSize(width, height);
     frame.setVisible(true);
   }
-} ///:~
+} /// :~
