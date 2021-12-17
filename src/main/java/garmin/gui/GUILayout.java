@@ -253,9 +253,14 @@ public class GUILayout extends JPanel implements ItemListener {
 				int option = fileChooser.showOpenDialog(GUILayout.this);
 				if (option == JFileChooser.APPROVE_OPTION) {
 					m_GpxFiles = fileChooser.getSelectedFiles();
-
+					if (m_GpxFiles.length == 1) {
+						lblCSVFile.setText(m_GpxFiles[0].getName());
+					} else {
+						lblCSVFile.setText(m_GpxFiles[0].getName() + " etc.");
+					}
 					lblCSVFile.setEnabled(true);
 					m_InputFolder = new File(m_GpxFiles[0].getParent());
+					m_param.set_InputFolder(m_InputFolder);
 					if (!m_OutputFolderModified) {
 						lblOutputFolder.setText(m_GpxFiles[0].getParent());
 						m_OutputFolder = new File(m_GpxFiles[0].getParent());
