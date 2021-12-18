@@ -7,7 +7,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>inlezen</name>
+  <name>Summary</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -44,22 +44,121 @@
 	</dependency>	
   </dependencies>
   <build>
-    <plugins>
-      <plugin>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources>   
+	<plugins>
+	  <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
+        <version>3.8.1</version>
         <configuration>
-          <release>11</release>
+           <source>11</source>
+           <target>11</target>
         </configuration>
-        <dependencies>
-		  <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm</artifactId>
-            <version>6.2</version>
-          </dependency>
-        </dependencies>
       </plugin>
-    </plugins>
+      <plugin>
+		<artifactId>maven-assembly-plugin</artifactId>
+		<executions>
+          <execution>
+			<phase>package</phase>
+			<goals>
+			  <goal>single</goal>
+			</goals>
+          </execution>
+          </executions>
+			<configuration>
+              <archive>
+                 <manifest>
+				   <addClasspath>true</addClasspath>
+				   <mainClass>garmin.main.Main</mainClass>
+				 </manifest>
+              </archive>
+              <descriptorRefs>
+                 <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <finalName>garminSummary</finalName>
+           </configuration>
+        </plugin>		
+		<!-- LAUNCH4J create executable v -->
+        <plugin>
+          <groupId>com.akathist.maven.plugins.launch4j</groupId>
+          <artifactId>launch4j-maven-plugin</artifactId>
+          <version>2.1.2</version>
+          <executions>
+            <execution>
+              <id>l4j-clui</id>
+              <phase>package</phase>
+              <goals>
+                <goal>launch4j</goal>
+              </goals>
+              <configuration>
+                <headerType>console</headerType>
+                <jar>target/garminSummary-jar-with-dependencies.jar</jar>
+                <outfile>target/garminSummary.exe</outfile>
+                <downloadUrl>http://java.com/download</downloadUrl>
+                <classPath>
+                  <mainClass>garmin.main.Main</mainClass>
+                </classPath>
+				<icon>src/main/resources/GarminLogo.ico</icon>
+                <jre>
+                  <bundledJre64Bit>true</bundledJre64Bit>
+		          <path>%JAVA_HOME%;%PATH%</path>
+                  <bundledJreAsFallback>true</bundledJreAsFallback>
+                  <minVersion>1.8.0</minVersion>
+                  <jdkPreference>preferJre</jdkPreference>
+                  <runtimeBits>64</runtimeBits>
+                </jre>
+                <versionInfo>
+                  <fileVersion>0.1.3.0</fileVersion>
+                  <txtFileVersion>${project.version}</txtFileVersion>
+                  <fileDescription>${project.name}</fileDescription>
+                  <copyright>C</copyright>
+                  <productVersion>0.1.3.0</productVersion>
+                  <txtProductVersion>0.1.3.0</txtProductVersion>
+                  <productName>${project.name}</productName>
+                  <internalName>garminSummary</internalName>
+                  <originalFilename>garminSummary.exe</originalFilename>
+                </versionInfo>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+	    <!-- LAUNCH4J ^ -->
+		<!-- Sign executable v -->
+        <plugin>
+          <groupId>net.jsign</groupId>
+          <artifactId>jsign-maven-plugin</artifactId>
+          <version>4.0</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+              <configuration>
+                <file>target/garminSummary.exe</file>
+                <name>Garmin Summary</name>
+                <url>https://github.com/RSHKwee/garmin</url>
+                <keystore>keystore.jks</keystore>
+                <alias>RSHK</alias>
+                <storepass>GW93ayi0j2CfeJx9VoSo</storepass>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+		<!-- Sign executable ^ -->		
+      </plugins>
   </build>
+  <distributionManagement>
+    <!-- Upload to Github v-->
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/RSHKwee/ing2ofx</url>
+    </repository>
+    <!-- Upload to Github ^-->
+  </distributionManagement>
 </project>
