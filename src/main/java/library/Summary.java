@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+
 import io.jenetics.jpx.GPX;
 import io.jenetics.jpx.Length;
 import io.jenetics.jpx.Point;
@@ -22,10 +25,20 @@ public class Summary {
 	private ArrayList<String> m_Regels;
 	private String m_GPXFile;
 
+	private JProgressBar m_pbar;
+	private int m_VerwerkteTracks = 0;
+	private JLabel m_ProgressLabel;
+	private int m_AantalProjecten = 0;
+
 	/**
 	 * Default constructor
 	 */
 	public Summary() {
+	}
+
+	public Summary(JProgressBar a_pbar, JLabel a_Progresslabel) {
+		m_pbar = a_pbar;
+		m_ProgressLabel = a_Progresslabel;
 	}
 
 	/**
@@ -61,6 +74,8 @@ public class Summary {
 			gpx = GPX.reader(GPX.Version.V11).read(m_GPXFile);
 
 			List<Track> v_tracks = gpx.getTracks();
+			m_VerwerkteTracks = 0;
+			m_pbar.setMaximum(v_tracks.size());
 
 			v_tracks.forEach(v_track -> {
 				List<TrackSegment> v_segments = v_track.getSegments();
@@ -102,6 +117,7 @@ public class Summary {
 							fmt.format(v_waypoints.get(v_eind).getLatitude().toDegrees()), v_AdrStart.getDisplayName(),
 							v_AdrFinish.getDisplayName(), fmt.format(v_afstand), TimeConversion.formatDuration(v_period));
 					m_Regels.add(v_regel);
+					verwerkProgress("");
 				});
 			});
 		} catch (IOException e) {
@@ -109,6 +125,9 @@ public class Summary {
 		} catch (java.lang.Exception e) {
 			e.printStackTrace();
 		}
+		m_ProgressLabel.setText(" ");
+		m_pbar.setValue(0);
+
 		return m_Regels;
 	}
 
@@ -132,5 +151,16 @@ public class Summary {
 			v_length = v_length + lengte.doubleValue();
 		}
 		return v_length;
+	}
+
+	void verwerkProgress(String a_post) {
+		m_VerwerkteTracks++;
+		try {
+			m_pbar.setValue(m_VerwerkteTracks);
+			Double v_prog = ((double) m_VerwerkteTracks / (double) m_AantalProjecten) * 100;
+			Integer v_iprog = v_prog.intValue();
+			m_ProgressLabel.setText(v_iprog.toString() + "% (Post :" + a_post + ")");
+		} catch (Exception e) {
+		}
 	}
 }

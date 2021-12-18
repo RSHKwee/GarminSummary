@@ -23,8 +23,6 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
 	private String m_OutFileNaam;
 
 	private JTextArea area = new JTextArea(30, 50);
-	private int m_AantalProjecten = 0;
-	private int m_VerwerkteProjecten = 0;
 	private JLabel m_ProgressLabel;
 
 	public ActionPerformedSummarize(File[] a_GpXFiles, File a_OutputFolder, String a_OutFileNaam, JProgressBar a_pbar,
@@ -48,20 +46,14 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
 	 */
 	@Override
 	protected Void doInBackground() throws Exception {
-		Summary v_sum = new Summary();
+		Summary v_sum = new Summary(m_pbar, m_ProgressLabel);
 		ArrayList<String> v_Regels = new ArrayList<String>();
-
-		m_VerwerkteProjecten = 0;
-		m_pbar.setMaximum(m_GpxFiles.length);
 
 		for (int i = 0; i < m_GpxFiles.length; i++) {
 			v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i].getAbsolutePath()));
-			verwerkProgress(m_GpxFiles[i].getName());
 		}
 		TxtBestand.DumpBestand(m_OutputFolder.getAbsolutePath() + "//" + m_OutFileNaam, v_Regels);
 
-		m_ProgressLabel.setText(" ");
-		m_pbar.setValue(0);
 		return null;
 	}
 
@@ -69,15 +61,6 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
 	protected void done() {
 		LOGGER.log(Level.INFO, "");
 		LOGGER.log(Level.INFO, "Klaar.");
-	}
-
-	void verwerkProgress(String a_post) {
-		m_VerwerkteProjecten++;
-		m_pbar.setValue(m_VerwerkteProjecten);
-
-		Double v_prog = ((double) m_VerwerkteProjecten / (double) m_AantalProjecten) * 100;
-		Integer v_iprog = v_prog.intValue();
-		m_ProgressLabel.setText(v_iprog.toString() + "% (Post :" + a_post + ")");
 	}
 
 }
