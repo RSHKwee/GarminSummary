@@ -8,7 +8,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +23,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -36,8 +36,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import garmin.main.Main;
-import library.Summary;
-import library.TxtBestand;
 import library.UserSetting;
 /**
  * Garmin GUI
@@ -58,6 +56,9 @@ public class GUILayout extends JPanel implements ItemListener {
 	private String m_LogDir = "c:\\";
 	private boolean m_OutputFolderModified = false;
 	private JTextArea output;
+
+	private JProgressBar m_ProgressBar = new JProgressBar();
+	private JLabel lblProgressLabel;
 
 	// Preferences
 	private UserSetting m_param = Main.m_param;
@@ -312,20 +313,26 @@ public class GUILayout extends JPanel implements ItemListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				m_param.save();
-
-				Summary v_sum = new Summary();
-				ArrayList<String> v_Regels = new ArrayList<String>();
-				m_param.save();
-				for (int i = 0; i < m_GpxFiles.length; i++) {
-					v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i].getAbsolutePath()));
-				}
-				TxtBestand.DumpBestand(m_OutputFolder.getAbsolutePath() + "//" + txtOutputFilename.getText(), v_Regels);
+				ActionPerformedSummarize act = new ActionPerformedSummarize(m_GpxFiles, m_OutputFolder,
+						txtOutputFilename.getText(), m_ProgressBar, lblProgressLabel);
+				act.execute();
+				/**
+				 * Summary v_sum = new Summary(); ArrayList<String> v_Regels = new
+				 * ArrayList<String>(); m_param.save(); for (int i = 0; i < m_GpxFiles.length;
+				 * i++) { v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i].getAbsolutePath()));
+				 * } TxtBestand.DumpBestand(m_OutputFolder.getAbsolutePath() + "//" +
+				 * txtOutputFilename.getText(), v_Regels);
+				 **/
 			}
 		});
 		panel.add(btnConvert, "cell 1 5");
 
 		JLabel lblNewLabel = new JLabel("    ");
 		panel.add(lblNewLabel, "cell 0 6");
+
+		panel.add(m_ProgressBar, "south");
+		lblProgressLabel = new JLabel(" ");
+		panel.add(lblProgressLabel, "cell 3 6,alignx left,aligny top");
 
 		bottomHalf.setMinimumSize(new Dimension(500, 100));
 		bottomHalf.setPreferredSize(new Dimension(500, 400));
