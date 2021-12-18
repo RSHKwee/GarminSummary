@@ -1,4 +1,6 @@
-/*
+package library;
+
+/**
  * (C) Copyright 2018 Daniel Braun (http://www.daniel-braun.com/).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +16,6 @@
  * limitations under the License.
  *
  */
-
-package library;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
