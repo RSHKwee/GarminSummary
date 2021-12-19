@@ -49,6 +49,27 @@ public class NominatimAPI {
    * 17 major and minor streets 
    * 18 building
    * 
+   * JSON Example:
+   *      {
+   *         "place_id":70681804,
+   *         "licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+   *         "osm_type":"way",
+   *         "osm_id":7057423,
+   *         "lat":"52.0933866205869",
+   *         "lon":"5.10820490843536",
+   *         "display_name":"Nieuwe Daalstraat, Lombok-Oost, Utrecht, Nederland, 3511SX, Nederland",
+   *         "address":{
+   *             "construction":"Nieuwe Daalstraat",
+   *             "neighbourhood":"Lombok-Oost",
+   *             "suburb":"Utrecht",
+   *             "city":"Utrecht",
+   *             "state":"Utrecht",
+   *             "postcode":"3511SX",
+   *             "country":"Nederland",
+   *             "country_code":"nl"
+   *         },
+   *         "boundingbox":["52.0932044","52.093541","5.108176","5.1082294"]
+   *      }
    * @formatter:on
    */
   private int zoomLevel = 18;
