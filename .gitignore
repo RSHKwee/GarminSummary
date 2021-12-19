@@ -1,7 +1,7 @@
 /target/
-*.prefs
+.prefs
 .classpath
-*.bak
+.bak
 pom.properties
 MANIFEST.MF
 /bin/
