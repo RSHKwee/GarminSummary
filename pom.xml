@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>garmin</groupId>
-  <artifactId>main.Main</artifactId>
-  <version>0.0.1</version>
+  <artifactId>garmin</artifactId>
+  <version>0.1.0</version>
   <packaging>jar</packaging>
 
   <name>Summary</name>
@@ -117,8 +117,8 @@
                   <txtFileVersion>${project.version}</txtFileVersion>
                   <fileDescription>${project.name}</fileDescription>
                   <copyright>C</copyright>
-                  <productVersion>0.1.3.0</productVersion>
-                  <txtProductVersion>0.1.3.0</txtProductVersion>
+                  <productVersion>0.1.0.0</productVersion>
+                  <txtProductVersion>0.1.0.0</txtProductVersion>
                   <productName>${project.name}</productName>
                   <internalName>garminSummary</internalName>
                   <originalFilename>garminSummary.exe</originalFilename>
