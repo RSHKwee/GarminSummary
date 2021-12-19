@@ -45,10 +45,10 @@
   </dependencies>
   <build>
     <resources>
-        <resource>
-            <directory>src/main/resources</directory>
-            <filtering>true</filtering>
-        </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
     </resources>   
 	<plugins>
 	  <plugin>
@@ -56,8 +56,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-           <source>11</source>
-           <target>11</target>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
       <plugin>
@@ -78,7 +78,7 @@
 				 </manifest>
               </archive>
               <descriptorRefs>
-                 <descriptorRef>jar-with-dependencies</descriptorRef>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
               </descriptorRefs>
               <finalName>garminSummary</finalName>
            </configuration>
@@ -157,7 +157,7 @@
     <repository>
       <id>github</id>
       <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/RSHKwee/ing2ofx</url>
+      <url>https://maven.pkg.github.com/RSHKwee/garmin</url>
     </repository>
     <!-- Upload to Github ^-->
   </distributionManagement>
