@@ -125,9 +125,9 @@ public class Summary {
               fmt.format(v_waypoints.get(v_eind).getLatitude().toDegrees()), v_AdrStart.getDisplayName(),
               v_AdrFinish.getDisplayName(), fmt.format(v_afstand), TimeConversion.formatDuration(v_period));
           m_Regels.add(v_regel);
-          verwerkProgress1();
+          verwerkProgressSegments();
         });
-        verwerkProgress();
+        verwerkProgressTracks();
       });
     } catch (IOException e) {
       e.printStackTrace();
@@ -165,7 +165,7 @@ public class Summary {
     return v_length;
   }
 
-  private void verwerkProgress() {
+  private void verwerkProgressTracks() {
     m_VerwerkteTracks++;
     try {
       m_pbar.setValue(m_VerwerkteTracks);
@@ -176,7 +176,7 @@ public class Summary {
     }
   }
 
-  private void verwerkProgress1() {
+  private void verwerkProgressSegments() {
     m_AantalSegments++;
     try {
       m_pbar.setValue(m_AantalSegments);
