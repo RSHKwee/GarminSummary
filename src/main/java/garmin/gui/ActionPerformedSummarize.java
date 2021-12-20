@@ -15,8 +15,8 @@ import library.TxtBestand;
 
 public class ActionPerformedSummarize extends SwingWorker<Void, String> implements MyAppendable {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
-  private JProgressBar m_pbar;
-  private JProgressBar m_pbar1;
+  private JProgressBar m_pbarTracks;
+  private JProgressBar m_pbarSegemnts;
 
   // Variables
   private File m_OutputFolder;
@@ -26,15 +26,15 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
   private JTextArea area = new JTextArea(30, 50);
   private JLabel m_ProgressLabel;
 
-  public ActionPerformedSummarize(File[] a_GpXFiles, File a_OutputFolder, String a_OutFileName, JProgressBar a_pbar,
-      JLabel a_Progresslabel, JProgressBar a_pbar1) {
+  public ActionPerformedSummarize(File[] a_GpXFiles, File a_OutputFolder, String a_OutFileName,
+      JProgressBar a_pbarTracks, JLabel a_Progresslabel, JProgressBar a_pbarSegments) {
     LOGGER.log(Level.FINE, "Set call ActionPerformedSummarize");
     m_GpxFiles = a_GpXFiles;
     m_OutputFolder = a_OutputFolder;
     m_OutFileName = a_OutFileName;
 
-    m_pbar = a_pbar;
-    m_pbar1 = a_pbar1;
+    m_pbarTracks = a_pbarTracks;
+    m_pbarSegemnts = a_pbarSegments;
     m_ProgressLabel = a_Progresslabel;
   }
 
@@ -48,7 +48,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
    */
   @Override
   protected Void doInBackground() throws Exception {
-    Summary v_sum = new Summary(m_pbar, m_ProgressLabel, m_pbar1);
+    Summary v_sum = new Summary(m_pbarTracks, m_ProgressLabel, m_pbarSegemnts);
     ArrayList<String> v_Regels = new ArrayList<String>();
     v_Regels.add(v_sum.Header());
 
@@ -65,5 +65,4 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
     LOGGER.log(Level.INFO, "");
     LOGGER.log(Level.INFO, "Klaar.");
   }
-
 }

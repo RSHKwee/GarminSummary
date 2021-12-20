@@ -57,8 +57,8 @@ public class GUILayout extends JPanel implements ItemListener {
   private boolean m_OutputFolderModified = false;
   private JTextArea output;
 
-  private JProgressBar m_ProgressBar = new JProgressBar();
-  private JProgressBar m_ProgressBar1 = new JProgressBar();
+  private JProgressBar m_ProgressBarTracks = new JProgressBar();
+  private JProgressBar m_ProgressBarSegments = new JProgressBar();
   private JLabel lblProgressLabel;
 
   // Preferences
@@ -81,7 +81,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
     JTextField txtOutputFilename = new JTextField();
     JLabel lblOutputFolder = new JLabel("");
-    JButton btnConvert = new JButton("Summarise");
+    JButton btnSummarize = new JButton("Summarise");
 
     // Initialize parameters
     if (!m_param.get_OutputFolder().isBlank()) {
@@ -228,15 +228,15 @@ public class GUILayout extends JPanel implements ItemListener {
     panel.setMinimumSize(new Dimension(350, 300));
     panel.setPreferredSize(new Dimension(350, 290));
 
-    // Choose CSV File
-    JLabel lblCSVFile = new JLabel("Select one or more GPX files");
-    lblCSVFile.setEnabled(false);
-    lblCSVFile.setHorizontalAlignment(SwingConstants.RIGHT);
-    panel.add(lblCSVFile, "cell 1 0");
+    // Choose GPX File(s)
+    JLabel lblGPXFile = new JLabel("Select one or more GPX files");
+    lblGPXFile.setEnabled(false);
+    lblGPXFile.setHorizontalAlignment(SwingConstants.RIGHT);
+    panel.add(lblGPXFile, "cell 1 0");
 
-    JButton btnCSVFile = new JButton("GPX File(s)");
-    btnCSVFile.setHorizontalAlignment(SwingConstants.RIGHT);
-    btnCSVFile.addActionListener(new ActionListener() {
+    JButton btnGPXFile = new JButton("GPX File(s)");
+    btnGPXFile.setHorizontalAlignment(SwingConstants.RIGHT);
+    btnGPXFile.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
@@ -256,11 +256,11 @@ public class GUILayout extends JPanel implements ItemListener {
         if (option == JFileChooser.APPROVE_OPTION) {
           m_GpxFiles = fileChooser.getSelectedFiles();
           if (m_GpxFiles.length == 1) {
-            lblCSVFile.setText(m_GpxFiles[0].getName());
+            lblGPXFile.setText(m_GpxFiles[0].getName());
           } else {
-            lblCSVFile.setText(m_GpxFiles[0].getName() + " etc.");
+            lblGPXFile.setText(m_GpxFiles[0].getName() + " etc.");
           }
-          lblCSVFile.setEnabled(true);
+          lblGPXFile.setEnabled(true);
           m_InputFolder = new File(m_GpxFiles[0].getAbsoluteFile().toString());
           m_param.set_InputFolder(m_InputFolder);
           if (!m_OutputFolderModified) {
@@ -269,11 +269,11 @@ public class GUILayout extends JPanel implements ItemListener {
             m_param.set_OutputFolder(m_OutputFolder);
             txtOutputFilename.setEnabled(true);
           }
-          btnConvert.setEnabled(true);
+          btnSummarize.setEnabled(true);
         }
       }
     });
-    panel.add(btnCSVFile, "cell 0 0");
+    panel.add(btnGPXFile, "cell 0 0");
 
     // Define output folder
     // Output folder & filename
@@ -294,7 +294,7 @@ public class GUILayout extends JPanel implements ItemListener {
           m_param.set_OutputFolder(m_OutputFolder);
           m_OutputFolderModified = true;
           txtOutputFilename.setEnabled(true);
-          btnConvert.setEnabled(true);
+          btnSummarize.setEnabled(true);
         }
       }
     });
@@ -310,28 +310,29 @@ public class GUILayout extends JPanel implements ItemListener {
     panel.add(txtOutputFilename, "cell 1 4");
 
     // Convert button
-    btnConvert.setEnabled(false);
-    btnConvert.addActionListener(new ActionListener() {
+    btnSummarize.setEnabled(false);
+    btnSummarize.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         m_param.save();
         ActionPerformedSummarize act = new ActionPerformedSummarize(m_GpxFiles, m_OutputFolder,
-            txtOutputFilename.getText(), m_ProgressBar, lblProgressLabel, m_ProgressBar1);
+            txtOutputFilename.getText(), m_ProgressBarTracks, lblProgressLabel, m_ProgressBarSegments);
         act.execute();
       }
     });
-    panel.add(btnConvert, "cell 1 5");
+    panel.add(btnSummarize, "cell 1 5");
 
     JLabel lblNewLabel = new JLabel("    ");
     panel.add(lblNewLabel, "cell 0 6");
 
+    // Progress bars
     lblProgressLabel = new JLabel(" ");
     panel.add(lblProgressLabel, "cell 1 6,alignx right,aligny top");
 
-    m_ProgressBar.setVisible(false);
-    m_ProgressBar1.setVisible(false);
-    panel.add(m_ProgressBar, "south");
-    panel.add(m_ProgressBar1, "south");
+    m_ProgressBarTracks.setVisible(false);
+    m_ProgressBarSegments.setVisible(false);
+    panel.add(m_ProgressBarTracks, "south");
+    panel.add(m_ProgressBarSegments, "south");
 
     bottomHalf.setMinimumSize(new Dimension(500, 100));
     bottomHalf.setPreferredSize(new Dimension(500, 400));
