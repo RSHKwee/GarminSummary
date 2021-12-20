@@ -258,7 +258,20 @@ public class GUILayout extends JPanel implements ItemListener {
           if (m_GpxFiles.length == 1) {
             lblGPXFile.setText(m_GpxFiles[0].getName());
           } else {
-            lblGPXFile.setText(m_GpxFiles[0].getName() + " etc.");
+            String l_gpxfiles = m_GpxFiles[0].getName();
+            // Process GPX files one by one
+            boolean l_overflow = false;
+            for (int i = 1; i < m_GpxFiles.length; i++) {
+              if (l_gpxfiles.length() < 100) {
+                l_gpxfiles = l_gpxfiles + " " + m_GpxFiles[i].getName();
+              } else {
+                if (!l_overflow) {
+                  l_gpxfiles = l_gpxfiles + " etc.";
+                  l_overflow = true;
+                }
+              }
+            }
+            lblGPXFile.setText(l_gpxfiles);
           }
           lblGPXFile.setEnabled(true);
           m_InputFolder = new File(m_GpxFiles[0].getAbsoluteFile().toString());
