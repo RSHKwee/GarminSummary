@@ -44,6 +44,12 @@ import logger.MyLogger;
 import logger.TextAreaHandler;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * Define GUI for Garmin trip summary tool.
+ * 
+ * @author rshkw
+ *
+ */
 public class GUILayout extends JPanel implements ItemListener {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private static final long serialVersionUID = 1L;
@@ -57,9 +63,11 @@ public class GUILayout extends JPanel implements ItemListener {
   private boolean m_OutputFolderModified = false;
   private JTextArea output;
 
+  private JProgressBar m_ProgressBarFiles = new JProgressBar();
   private JProgressBar m_ProgressBarTracks = new JProgressBar();
   private JProgressBar m_ProgressBarSegments = new JProgressBar();
   private JLabel lblProgressLabel;
+  private JLabel lblFileProgressLabel;
 
   // Preferences
   private UserSetting m_param = Main.m_param;
@@ -258,15 +266,15 @@ public class GUILayout extends JPanel implements ItemListener {
           if (m_GpxFiles.length == 1) {
             lblGPXFile.setText(m_GpxFiles[0].getName());
           } else {
+            // Define label text GPX files
             String l_gpxfiles = m_GpxFiles[0].getName();
-            // Process GPX files one by one
             boolean l_overflow = false;
             for (int i = 1; i < m_GpxFiles.length; i++) {
-              if (l_gpxfiles.length() < 100) {
+              if (l_gpxfiles.length() < 90) {
                 l_gpxfiles = l_gpxfiles + " " + m_GpxFiles[i].getName();
               } else {
                 if (!l_overflow) {
-                  l_gpxfiles = l_gpxfiles + " etc.";
+                  l_gpxfiles = l_gpxfiles + " ... " + m_GpxFiles[m_GpxFiles.length - 1].getName();
                   l_overflow = true;
                 }
               }
@@ -288,8 +296,7 @@ public class GUILayout extends JPanel implements ItemListener {
     });
     panel.add(btnGPXFile, "cell 0 0");
 
-    // Define output folder
-    // Output folder & filename
+    // Define output folder & filename
     JButton btnOutputFolder = new JButton("Output folder");
     btnOutputFolder.setHorizontalAlignment(SwingConstants.RIGHT);
     btnOutputFolder.addActionListener(new ActionListener() {
@@ -322,33 +329,36 @@ public class GUILayout extends JPanel implements ItemListener {
     txtOutputFilename.setColumns(100);
     panel.add(txtOutputFilename, "cell 1 4");
 
-    // Convert button
+    // Summarize button
     btnSummarize.setEnabled(false);
     btnSummarize.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         m_param.save();
         ActionPerformedSummarize act = new ActionPerformedSummarize(m_GpxFiles, m_OutputFolder,
-            txtOutputFilename.getText(), m_ProgressBarTracks, lblProgressLabel, m_ProgressBarSegments);
+            txtOutputFilename.getText(), m_ProgressBarFiles, lblFileProgressLabel, m_ProgressBarTracks,
+            lblProgressLabel, m_ProgressBarSegments);
         act.execute();
       }
     });
     panel.add(btnSummarize, "cell 1 5");
 
-    JLabel lblNewLabel = new JLabel("    ");
-    panel.add(lblNewLabel, "cell 0 6");
-
     // Progress bars
-    lblProgressLabel = new JLabel(" ");
-    panel.add(lblProgressLabel, "cell 1 6,alignx right,aligny top");
+    lblFileProgressLabel = new JLabel(" ");
+    panel.add(lblFileProgressLabel, "cell 1 6,alignx right,aligny top");
 
+    lblProgressLabel = new JLabel(" ");
+    panel.add(lblProgressLabel, "cell 1 7,alignx right,aligny top");
+
+    m_ProgressBarFiles.setVisible(false);
     m_ProgressBarTracks.setVisible(false);
     m_ProgressBarSegments.setVisible(false);
     panel.add(m_ProgressBarTracks, "south");
     panel.add(m_ProgressBarSegments, "south");
+    panel.add(m_ProgressBarFiles, "south");
 
     bottomHalf.setMinimumSize(new Dimension(500, 100));
-    bottomHalf.setPreferredSize(new Dimension(500, 400));
+    bottomHalf.setPreferredSize(new Dimension(500, 300));
     splitPane.add(bottomHalf);
   }
 
