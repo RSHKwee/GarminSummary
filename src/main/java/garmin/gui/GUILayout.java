@@ -318,16 +318,16 @@ public class GUILayout extends JPanel implements ItemListener {
         }
       }
     });
-    panel.add(btnOutputFolder, "cell 0 3");
+    panel.add(btnOutputFolder, "cell 0 2");
 
     lblOutputFolder.setHorizontalAlignment(SwingConstants.LEFT);
-    panel.add(lblOutputFolder, "cell 1 3");
+    panel.add(lblOutputFolder, "cell 1 2");
 
     txtOutputFilename.setHorizontalAlignment(SwingConstants.LEFT);
     txtOutputFilename.setText("current.csv");
     txtOutputFilename.setEnabled(false);
     txtOutputFilename.setColumns(100);
-    panel.add(txtOutputFilename, "cell 1 4");
+    panel.add(txtOutputFilename, "cell 1 3");
 
     // Summarize button
     btnSummarize.setEnabled(false);
@@ -341,7 +341,7 @@ public class GUILayout extends JPanel implements ItemListener {
         act.execute();
       }
     });
-    panel.add(btnSummarize, "cell 1 5");
+    panel.add(btnSummarize, "cell 1 4");
 
     // Progress bars
     lblFileProgressLabel = new JLabel(" ");
