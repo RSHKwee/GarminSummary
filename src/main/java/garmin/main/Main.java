@@ -17,7 +17,7 @@ import library.JarInfo;
 import library.UserSetting;
 
 /**
- * Main program for ING csv to OFX convertor
+ * Main program for Garmin summary
  * 
  * @author kweers1
  */
@@ -60,6 +60,9 @@ public class Main {
         }
       }
 
+      /**
+       * Bunch of obliged overridden methods
+       */
       @Override
       public void windowOpened(WindowEvent e) {
       }
@@ -86,7 +89,7 @@ public class Main {
     });
     frame.setVisible(true);
 
-    // Image ING logo;
+    // Image Garmin logo;
     try {
       URL iconURL = Main.class.getClassLoader().getResource("garminLogo.png");
       // iconURL is null when not found
@@ -112,7 +115,7 @@ public class Main {
   }
 
   /**
-   * Initialiseer Look and Feel
+   * Initialize Look and Feel
    */
   private static void initLookAndFeel() {
     try {
@@ -141,29 +144,29 @@ public class Main {
     m_ConfirmOnExit = m_param.is_ConfirmOnExit();
 
     switch (argv.length) {
-      case 1: {
-        if (argv[0].toLowerCase().startsWith("t")) {
-          m_ConfirmOnExit = true;
-          m_param.set_ConfirmOnExit(m_ConfirmOnExit);
-        } else {
-          m_ConfirmOnExit = false;
-          m_param.set_ConfirmOnExit(m_ConfirmOnExit);
-        }
-        break;
+    case 1: {
+      if (argv[0].toLowerCase().startsWith("t")) {
+        m_ConfirmOnExit = true;
+        m_param.set_ConfirmOnExit(m_ConfirmOnExit);
+      } else {
+        m_ConfirmOnExit = false;
+        m_param.set_ConfirmOnExit(m_ConfirmOnExit);
       }
-      case 2: {
-        if (argv[0].toLowerCase().startsWith("t")) {
-          m_ConfirmOnExit = true;
-          m_param.set_ConfirmOnExit(true);
-        } else {
-          m_ConfirmOnExit = false;
-          m_param.set_ConfirmOnExit(false);
-        }
-        m_LookAndFeel = argv[1];
-        m_param.set_LookAndFeel(m_LookAndFeel);
+      break;
+    }
+    case 2: {
+      if (argv[0].toLowerCase().startsWith("t")) {
+        m_ConfirmOnExit = true;
+        m_param.set_ConfirmOnExit(true);
+      } else {
+        m_ConfirmOnExit = false;
+        m_param.set_ConfirmOnExit(false);
       }
-      default: {
-      }
+      m_LookAndFeel = argv[1];
+      m_param.set_LookAndFeel(m_LookAndFeel);
+    }
+    default: {
+    }
     }
 
     // Schedule a job for the event-dispatching thread:

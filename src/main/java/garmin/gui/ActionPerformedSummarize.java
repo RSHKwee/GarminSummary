@@ -15,10 +15,11 @@ import library.TxtBestand;
 
 public class ActionPerformedSummarize extends SwingWorker<Void, String> implements MyAppendable {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+
+  // Variables
   private JProgressBar m_pbarTracks;
   private JProgressBar m_pbarSegemnts;
 
-  // Variables
   private File m_OutputFolder;
   private File[] m_GpxFiles;
   private String m_OutFileName;
@@ -26,6 +27,16 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
   private JTextArea area = new JTextArea(30, 50);
   private JLabel m_ProgressLabel;
 
+  /**
+   * Constructor, initialize variables.
+   * 
+   * @param a_GpXFiles      List of GPX file to process
+   * @param a_OutputFolder  Directory for result
+   * @param a_OutFileName   Filename
+   * @param a_pbarTracks    Tracks progress bar
+   * @param a_Progresslabel Label
+   * @param a_pbarSegments  Segments progress bar
+   */
   public ActionPerformedSummarize(File[] a_GpXFiles, File a_OutputFolder, String a_OutFileName,
       JProgressBar a_pbarTracks, JLabel a_Progresslabel, JProgressBar a_pbarSegments) {
     LOGGER.log(Level.FINE, "Set call ActionPerformedSummarize");
@@ -38,6 +49,11 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
     m_ProgressLabel = a_Progresslabel;
   }
 
+  /**
+   * Append text to display area.
+   * 
+   * @param text String to display
+   */
   @Override
   public void append(String text) {
     area.append(text);
@@ -60,9 +76,12 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
     return null;
   }
 
+  /**
+   * Display ready message.
+   */
   @Override
   protected void done() {
     LOGGER.log(Level.INFO, "");
-    LOGGER.log(Level.INFO, "Klaar.");
+    LOGGER.log(Level.INFO, "Processing is done.");
   }
 }

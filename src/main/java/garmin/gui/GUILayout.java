@@ -322,7 +322,7 @@ public class GUILayout extends JPanel implements ItemListener {
     txtOutputFilename.setColumns(100);
     panel.add(txtOutputFilename, "cell 1 4");
 
-    // Convert button
+    // Summarize button
     btnSummarize.setEnabled(false);
     btnSummarize.addActionListener(new ActionListener() {
       @Override
@@ -352,6 +352,9 @@ public class GUILayout extends JPanel implements ItemListener {
     splitPane.add(bottomHalf);
   }
 
+  /**
+   * Must be overridden..
+   */
   @Override
   public void itemStateChanged(ItemEvent e) {
     LOGGER.log(Level.INFO, "itemStateChanged");
