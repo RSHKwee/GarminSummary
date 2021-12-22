@@ -1,5 +1,6 @@
 package library;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.Duration;
@@ -28,23 +29,26 @@ import io.jenetics.jpx.geom.Geoid;
  */
 public class Summary {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private String C_Separator = ";";
+
   private ArrayList<String> m_Regels;
-  private String m_GPXFile;
+  private File m_GPXFile;
 
   private JProgressBar m_pbarTracks;
   private JProgressBar m_pbarSegments;
+  private JLabel m_ProgressLabel;
+
   private int m_ProcessedTracks = 0;
   private int m_ProcessedSegments = 0;
 
-  private JLabel m_ProgressLabel;
   private int m_NumberTracks = 0;
   private int m_NumberSegments = 0;
 
   /**
-   * Constructor
    * 
-   * @param a_pbarTracks    Progresbar
-   * @param a_Progresslabel Label
+   * @param a_pbarTracks
+   * @param a_Progresslabel
+   * @param a_pbarSegments
    */
   public Summary(JProgressBar a_pbarTracks, JLabel a_Progresslabel, JProgressBar a_pbarSegments) {
     m_pbarTracks = a_pbarTracks;
@@ -53,28 +57,44 @@ public class Summary {
   }
 
   /**
-   * Header
    * 
-   * @return Header text.
+   * @param a_GPXFile
+   * @param a_pbarTracks
+   * @param a_Progresslabel
+   * @param a_pbarSegments
    */
-  public String Header() {
-    return String.join(";", "Date", "Time Origin", "Time Finish", "Longtitude(origin)", "Latitude(origin)",
-        "Longtitude(finish)", "Latitude(finish)", "Address origin", "Address finish", "Distance", "Duration");
+  public Summary(File a_GPXFile, JProgressBar a_pbarTracks, JLabel a_Progresslabel, JProgressBar a_pbarSegments) {
+    m_pbarTracks = a_pbarTracks;
+    m_ProgressLabel = a_Progresslabel;
+    m_pbarSegments = a_pbarSegments;
+
+    m_GPXFile = a_GPXFile;
   }
 
   /**
-   * Create summary for given GPX-file.
+   * Creeer een samenvatting van tripjes voor de opgegeven GPX-file.
    * 
-   * @param a_GPXFile Filename GPX
+   * @param a_GPXFile Filenaam GPX
    * @return Tekstregels.
    */
-  public ArrayList<String> TripsSummary(String a_GPXFile) {
+  public ArrayList<String> TripsSummary(File a_GPXFile) {
     m_GPXFile = a_GPXFile;
     return TripsSummary();
   }
 
   /**
-   * Create summary for given GPX-file.
+   * Header line for csv sumnmary file.
+   * 
+   * @return String with header information.
+   */
+  public String Header() {
+    return String.join(C_Separator, "Date", "Origin", "Finish", "Longitude(origin)", "Latitude(origin)",
+        "Longitude(finish)", "Latitude(finish)", "Address origin", "Address finish", "Distance (km)", "Duration",
+        "Avr speed (km/h)");
+  }
+
+  /**
+   * Create summary.
    * 
    * @return Text lines.
    */
@@ -88,16 +108,19 @@ public class Summary {
       List<Track> v_tracks = gpx.getTracks();
       m_NumberTracks = v_tracks.size();
       LOGGER.log(Level.INFO, "Process GPX-File: " + m_GPXFile + " with content of " + m_NumberTracks + " tracks.");
-      m_ProcessedTracks = 0;
+      m_ProcessedTracks = -1;
       m_pbarTracks.setMaximum(m_NumberTracks);
       m_pbarTracks.setVisible(true);
+      processProgressTracks();
 
       v_tracks.forEach(v_track -> {
         List<TrackSegment> v_segments = v_track.getSegments();
         m_NumberSegments = v_segments.size();
-        m_ProcessedSegments = 0;
+        m_ProcessedSegments = -1;
         m_pbarSegments.setMaximum(m_NumberSegments);
         m_pbarSegments.setVisible(true);
+        processProgressSegments();
+
         v_segments.forEach(v_segment -> {
           List<WayPoint> v_waypoints = v_segment.getPoints();
           int v_eind = v_waypoints.size() - 1;
@@ -116,6 +139,9 @@ public class Summary {
           String[] v_eindtijdparts = v_FinishTime.toString().split("T");
 
           Duration v_period = Duration.between(v_StartTime, v_FinishTime);
+          long vsec = v_period.getSeconds();
+
+          Double v_Speed = v_afstand / (vsec / 3600.0);
 
           // Date (DD/MM/YYYY) Start Time Origin Longitude Origin Latitude Destination
           // Longitude Destination Latitude Origin Destination Distance (km) Time (min)
@@ -127,12 +153,14 @@ public class Summary {
           fmt.setGroupingUsed(false);
           fmt.setMaximumIntegerDigits(9999);
           fmt.setMaximumFractionDigits(9999);
-          String v_regel = String.join(";", v_starttijdparts[0], v_starttijdparts[1], v_eindtijdparts[1],
+
+          String v_regel = String.join(C_Separator, v_starttijdparts[0], v_starttijdparts[1], v_eindtijdparts[1],
               fmt.format(v_waypoints.get(0).getLongitude().toDegrees()),
               fmt.format(v_waypoints.get(0).getLatitude().toDegrees()),
               fmt.format(v_waypoints.get(v_eind).getLongitude().toDegrees()),
               fmt.format(v_waypoints.get(v_eind).getLatitude().toDegrees()), v_AdrStart.getDisplayName(),
-              v_AdrFinish.getDisplayName(), fmt.format(v_afstand), TimeConversion.formatDuration(v_period));
+              v_AdrFinish.getDisplayName(), fmt.format(v_afstand), TimeConversion.formatDuration(v_period),
+              fmt.format(v_Speed));
           m_Regels.add(v_regel);
           processProgressSegments();
         });
@@ -146,7 +174,7 @@ public class Summary {
       e.printStackTrace();
     }
 
-    // Reset progress
+    // Reset propgress bars
     m_ProgressLabel.setText(" ");
     m_pbarTracks.setValue(0);
     m_pbarTracks.setVisible(false);
@@ -207,9 +235,9 @@ public class Summary {
       Integer v_iprog = v_prog.intValue();
       m_ProgresTextSegments = v_iprog.toString() + "% (" + m_ProcessedSegments + " of " + m_NumberSegments
           + " segments)";
-      m_ProgressLabel.setText(m_ProgresTextSegments + " | " + m_ProgresTextTracks);
+      m_ProgressLabel.setText(m_GPXFile.getName() + " " + m_ProgresTextSegments + " | " + m_ProgresTextTracks);
     } catch (Exception e) {
-      // Do nothing...
+      // Do nothing
     }
   }
 }
