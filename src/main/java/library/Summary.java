@@ -140,20 +140,12 @@ public class Summary {
 
           Duration v_period = Duration.between(v_StartTime, v_FinishTime);
           long vsec = v_period.getSeconds();
-
           Double v_Speed = v_afstand / (vsec / 3600.0);
-
-          // Date (DD/MM/YYYY) Start Time Origin Longitude Origin Latitude Destination
-          // Longitude Destination Latitude Origin Destination Distance (km) Time (min)
-          // Fuel Economy (l/100km) Fuel Cost (EUR) Carbon Footprint (kg) ecoChallenge
-          // Overall ecoChallenge Speed ecoChallenge Acceleration ecoChallenge Braking
-          // ecoChallenge Fuel Economy
 
           NumberFormat fmt = NumberFormat.getInstance();
           fmt.setGroupingUsed(false);
           fmt.setMaximumIntegerDigits(9999);
           fmt.setMaximumFractionDigits(9999);
-
           String v_regel = String.join(C_Separator, v_starttijdparts[0], v_starttijdparts[1], v_eindtijdparts[1],
               fmt.format(v_waypoints.get(0).getLongitude().toDegrees()),
               fmt.format(v_waypoints.get(0).getLatitude().toDegrees()),
@@ -161,6 +153,7 @@ public class Summary {
               fmt.format(v_waypoints.get(v_eind).getLatitude().toDegrees()), v_AdrStart.getDisplayName(),
               v_AdrFinish.getDisplayName(), fmt.format(v_afstand), TimeConversion.formatDuration(v_period),
               fmt.format(v_Speed));
+
           m_Regels.add(v_regel);
           processProgressSegments();
         });

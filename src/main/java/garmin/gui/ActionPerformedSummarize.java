@@ -103,6 +103,9 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
     LOGGER.log(Level.INFO, "Processing is done.");
   }
 
+  /**
+   * Display progress processed files.
+   */
   private void verwerkProgressFiles() {
     m_ProcessedFiles++;
     try {
