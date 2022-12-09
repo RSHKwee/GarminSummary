@@ -1,4 +1,4 @@
-package garmin.gui;
+package garminSummary.gui;
 
 import java.io.File;
 import java.util.ArrayList;

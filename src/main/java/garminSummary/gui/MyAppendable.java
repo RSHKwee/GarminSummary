@@ -1,4 +1,4 @@
-package garmin.gui;
+package garminSummary.gui;
 
 /**
  * Interface definition.
