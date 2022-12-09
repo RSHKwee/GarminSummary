@@ -117,7 +117,7 @@ public class Address {
 
 	String ReplSemiColon(String a_Str) {
 		String l_str = a_Str;
-		l_str = l_str.replace(";", "_");
+		l_str = l_str.replace(";", ",");
 		return l_str;
 	}
 
