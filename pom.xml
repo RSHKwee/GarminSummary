@@ -4,7 +4,7 @@
 
   <groupId>garminSummary</groupId>
   <artifactId>garminSummary</artifactId>
-  <version>0.6.0</version>
+  <version>0.6.1</version>
   <packaging>jar</packaging>
 
   <name>garminSummary</name>
@@ -143,7 +143,7 @@
               <configuration>
                 <file>target/garminSummary.exe</file>
                 <name>Garmin Summary</name>
-                <url>https://github.com/RSHKwee/garmin</url>
+                <url>https://github.com/RSHKwee/garminSummary</url>
                 <keystore>keystore.jks</keystore>
                 <alias>RSHK</alias>
                 <storepass>GW93ayi0j2CfeJx9VoSo</storepass>
@@ -159,7 +159,7 @@
     <repository>
       <id>github</id>
       <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/RSHKwee/garmin</url>
+      <url>https://maven.pkg.github.com/RSHKwee/garminSummary</url>
     </repository>
     <!-- Upload to Github ^-->
   </distributionManagement>
