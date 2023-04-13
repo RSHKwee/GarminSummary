@@ -115,12 +115,12 @@
                   <runtimeBits>64</runtimeBits>
                 </jre>
                 <versionInfo>
-                  <fileVersion>0.4.0.0</fileVersion>
+                  <fileVersion>${project.version}</fileVersion>
                   <txtFileVersion>${project.version}</txtFileVersion>
                   <fileDescription>${project.name}</fileDescription>
                   <copyright>C</copyright>
-                  <productVersion>0.3.0.0</productVersion>
-                  <txtProductVersion>0.4.0.0</txtProductVersion>
+                  <productVersion>${project.version}</productVersion>
+                  <txtProductVersion>${project.version}</txtProductVersion>
                   <productName>${project.name}</productName>
                   <internalName>garminSummary</internalName>
                   <originalFilename>garminSummary.exe</originalFilename>
@@ -152,7 +152,73 @@
           </executions>
         </plugin>
 		<!-- Sign executable ^ -->		
-      </plugins>
+      <!-- Windows installers v -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+		
+		  <execution>
+            <id>GarminSumHelp</id>
+            <phase>process-resources</phase>
+           <goals>
+              <goal>exec</goal>
+            </goals>          
+            <configuration>
+              <executable>HelpChm.cmd</executable>
+              <workingDirectory>help</workingDirectory>
+              <arguments>
+                <argument>garminSummary.hhp</argument>
+              </arguments>
+            </configuration>          
+          </execution>
+		  
+          <execution>
+            <id>innoSetup</id>
+            <phase>package</phase>
+           <goals>
+              <goal>exec</goal>
+            </goals>          
+            <configuration>
+              <executable>C:\Program Files (x86)\Inno Setup 6\ISCC.exe</executable>
+              <workingDirectory>...</workingDirectory>
+              <arguments>
+                <argument>garminsummary.iss</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>innoSetupNoJre</id>
+            <phase>package</phase>
+           <goals>
+              <goal>exec</goal>
+            </goals>          
+            <configuration>
+              <executable>C:\Program Files (x86)\Inno Setup 6\ISCC.exe</executable>
+              <workingDirectory>...</workingDirectory>
+              <arguments>
+                <argument>garminsummarynojre.iss</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>innoSetupJreDown</id>
+            <phase>package</phase>
+           <goals>
+              <goal>exec</goal>
+            </goals>          
+            <configuration>
+              <executable>C:\Program Files (x86)\Inno Setup 6\ISCC.exe</executable>
+              <workingDirectory>...</workingDirectory>
+              <arguments>
+                <argument>garminsummary_jreDownload.iss</argument>
+              </arguments>
+            </configuration>
+          </execution>         
+        </executions>
+      </plugin>
+    </plugins>
   </build>
   <distributionManagement>
     <!-- Upload to Github v-->
