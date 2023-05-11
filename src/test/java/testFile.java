@@ -2,7 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
+//import java.nio.charset.Charset;
 
 public class testFile {
   FileWriter fw = null;
@@ -11,7 +11,7 @@ public class testFile {
 
   public testFile(String filename) {
     try {
-      Charset charset = Charset.forName("ISO-8859-1");
+      // Charset charset = Charset.forName("ISO-8859-1");
       fw = new FileWriter(filename, true);
       bw = new BufferedWriter(fw);
       out = new PrintWriter(bw);

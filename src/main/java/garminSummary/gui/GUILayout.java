@@ -1,6 +1,7 @@
 package garminSummary.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,10 +55,14 @@ import net.miginfocom.swing.MigLayout;
 public class GUILayout extends JPanel implements ItemListener {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private static final long serialVersionUID = 1L;
+  static final String c_CopyrightYear = "2023";
 
   // Loglevels: OFF SEVERE WARNING INFO CONFIG FINE FINER FINEST ALL
   static final String[] c_levels = { "OFF", "SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST", "ALL" };
   static final String[] c_LogToDisk = { "Yes", "No" };
+
+  // Replace "path/to/help/file" with the actual path to your help file
+  static final String m_HelpFile = "garminSummary.chm";
 
   // Variables
   private String m_LogDir = "c:\\";
@@ -189,6 +194,43 @@ public class GUILayout extends JPanel implements ItemListener {
       }
     });
     mnSettings.add(mntmLogToDisk);
+    // ? item
+    JMenu mnHelpAbout = new JMenu("?");
+    mnHelpAbout.setHorizontalAlignment(SwingConstants.RIGHT);
+    menuBar.add(mnHelpAbout);
+
+    // Help
+    JMenuItem mntmHelp = new JMenuItem("Help");
+    mntmHelp.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        File helpFile = new File(m_HelpFile);
+
+        if (helpFile.exists()) {
+          try {
+            // Open the help file with the default viewer
+            Desktop.getDesktop().open(helpFile);
+          } catch (IOException e1) {
+            e1.printStackTrace();
+          }
+        } else {
+          LOGGER.log(Level.INFO, "Help file not found " + helpFile.getAbsolutePath());
+        }
+      }
+    });
+    mnHelpAbout.add(mntmHelp);
+
+    // About
+    JMenuItem mntmAbout = new JMenuItem("About");
+    mntmAbout.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JFrame frame = new JFrame("About");
+        String l_message = "GarminSummary version " + Main.m_creationtime + "\n\nCopyright © " + c_CopyrightYear;
+        JOptionPane.showMessageDialog(frame, l_message, "About", JOptionPane.PLAIN_MESSAGE);
+      }
+    });
+    mnHelpAbout.add(mntmAbout);
 
     // Do the layout.
     JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);

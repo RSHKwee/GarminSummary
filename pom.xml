@@ -52,7 +52,7 @@
         <filtering>true</filtering>
       </resource>
     </resources>
-    <pluginManagement>   
+ <!--   <pluginManagement>   -->
   	  <plugins>
   	    <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -85,7 +85,55 @@
             </descriptorRefs>
             <finalName>garminSummary</finalName>
           </configuration>
+        </plugin>
+	    <!-- Distribute readme.md v -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.1</version>
+          <executions>
+            <execution>
+              <id>readme-md</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.basedir}/target</outputDirectory>
+                <resources>                                        
+                  <resource>
+                    <directory>.</directory>
+                    <includes>
+                      <include>readme.md</include>
+                      <include>*.PNG</include>
+                    </includes>
+                    <filtering>true</filtering>
+                  </resource>
+                </resources>
+                <encoding>UTF-8</encoding>
+              </configuration>
+            </execution>
+            <execution>
+              <id>helpfile</id>
+              <phase>package</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.basedir}/target</outputDirectory>
+                <resources>                                        
+                  <resource>
+                    <directory>./help</directory>
+                    <includes>
+                      <include>garminSummary.chm</include>
+                    </includes>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>         
+          </executions>
         </plugin>		
+	    <!-- readme.md ^ -->
   	  	<!-- LAUNCH4J create executable v -->
         <plugin>
           <groupId>com.akathist.maven.plugins.launch4j</groupId>
@@ -219,7 +267,7 @@
           </executions>
         </plugin>
       </plugins>
-    </pluginManagement>
+ <!--   </pluginManagement> -->
   </build>
   <distributionManagement>
     <!-- Upload to Github v-->

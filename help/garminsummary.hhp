@@ -1,6 +1,6 @@
 [OPTIONS]
 Compatibility=1.1 or later
-Compiled file=ing2ofx.chm
+Compiled file=garminSummary.chm
 Contents file=Table of Contents.hhc
 Default topic=Introduction.htm
 Display compile progress=No
@@ -10,13 +10,10 @@ Title=ING to OFX Convertor
 
 
 [FILES]
-Background.htm
 Introduction.htm
 OpeningMenu.htm
 SettingsMenu.htm
-Synonyms.htm
-Filenames.htm
-OFX-Mapping.htm
+
 
 [INFOTYPES]
 
