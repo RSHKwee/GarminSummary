@@ -27,6 +27,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
 
   private int m_ProcessedFiles = 0;
   private int m_NumberFiles = -1;
+  private boolean m_Append = false;
 
   private JTextArea area = new JTextArea(30, 50);
   private JLabel m_ProgressLabel;
@@ -42,7 +43,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
    * @param a_Progresslabel Label
    * @param a_pbarSegments  Segments progress bar
    */
-  public ActionPerformedSummarize(File[] a_GpXFiles, File a_OutputFolder, String a_OutFileName,
+  public ActionPerformedSummarize(File[] a_GpXFiles, File a_OutputFolder, String a_OutFileName, boolean a_Append,
       JProgressBar a_ProgressBarFiles, JLabel a_FileProgresslabel, JProgressBar a_pbarTracks, JLabel a_Progresslabel,
       JProgressBar a_pbarSegments) {
     LOGGER.log(Level.FINE, "Set call ActionPerformedSummarize");
@@ -54,6 +55,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
     m_pbarSegemnts = a_pbarSegments;
     m_ProgressLabel = a_Progresslabel;
     m_FileProgressLabel = a_FileProgresslabel;
+    m_Append = a_Append;
   }
 
   /**
