@@ -338,6 +338,10 @@ public class GUILayout extends JPanel implements ItemListener {
       @Override
       public void actionPerformed(ActionEvent e) {
         // @TODO
+        boolean selected = chkbAddToFile.isSelected();
+        m_AcountSeparateOFX = selected;
+        m_param.set_AcountSeparateOFX(selected);
+        LOGGER.log(Level.CONFIG, "Accounts in separate OFX files :" + Boolean.toString(selected));
 
       }
     });
