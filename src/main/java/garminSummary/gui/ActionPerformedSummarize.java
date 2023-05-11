@@ -88,7 +88,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
       v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i]));
       verwerkProgressFiles();
     }
-    TxtBestand.DumpBestand(m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName, v_Regels);
+    TxtBestand.DumpBestand(m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName, v_Regels, m_Append);
 
     m_pbarFiles.setValue(0);
     m_pbarFiles.setVisible(false);

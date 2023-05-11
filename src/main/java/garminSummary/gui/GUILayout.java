@@ -77,6 +77,7 @@ public class GUILayout extends JPanel implements ItemListener {
   private File m_OutputFolder;
   private File[] m_GpxFiles;
   private boolean m_toDisk = false;
+  private boolean m_Append = false;
   private Level m_Level = Level.INFO;
 
   /**
@@ -337,12 +338,10 @@ public class GUILayout extends JPanel implements ItemListener {
     chkbAddToFile.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // @TODO
         boolean selected = chkbAddToFile.isSelected();
-        m_AcountSeparateOFX = selected;
-        m_param.set_AcountSeparateOFX(selected);
-        LOGGER.log(Level.CONFIG, "Accounts in separate OFX files :" + Boolean.toString(selected));
-
+        m_Append = selected;
+        m_param.set_Append(selected);
+        LOGGER.log(Level.CONFIG, "Append to file:" + Boolean.toString(selected));
       }
     });
 
@@ -355,7 +354,7 @@ public class GUILayout extends JPanel implements ItemListener {
       public void actionPerformed(ActionEvent e) {
         m_param.save();
         ActionPerformedSummarize act = new ActionPerformedSummarize(m_GpxFiles, m_OutputFolder,
-            txtOutputFilename.getText(), m_ProgressBarFiles, lblFileProgressLabel, m_ProgressBarTracks,
+            txtOutputFilename.getText(), m_Append, m_ProgressBarFiles, lblFileProgressLabel, m_ProgressBarTracks,
             lblProgressLabel, m_ProgressBarSegments);
         act.execute();
       }

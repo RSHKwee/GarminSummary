@@ -24,9 +24,32 @@ public class TxtBestand {
     }
   }
 
+  public static void DumpBestand(String a_OutputFile, ArrayList<String> a_Regels, boolean a_Append) {
+    try {
+      OutputTxt logbestand = new OutputTxt(a_OutputFile, a_Append);
+      logbestand.SetFooter("# " + a_OutputFile);
+      logbestand.Schrijf(a_Regels);
+      logbestand.Close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   public void DumpBestand(String a_Comment) {
     try {
       OutputTxt logbestand = new OutputTxt(m_Filenaam);
+      logbestand.SetFooter(a_Comment + " " + m_Filenaam);
+      logbestand.SetComment(a_Comment);
+      logbestand.Schrijf(m_Regels);
+      logbestand.Close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void DumpBestand(String a_Comment, boolean a_Append) {
+    try {
+      OutputTxt logbestand = new OutputTxt(m_Filenaam, a_Append);
       logbestand.SetFooter(a_Comment + " " + m_Filenaam);
       logbestand.SetComment(a_Comment);
       logbestand.Schrijf(m_Regels);
