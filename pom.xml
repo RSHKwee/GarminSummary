@@ -9,7 +9,24 @@
 
   <name>garminSummary</name>
   <url>http://maven.apache.org</url>
-
+<!--
+  <modules>     
+    <module>library</module>
+  </modules>
+-->
+  <repositories>
+    <repository>
+        <id>mvn-repo</id>
+        <url>https://github.com/RSHKwee/library/releases</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+  </repositories>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
@@ -17,6 +34,11 @@
   </properties>
 
   <dependencies>
+   	<dependency>
+	  <groupId>library</groupId>
+	  <artifactId>library</artifactId>
+	  <version>0.0.1.0</version>
+	</dependency> 
   <!--
     <dependency>
       <groupId>junit</groupId>

@@ -14,7 +14,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import garminSummary.gui.GUILayout;
 import library.JarInfo;
-import library.UserSetting;
 
 /**
  * Main program for Garmin summary

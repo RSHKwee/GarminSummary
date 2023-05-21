@@ -38,7 +38,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import garminSummary.main.Main;
-import library.UserSetting;
+import garminSummary.main.UserSetting;
 /**
  * Garmin GUI
  */

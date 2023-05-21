@@ -39,7 +39,7 @@ Source: ".\target\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "readme.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
 Source: ".\help\garminsummary.chm"; DestDir: "{app}"; Flags: ignoreversion
-DestDir: {app}\jre; Source: jre\*;   Flags: recursesubdirs ; Check: JreNotPresent
+DestDir: {app}\jre; Source: ..\jre\*;   Flags: recursesubdirs ; Check: JreNotPresent
 
 [Icons]
 Name: "{commonstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
