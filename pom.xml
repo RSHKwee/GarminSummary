@@ -4,7 +4,7 @@
 
   <groupId>garminSummary</groupId>
   <artifactId>garminSummary</artifactId>
-  <version>0.6.3.0</version>
+  <version>0.6.4.0</version>
   <packaging>jar</packaging>
 
   <name>garminSummary</name>
