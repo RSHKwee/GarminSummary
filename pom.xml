@@ -4,7 +4,7 @@
 
   <groupId>garminSummary</groupId>
   <artifactId>garminSummary</artifactId>
-  <version>0.6.3.0</version>
+  <version>0.6.4.0</version>
   <packaging>jar</packaging>
 
   <name>garminSummary</name>
@@ -14,6 +14,19 @@
     <module>library</module>
   </modules>
 -->
+  <repositories>
+    <repository>
+        <id>mvn-repo</id>
+        <url>https://github.com/RSHKwee/library/releases</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+  </repositories>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
@@ -21,6 +34,11 @@
   </properties>
 
   <dependencies>
+   	<dependency>
+	  <groupId>library</groupId>
+	  <artifactId>library</artifactId>
+	  <version>0.0.2.0</version>
+	</dependency> 
   <!--
     <dependency>
       <groupId>junit</groupId>
