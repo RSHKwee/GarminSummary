@@ -1,4 +1,4 @@
-package garminSummary.main;
+package kwee.garminSummary.main;
 
 import java.io.File;
 import java.util.logging.Level;

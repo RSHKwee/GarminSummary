@@ -1,4 +1,4 @@
-package garminSummary.gui;
+package kwee.garminSummary.gui;
 
 /**
  * Interface definition.

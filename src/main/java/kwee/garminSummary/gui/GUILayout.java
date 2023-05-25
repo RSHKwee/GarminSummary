@@ -1,4 +1,4 @@
-package garminSummary.gui;
+package kwee.garminSummary.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
@@ -37,13 +37,13 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import garminSummary.main.Main;
-import garminSummary.main.UserSetting;
+import kwee.garminSummary.main.Main;
+import kwee.garminSummary.main.UserSetting;
 /**
  * Garmin GUI
  */
-import logger.MyLogger;
-import logger.TextAreaHandler;
+import kwee.logger.MyLogger;
+import kwee.logger.TextAreaHandler;
 import net.miginfocom.swing.MigLayout;
 
 /**

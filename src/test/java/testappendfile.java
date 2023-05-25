@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
-import library.OutputTxt;
+import kwee.library.OutputTxt;
 
 public class testappendfile {
 

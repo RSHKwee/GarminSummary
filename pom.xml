@@ -174,7 +174,7 @@
                 <outfile>target/garminSummary.exe</outfile>
                 <downloadUrl>http://java.com/download</downloadUrl>
                 <classPath>
-                  <mainClass>garminSummary.main.Main</mainClass>
+                  <mainClass>kwee.garminSummary.main.Main</mainClass>
                 </classPath>
                 <icon>src/main/resources/GarminLogo.ico</icon>
                 <jre>

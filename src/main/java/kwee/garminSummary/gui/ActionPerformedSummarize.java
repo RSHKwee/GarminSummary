@@ -1,4 +1,4 @@
-package garminSummary.gui;
+package kwee.garminSummary.gui;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
-import library.Summary;
-import library.TxtBestand;
+import kwee.library.Summary;
+import kwee.library.TxtBestand;
 
 public class ActionPerformedSummarize extends SwingWorker<Void, String> implements MyAppendable {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
