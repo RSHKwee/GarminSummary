@@ -35,7 +35,7 @@
 
   <dependencies>
    	<dependency>
-	  <groupId>library</groupId>
+	  <groupId>kwee.library</groupId>
 	  <artifactId>library</artifactId>
 	  <version>0.0.2.0</version>
 	</dependency> 
@@ -65,7 +65,12 @@
 	  <groupId>com.miglayout</groupId>
 	  <artifactId>miglayout</artifactId>
 	  <version>3.7.4</version>
-	</dependency>	
+	</dependency>
+	<dependency>
+		<groupId>kwee.library</groupId>
+		<artifactId>library</artifactId>
+		<version>0.0.2.0</version>
+	</dependency>
   </dependencies>
   <build>
     <resources>

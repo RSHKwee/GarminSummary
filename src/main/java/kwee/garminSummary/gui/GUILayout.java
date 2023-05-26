@@ -156,7 +156,7 @@ public class GUILayout extends JPanel implements ItemListener {
           SwingUtilities.updateComponentTreeUI(this);
           m_param.set_LookAndFeel(lookAndFeelInfo.getClassName());
         } catch (Exception e) {
-          e.printStackTrace();
+          LOGGER.log(Level.WARNING, e.getMessage());
         }
       });
       menu.add(item);
