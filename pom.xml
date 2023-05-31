@@ -33,15 +33,18 @@
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
-  <dependencies>
-  <!--
+  <dependencies>  
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
-    </dependency>
-	-->
+    </dependency>	
+	<dependency>
+	  <groupId>kwee.library</groupId>
+	  <artifactId>library</artifactId>
+	  <version>0.0.2.0</version>
+	</dependency>
 	<dependency>
 	<groupId>org.json</groupId>
 	  <artifactId>json</artifactId>
@@ -60,11 +63,6 @@
 	  <groupId>com.miglayout</groupId>
 	  <artifactId>miglayout</artifactId>
 	  <version>3.7.4</version>
-	</dependency>
-	<dependency>
-		<groupId>kwee.library</groupId>
-		<artifactId>library</artifactId>
-		<version>0.0.2.0</version>
 	</dependency>
   </dependencies>
   <build>
