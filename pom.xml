@@ -34,11 +34,6 @@
   </properties>
 
   <dependencies>
-   	<dependency>
-	  <groupId>kwee.library</groupId>
-	  <artifactId>library</artifactId>
-	  <version>0.0.2.0</version>
-	</dependency> 
   <!--
     <dependency>
       <groupId>junit</groupId>
