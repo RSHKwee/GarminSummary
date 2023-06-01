@@ -150,7 +150,23 @@
                   </resource>
                 </resources>
               </configuration>
-            </execution>         
+            </execution> 
+            <execution>
+              <id>copy-test-resources</id>
+              <phase>generate-test-resources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.build.directory}/test-resources</outputDirectory>
+                <resources>
+                    <resource>
+                        <directory>src/test/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+              </configuration>
+            </execution>
           </executions>
         </plugin>		
 	    <!-- readme.md ^ -->

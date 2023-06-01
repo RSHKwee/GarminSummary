@@ -13,7 +13,7 @@ public class SummaryTest extends TestCase {
   JProgressBar m_pbarTracks = new JProgressBar();
   JLabel m_Progresslabel = new JLabel();
   JProgressBar m_pbarSegments = new JProgressBar();
-  File m_GPXFile = new File("resources/362.gpx");
+  File m_GPXFile;
   Summary m_Summary;
   ArrayList<String> m_Regels = new ArrayList<String>();
 
@@ -28,6 +28,7 @@ public class SummaryTest extends TestCase {
       // Get the resource directory path
       String resourceDirectory = resourceUrl.getPath();
       System.out.println("Directory :" + resourceDirectory);
+      m_GPXFile = new File(resourceDirectory);
     }
 
     m_Summary = new Summary(m_GPXFile, m_pbarTracks, m_Progresslabel, m_pbarSegments);
