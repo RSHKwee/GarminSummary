@@ -34,18 +34,22 @@ public class Summary {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private String C_Separator = ";";
 
-  private ArrayList<String> m_Regels;
+  private ArrayList<String> m_Regels = new ArrayList<String>();
   private File m_GPXFile;
 
-  private JProgressBar m_pbarTracks;
-  private JProgressBar m_pbarSegments;
-  private JLabel m_ProgressLabel;
+  private JProgressBar m_pbarTracks = new JProgressBar();
+  private JProgressBar m_pbarSegments = new JProgressBar();
+  private JLabel m_ProgressLabel = new JLabel();
 
   private int m_ProcessedTracks = 0;
   private int m_ProcessedSegments = 0;
 
   private int m_NumberTracks = 0;
   private int m_NumberSegments = 0;
+
+  public Summary() {
+    // Default constructor.
+  }
 
   /**
    * 
