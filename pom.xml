@@ -15,63 +15,14 @@
   </parent>
   
   <name>garminSummary</name>
-  <repositories>
-    <repository>
-        <id>mvn-repo</id>
-        <url>https://github.com/RSHKwee/library/releases</url>
-        <releases>
-            <enabled>true</enabled>
-        </releases>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-    </repository>
-  </repositories>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-
-    <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
- 	<junit.version>4.12</junit.version>
-	<assertj.version>3.11.1</assertj.version>
-  </properties>
-
   <dependencies>  
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-	<dependency>
 	  <groupId>kwee.library</groupId>
 	  <artifactId>library</artifactId>
-	  <version>0.0.2.0</version>
-	</dependency>
-	<dependency>
-	<groupId>org.json</groupId>
-	  <artifactId>json</artifactId>
-	  <version>20230227</version>
-	</dependency>
-	<dependency>
-      <groupId>io.jenetics</groupId>
-      <artifactId>jpx</artifactId>
-      <version>1.5.2</version>
-    </dependency>	<dependency>
-      <groupId>fr.dudie</groupId>
-      <artifactId>nominatim-api</artifactId>
-      <version>3.4</version>
-    </dependency>
-	<dependency>
-	  <groupId>com.miglayout</groupId>
-	  <artifactId>miglayout</artifactId>
-	  <version>3.7.4</version>
+	  <version>${kweeLibrary.version}</version>
 	</dependency>
   </dependencies>
+  
   <build>
     <resources>
       <resource>
@@ -80,25 +31,6 @@
       </resource>
     </resources>
    	  <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven-surefire-plugin.version}</version>
-          <configuration>
-            <testFailureIgnore>true</testFailureIgnore>
-          </configuration>
-        </plugin>
-        
-  	    <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${maven-compiler-plugin.version}</version>
-          <configuration>
-            <source>${maven.compiler.source}</source>
-            <target>${maven.compiler.target}</target>
-          </configuration>
-        </plugin>
-
         <plugin>
   	  	  <artifactId>maven-assembly-plugin</artifactId>
   	  	  <executions>
@@ -126,7 +58,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.1</version>
+          <version>${maven-resources-plugin.version}</version>
           <executions>
             <execution>
               <id>readme-md</id>
@@ -190,7 +122,7 @@
         <plugin>
           <groupId>com.akathist.maven.plugins.launch4j</groupId>
           <artifactId>launch4j-maven-plugin</artifactId>
-          <version>2.1.2</version>
+          <version>${launch4j-maven-plugin.version}</version>
           <executions>
             <execution>
               <id>l4j-clui</id>
@@ -235,7 +167,7 @@
         <plugin>
           <groupId>net.jsign</groupId>
           <artifactId>jsign-maven-plugin</artifactId>
-          <version>4.0</version>
+          <version>${jsign-maven-plugin.version}</version>
           <executions>
             <execution>
               <goals>
@@ -257,7 +189,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>${exec-maven-plugin.version}</version>
           <executions>
    	        <execution>
               <id>GarminSumHelp</id>
