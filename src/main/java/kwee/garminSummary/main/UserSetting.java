@@ -37,12 +37,16 @@ public class UserSetting {
   private boolean m_toDisk = false;
   private boolean m_Append = false;
 
-  private Preferences pref = Preferences.userRoot();
+  private Preferences userPrefs = Preferences.userRoot();
+  private Preferences pref;
 
   /**
    * Constructor Initialize settings
    */
   public UserSetting() {
+    // Navigate to the preference node that stores the user setting
+    pref = userPrefs.node("kwee.garminSummary");
+
     m_toDisk = pref.getBoolean(c_toDisk, false);
     m_ConfirmOnExit = pref.getBoolean(c_ConfirmOnExit, false);
     m_Append = pref.getBoolean(c_Append, false);
@@ -144,5 +148,21 @@ public class UserSetting {
     } catch (BackingStoreException e) {
       LOGGER.log(Level.INFO, e.getMessage());
     }
+  }
+
+  public String print() {
+    String l_line = "User setting \n";
+    l_line = l_line + "Name: " + pref.name() + "\n";
+    l_line = l_line + c_toDisk + ": " + m_toDisk + "\n";
+    l_line = l_line + c_ConfirmOnExit + ": " + m_ConfirmOnExit + "\n";
+    l_line = l_line + c_InputFolder + ": " + m_InputFolder + "\n";
+    l_line = l_line + c_Append + ": " + m_Append + "\n";
+
+    l_line = l_line + c_LookAndFeel + ": " + m_LookAndFeel + "\n";
+    l_line = l_line + c_OutputFolder + ": " + m_OutputFolder + "\n";
+    l_line = l_line + c_Level + ": " + m_Level + "\n";
+    l_line = l_line + c_LogDir + ": " + m_LogDir + "\n";
+
+    return l_line;
   }
 }
