@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>kwee.garminSummary</groupId>
-  <artifactId>garminSummary</artifactId>
+  <artifactId>garminsummary</artifactId>
   <version>0.6.4.0</version>
   <packaging>jar</packaging>
 
@@ -51,7 +51,7 @@
             <descriptorRefs>
               <descriptorRef>jar-with-dependencies</descriptorRef>
             </descriptorRefs>
-            <finalName>garminSummary</finalName>
+            <finalName>garminsummary</finalName>
           </configuration>
         </plugin>
 	    <!-- Distribute readme.md v -->
@@ -155,7 +155,7 @@
                   <productVersion>${project.version}</productVersion>
                   <txtProductVersion>${project.version}</txtProductVersion>
                   <productName>${project.name}</productName>
-                  <internalName>garminSummary</internalName>
+                  <internalName>garminsummary</internalName>
                   <originalFilename>garminSummary.exe</originalFilename>
                 </versionInfo>
               </configuration>
@@ -176,7 +176,7 @@
               <configuration>
                 <file>target/garminSummary.exe</file>
                 <name>Garmin Summary</name>
-                <url>https://github.com/RSHKwee/garminSummary</url>
+                <url>https://github.com/RSHKwee/garminsummary</url>
                 <keystore>keystore.jks</keystore>
                 <alias>RSHK</alias>
                 <storepass>GW93ayi0j2CfeJx9VoSo</storepass>
