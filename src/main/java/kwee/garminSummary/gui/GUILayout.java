@@ -95,6 +95,8 @@ public class GUILayout extends JPanel implements ItemListener {
     // GUI items
     JMenuBar menuBar = new JMenuBar();
     JMenuItem mntmLoglevel = new JMenuItem("Loglevel");
+    mntmLoglevel.setName("Loglevel");
+    menuBar.setName("menu");
 
     JTextField txtOutputFilename = new JTextField();
     JLabel lblOutputFolder = new JLabel("");
@@ -119,6 +121,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
     // Define Setting menu in menu bar:
     JMenu mnSettings = new JMenu("Settings");
+    mnSettings.setName("Settings");
     menuBar.add(mnSettings);
 
     // Option log level
@@ -141,6 +144,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
     // Add item Look and Feel
     JMenu menu = new JMenu("Look and Feel");
+    menu.setName("Look and Feel");
     menu.setHorizontalAlignment(SwingConstants.LEFT);
     mnSettings.add(menu);
 
@@ -150,6 +154,7 @@ public class GUILayout extends JPanel implements ItemListener {
     UIManager.LookAndFeelInfo[] lookAndFeels = UIManager.getInstalledLookAndFeels();
     for (UIManager.LookAndFeelInfo lookAndFeelInfo : lookAndFeels) {
       JMenuItem item = new JMenuItem(lookAndFeelInfo.getName());
+      item.setName(lookAndFeelInfo.getName());
       item.addActionListener(event -> {
         try {
           // Set the look and feel for the frame and update the UI
@@ -166,6 +171,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
     // Option Logging to Disk
     JCheckBoxMenuItem mntmLogToDisk = new JCheckBoxMenuItem("Create logfiles");
+    mntmLogToDisk.setName("Create logfiles");
     mntmLogToDisk.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -198,11 +204,13 @@ public class GUILayout extends JPanel implements ItemListener {
     mnSettings.add(mntmLogToDisk);
     // ? item
     JMenu mnHelpAbout = new JMenu("?");
+    mnHelpAbout.setName("?");
     mnHelpAbout.setHorizontalAlignment(SwingConstants.RIGHT);
     menuBar.add(mnHelpAbout);
 
     // Help
     JMenuItem mntmHelp = new JMenuItem("Help");
+    mntmHelp.setName("Help");
     mntmHelp.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -224,6 +232,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
     // About
     JMenuItem mntmAbout = new JMenuItem("About");
+    mntmAbout.setName("About");
     mntmAbout.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -296,6 +305,9 @@ public class GUILayout extends JPanel implements ItemListener {
 
     JButton btnSummarize = new JButton("Summarise");
     JButton btnGPXFile = new JButton("GPX File(s)");
+    btnSummarize.setName("Summarise");
+    btnGPXFile.setName("GPX File(s)");
+
     btnGPXFile.setHorizontalAlignment(SwingConstants.RIGHT);
     btnGPXFile.addActionListener(new ActionListener() {
       @Override
@@ -351,8 +363,10 @@ public class GUILayout extends JPanel implements ItemListener {
 
     // Define output folder & filename
     JCheckBox chkbAddToFile = new JCheckBox("Add to file");
+    chkbAddToFile.setName("Add to file");
 
     JButton btnOutputFolder = new JButton("Output folder");
+    btnOutputFolder.setName("Output folder");
     btnOutputFolder.setHorizontalAlignment(SwingConstants.RIGHT);
     btnOutputFolder.addActionListener(new ActionListener() {
       @Override

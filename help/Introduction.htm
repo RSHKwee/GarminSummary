@@ -12,11 +12,16 @@
 <h1 class="topicheading">Introduction</h1>
 <div class="topicbody">
 <br>
-<p>This (java) application generates a trip summarizes (<a href="https://github.com/RSHKwee/GarminSummary/releases">https://github.com/RSHKwee/GarminSummary/releases</a>) Garmin tracks.</p>
+<p>This (java) application generates a trip summary (<a href="https://github.com/RSHKwee/GarminSummary/releases">https://github.com/RSHKwee/GarminSummary/releases</a>) Garmin tracks.</p>
 <br>
-
-
-
+A Garmin navigation device store the trips in a file (with extension .gpx).
+<br>
+In the gpx file the crumb trail of every trip is stored.
+<br>
+From all trips the following attributes are extracted:
+<code>
+Date;Origin;Finish;Longitude(origin);Latitude(origin);Longitude(finish);Latitude(finish);Address origin;Address finish;Distance (km);Duration;Avr speed (km/h)
+</code>
 
 </div>
 </body>
