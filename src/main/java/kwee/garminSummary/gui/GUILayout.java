@@ -409,7 +409,6 @@ public class GUILayout extends JPanel implements ItemListener {
         LOGGER.log(Level.CONFIG, "Append to file:" + Boolean.toString(selected));
       }
     });
-
     panel.add(chkbAddToFile, "cell 1 3");
 
     // Summarize button

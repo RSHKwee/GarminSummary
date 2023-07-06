@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 import org.assertj.swing.fixture.FrameFixture;
+import org.assertj.swing.fixture.JFileChooserFixture;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import junit.framework.TestCase;
 import kwee.garminSummary.main.Main;
 import kwee.garminSummary.main.UserSetting;
+import kwee.library.FileUtils;
 import kwee.logger.TestLogger;
 import kwee.testLibrary.TestFunctions;
 
@@ -32,8 +34,13 @@ public class GUILayoutTest extends TestCase {
   // Expected results in following dirs:
   private String m_DirExp_Suffux = "_Exp";
 
+  // Generated results in following dirs:
+  private String m_CSV = "CSV";
+
   @Before
   public void setUp() throws Exception {
+    super.setUp();
+
     File ll_file = m_Functions.GetResourceFile(c_GPXFile);
     m_OutputDir = ll_file.getParent();
     m_param.save();
@@ -54,11 +61,31 @@ public class GUILayoutTest extends TestCase {
 
   @After
   public void tearDown() throws Exception {
+    super.tearDown();
 
+    m_param = m_Functions.CopyUserSetting(m_OrgParam);
+    m_param.save();
+    this.frame.cleanUp();
+    TestLogger.close();
   }
 
   @Test
   public void testGUILayout() {
+    frame.button("GPX File(s)").click();
+    FileUtils.checkCreateDirectory(m_OutputDir + "\\" + m_CSV);
+
+    JFileChooserFixture fileChooser = frame.fileChooser();
+    fileChooser.setCurrentDirectory(new File(m_OutputDir));
+    fileChooser.fileNameTextBox().setText(c_GPXFile); // Set the desired file name
+    fileChooser.approve();
+
+    frame.button("Output folder").click();
+    fileChooser = frame.fileChooser();
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "\\" + m_CSV + "\\"));
+    fileChooser.approve();
+
+    frame.button("Summarise").click();
+
     fail("Not yet implemented");
   }
 
