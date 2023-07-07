@@ -13,7 +13,7 @@ import kwee.library.TxtBestand;
 
 public class SummaryTest extends TestCase {
   private String c_GPXFile = "362.gpx";
-  private String c_ExpFile = "362.csv";
+  private String c_ExpFile = "sum_gen.csv";
   private String c_GenFile = "sum_gen.csv";
 
   private JProgressBar m_pbarTracks = new JProgressBar();
@@ -24,7 +24,9 @@ public class SummaryTest extends TestCase {
   private ArrayList<String> m_Regels = new ArrayList<String>();
   private String m_Directory = "";
 
+  private String m_DirGen = "Summary";
   private String m_ExpFile = "";
+  private String m_DirExp = "Summary_Exp";
 
   @Override
   protected void setUp() throws Exception {
@@ -38,7 +40,7 @@ public class SummaryTest extends TestCase {
       m_Directory = m_GPXFile.getParent();
     }
 
-    resourceUrl = getClass().getClassLoader().getResource(c_ExpFile);
+    resourceUrl = getClass().getClassLoader().getResource(m_DirExp + "/" + c_ExpFile);
     if (resourceUrl != null) {
       // Get the resource directory path
       String resourceDirectory = resourceUrl.getPath();
@@ -74,10 +76,11 @@ public class SummaryTest extends TestCase {
 
   public void testTripsSummary() {
     Summary l_Summary = new Summary(m_GPXFile, m_pbarTracks, m_Progresslabel, m_pbarSegments);
+    FileUtils.checkCreateDirectory(m_Directory + "\\" + m_DirGen);
 
     m_Regels = l_Summary.TripsSummary();
-    TxtBestand.DumpBestand(m_Directory + "\\" + c_GenFile, m_Regels, false);
-    boolean bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + c_GenFile, m_ExpFile);
+    TxtBestand.DumpBestand(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_Regels, false);
+    boolean bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile);
     assertTrue(bstat);
   }
 

@@ -167,9 +167,13 @@ public class Summary {
         processProgressTracks();
       });
     } catch (IOException e) {
-      LOGGER.log(Level.INFO, e.getMessage());
+      if (e.getMessage() != null) {
+        LOGGER.log(Level.INFO, e.getMessage());
+      }
     } catch (java.lang.Exception e) {
-      LOGGER.log(Level.INFO, e.getMessage());
+      if (e.getMessage() != null) {
+        LOGGER.log(Level.INFO, e.getMessage());
+      }
     }
 
     // Reset propgress bars
