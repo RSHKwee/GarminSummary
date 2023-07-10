@@ -58,6 +58,7 @@ public class GUILayout extends JPanel implements ItemListener {
   private static final long serialVersionUID = 1L;
   static final String c_CopyrightYear = "2023";
   private static String c_reponame = "GarminSummary";
+  public static final Object lock = new Object();
 
   // Loglevels: OFF SEVERE WARNING INFO CONFIG FINE FINER FINEST ALL
   static final String[] c_levels = { "OFF", "SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST", "ALL" };
@@ -99,6 +100,7 @@ public class GUILayout extends JPanel implements ItemListener {
     menuBar.setName("menu");
 
     JTextField txtOutputFilename = new JTextField();
+    txtOutputFilename.setName("Outputfilename");
     JLabel lblOutputFolder = new JLabel("");
 
     // Initialize parameters
@@ -238,14 +240,6 @@ public class GUILayout extends JPanel implements ItemListener {
       public void actionPerformed(ActionEvent e) {
         AboutWindow l_window = new AboutWindow(c_reponame, Main.m_creationtime, c_CopyrightYear);
         l_window.setVisible(true);
-
-        // @formatter:off
-        /*
-        JFrame frame = new JFrame("About");
-        String l_message = "GarminSummary version " + Main.m_creationtime + "\n\nCopyright © " + c_CopyrightYear;
-        JOptionPane.showMessageDialog(frame, l_message, "About", JOptionPane.PLAIN_MESSAGE);
-        */
-        // @formatter:on
       }
     });
     mnHelpAbout.add(mntmAbout);
@@ -421,6 +415,18 @@ public class GUILayout extends JPanel implements ItemListener {
             txtOutputFilename.getText(), m_Append, m_ProgressBarFiles, lblFileProgressLabel, m_ProgressBarTracks,
             lblProgressLabel, m_ProgressBarSegments);
         act.execute();
+        // act.waitLatch();
+        /*
+         * @formatter:on
+        CountDownLatch latch = act.getLatch();
+        try {
+          latch.await();
+        } catch (InterruptedException e1) {
+          // TODO Auto-generated catch block
+          e1.printStackTrace();
+        }
+        @formatter:off
+        */
       }
     });
     panel.add(btnSummarize, "cell 1 4");

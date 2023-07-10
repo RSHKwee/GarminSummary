@@ -15,7 +15,6 @@ import kwee.library.TxtBestand;
 
 public class ActionPerformedSummarize extends SwingWorker<Void, String> implements MyAppendable {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
-
   // Variables
   private JProgressBar m_pbarFiles;
   private JProgressBar m_pbarTracks;
@@ -32,6 +31,8 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
   private JTextArea area = new JTextArea(30, 50);
   private JLabel m_ProgressLabel;
   private JLabel m_FileProgressLabel;
+
+  Object lock = GUILayout.lock;
 
   /**
    * Constructor, initialize variables.
@@ -73,26 +74,28 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
    */
   @Override
   protected Void doInBackground() throws Exception {
-    Summary v_sum = new Summary(m_pbarTracks, m_ProgressLabel, m_pbarSegemnts);
-    ArrayList<String> v_Regels = new ArrayList<String>();
-    v_Regels.add(v_sum.Header());
-    m_ProcessedFiles = -1;
-    m_NumberFiles = m_GpxFiles.length;
-    m_pbarFiles.setMaximum(m_NumberFiles);
-    m_pbarFiles.setVisible(true);
-    m_FileProgressLabel.setVisible(true);
-    verwerkProgressFiles();
-
-    // Process GPX files one by one
-    for (int i = 0; i < m_GpxFiles.length; i++) {
-      v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i]));
+    synchronized (lock) {
+      Summary v_sum = new Summary(m_pbarTracks, m_ProgressLabel, m_pbarSegemnts);
+      ArrayList<String> v_Regels = new ArrayList<String>();
+      v_Regels.add(v_sum.Header());
+      m_ProcessedFiles = -1;
+      m_NumberFiles = m_GpxFiles.length;
+      m_pbarFiles.setMaximum(m_NumberFiles);
+      m_pbarFiles.setVisible(true);
+      m_FileProgressLabel.setVisible(true);
       verwerkProgressFiles();
-    }
-    TxtBestand.DumpBestand(m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName, v_Regels, m_Append);
 
-    m_pbarFiles.setValue(0);
-    m_pbarFiles.setVisible(false);
-    m_FileProgressLabel.setVisible(false);
+      // Process GPX files one by one
+      for (int i = 0; i < m_GpxFiles.length; i++) {
+        v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i]));
+        verwerkProgressFiles();
+      }
+      TxtBestand.DumpBestand(m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName, v_Regels, m_Append);
+
+      m_pbarFiles.setValue(0);
+      m_pbarFiles.setVisible(false);
+      m_FileProgressLabel.setVisible(false);
+    }
     return null;
   }
 

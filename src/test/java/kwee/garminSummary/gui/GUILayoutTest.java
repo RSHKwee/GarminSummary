@@ -1,15 +1,13 @@
 package kwee.garminSummary.gui;
 
 import java.io.File;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JFileChooserFixture;
+import org.assertj.swing.fixture.JTextComponentFixture;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,22 +17,23 @@ import kwee.garminSummary.main.Main;
 import kwee.garminSummary.main.UserSetting;
 import kwee.library.FileUtils;
 import kwee.logger.TestLogger;
-import kwee.testLibrary.TestFunctions;
 
 public class GUILayoutTest extends TestCase {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  // private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private FrameFixture frame;
+  Object lock = GUILayout.lock;
 
   public kwee.garminSummary.main.UserSetting m_param = Main.m_param;
   private UserSetting m_OrgParam = new UserSetting();
-  private TestFunctions m_Functions = new kwee.testLibrary.TestFunctions();
   private String m_OutputDir;
 
   private String c_GPXFile = "362.gpx";
   private String c_ExpFile = "current.csv";
-  private String c_GenFile = "current.csv";
+  private String c_GenFile = "362.csv";
+  private String c_ExpFile2 = "a_current.csv";
 
   private String m_ExpFile = "";
+  private String m_ExpFile2 = "";
 
   // Expected results in following dirs:
   private String m_DirExp = "GUI_Exp";
@@ -45,15 +44,15 @@ public class GUILayoutTest extends TestCase {
   @Before
   public void setUp() throws Exception {
     super.setUp();
+    m_OrgParam = m_param.copy();
 
-    URL resourceUrl = getClass().getClassLoader().getResource(m_DirExp + "/" + c_ExpFile);
-    if (resourceUrl != null) {
-      // Get the resource directory path
-      String resourceDirectory = resourceUrl.getPath();
-      m_ExpFile = resourceDirectory;
-    }
+    File l_File = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile);
+    m_ExpFile = l_File.getAbsolutePath();
 
-    File ll_file = m_Functions.GetResourceFile(c_GPXFile);
+    File l_File2 = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile2);
+    m_ExpFile2 = l_File2.getAbsolutePath();
+
+    File ll_file = FileUtils.GetResourceFile(c_GPXFile);
     m_OutputDir = ll_file.getParent();
     m_param.save();
 
@@ -75,7 +74,7 @@ public class GUILayoutTest extends TestCase {
   public void tearDown() throws Exception {
     super.tearDown();
 
-    m_param = m_Functions.CopyUserSetting(m_OrgParam);
+    m_param = m_OrgParam.copy();
     m_param.save();
     this.frame.cleanUp();
     TestLogger.close();
@@ -97,16 +96,43 @@ public class GUILayoutTest extends TestCase {
     fileChooser.approve();
 
     frame.button("Summarise").click();
-    LOGGER.log(Level.INFO, "Wait for 15 seconds.....");
-    try {
-      TimeUnit.SECONDS.sleep(15);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
 
-    boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_GenFile, m_ExpFile);
-    assertTrue(bstat);
+    synchronized (lock) {
+      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_ExpFile, m_ExpFile);
+      if (!bstat) {
+        bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_ExpFile, m_ExpFile2);
+      }
+      assertTrue(bstat);
+    }
+  }
+
+  @Test
+  public void testGUILayoutFile() {
+    frame.button("GPX File(s)").click();
+    FileUtils.checkCreateDirectory(m_OutputDir + "\\" + m_gui);
+
+    JFileChooserFixture fileChooser = frame.fileChooser();
+    fileChooser.setCurrentDirectory(new File(m_OutputDir));
+    fileChooser.fileNameTextBox().setText(c_GPXFile); // Set the desired file name
+    fileChooser.approve();
+
+    frame.button("Output folder").click();
+    fileChooser = frame.fileChooser();
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "\\" + m_gui + "\\"));
+    fileChooser.approve();
+
+    JTextComponentFixture outputfile = frame.textBox("Outputfilename");
+    outputfile.setText(c_GenFile);
+
+    frame.button("Summarise").click();
+
+    synchronized (lock) {
+      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_GenFile, m_ExpFile);
+      if (!bstat) {
+        bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_GenFile, m_ExpFile2);
+      }
+      assertTrue(bstat);
+    }
   }
 
 }

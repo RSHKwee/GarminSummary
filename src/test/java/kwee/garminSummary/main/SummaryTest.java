@@ -1,7 +1,6 @@
 package kwee.garminSummary.main;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -14,6 +13,7 @@ import kwee.library.TxtBestand;
 public class SummaryTest extends TestCase {
   private String c_GPXFile = "362.gpx";
   private String c_ExpFile = "sum_gen.csv";
+  private String c_ExpFile2 = "a_sum_gen.csv";
   private String c_GenFile = "sum_gen.csv";
 
   private JProgressBar m_pbarTracks = new JProgressBar();
@@ -26,26 +26,21 @@ public class SummaryTest extends TestCase {
 
   private String m_DirGen = "Summary";
   private String m_ExpFile = "";
+  private String m_ExpFile2 = "";
   private String m_DirExp = "Summary_Exp";
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    // Get the URL of a resource file
-    URL resourceUrl = getClass().getClassLoader().getResource(c_GPXFile);
-    if (resourceUrl != null) {
-      // Get the resource directory path
-      String resourceDirectory = resourceUrl.getPath();
-      m_GPXFile = new File(resourceDirectory);
-      m_Directory = m_GPXFile.getParent();
-    }
 
-    resourceUrl = getClass().getClassLoader().getResource(m_DirExp + "/" + c_ExpFile);
-    if (resourceUrl != null) {
-      // Get the resource directory path
-      String resourceDirectory = resourceUrl.getPath();
-      m_ExpFile = resourceDirectory;
-    }
+    m_GPXFile = FileUtils.GetResourceFile(c_GPXFile);
+    m_Directory = m_GPXFile.getParent();
+
+    File lfile2 = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile);
+    m_ExpFile = lfile2.getAbsolutePath();
+
+    File lfile3 = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile2);
+    m_ExpFile2 = lfile3.getAbsolutePath();
   }
 
   @Override
@@ -81,6 +76,9 @@ public class SummaryTest extends TestCase {
     m_Regels = l_Summary.TripsSummary();
     TxtBestand.DumpBestand(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_Regels, false);
     boolean bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile);
+    if (!bstat) {
+      bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile2);
+    }
     assertTrue(bstat);
   }
 

@@ -165,4 +165,24 @@ public class UserSetting {
 
     return l_line;
   }
+
+  /**
+   * Copy UserSetings
+   * 
+   * @return Copy of UserSetting
+   */
+  public UserSetting copy() {
+    UserSetting l_UserSetting = new UserSetting();
+    l_UserSetting.set_toDisk(m_toDisk);
+    l_UserSetting.set_ConfirmOnExit(m_ConfirmOnExit);
+    l_UserSetting.set_InputFolder(new File(m_InputFolder));
+    l_UserSetting.set_Append(m_Append);
+
+    l_UserSetting.set_LookAndFeel(m_LookAndFeel);
+    l_UserSetting.set_OutputFolder(new File(m_OutputFolder));
+    l_UserSetting.set_Level(Level.parse(m_Level));
+    l_UserSetting.set_LogDir(m_LogDir);
+
+    return l_UserSetting;
+  }
 }
