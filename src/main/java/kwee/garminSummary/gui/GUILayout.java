@@ -40,6 +40,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import kwee.garminSummary.main.Main;
 import kwee.garminSummary.main.UserSetting;
 import kwee.library.AboutWindow;
+import kwee.library.ShowPreferences;
 /**
  * Garmin GUI
  */
@@ -204,6 +205,19 @@ public class GUILayout extends JPanel implements ItemListener {
       }
     });
     mnSettings.add(mntmLogToDisk);
+
+    // Option Preferences
+    JMenuItem mntmPreferences = new JMenuItem("Preferences");
+    mntmPreferences.setName("Preferences");
+    mntmPreferences.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ShowPreferences showpref = new ShowPreferences(UserSetting.NodePrefName);
+        showpref.showAllPreferences();
+      }
+    });
+    mnSettings.add(mntmPreferences);
+
     // ? item
     JMenu mnHelpAbout = new JMenu("?");
     mnHelpAbout.setName("?");

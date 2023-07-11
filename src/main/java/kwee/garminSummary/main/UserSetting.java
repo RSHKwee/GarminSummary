@@ -14,6 +14,7 @@ import java.util.prefs.Preferences;
  */
 public class UserSetting {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  public static String NodePrefName = "kwee.garminSummary";
 
   private String c_Level = "Level";
   private String c_LevelValue = "INFO";
@@ -45,7 +46,7 @@ public class UserSetting {
    */
   public UserSetting() {
     // Navigate to the preference node that stores the user setting
-    pref = userPrefs.node("kwee.garminSummary");
+    pref = userPrefs.node(NodePrefName);
 
     m_toDisk = pref.getBoolean(c_toDisk, false);
     m_ConfirmOnExit = pref.getBoolean(c_ConfirmOnExit, false);

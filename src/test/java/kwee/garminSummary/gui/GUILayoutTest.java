@@ -23,7 +23,7 @@ public class GUILayoutTest extends TestCase {
   private FrameFixture frame;
   Object lock = GUILayout.lock;
 
-  public kwee.garminSummary.main.UserSetting m_param = Main.m_param;
+//  public UserSetting m_param = Main.m_param;
   private UserSetting m_OrgParam = new UserSetting();
   private String m_OutputDir;
 
@@ -41,10 +41,11 @@ public class GUILayoutTest extends TestCase {
   // Generated results in following dirs:
   private String m_gui = "GUI";
 
+  @Override
   @Before
   public void setUp() throws Exception {
     super.setUp();
-    m_OrgParam = m_param.copy();
+    m_OrgParam = Main.m_param.copy();
 
     File l_File = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile);
     m_ExpFile = l_File.getAbsolutePath();
@@ -54,7 +55,7 @@ public class GUILayoutTest extends TestCase {
 
     File ll_file = FileUtils.GetResourceFile(c_GPXFile);
     m_OutputDir = ll_file.getParent();
-    m_param.save();
+    Main.m_param.save();
 
     // Start GUI, with prepared Usersettings
     if (frame != null) {
@@ -70,13 +71,14 @@ public class GUILayoutTest extends TestCase {
     TestLogger.setup(Level.INFO);
   }
 
+  @Override
   @After
   public void tearDown() throws Exception {
     super.tearDown();
-
-    m_param = m_OrgParam.copy();
-    m_param.save();
     this.frame.cleanUp();
+
+    Main.m_param = m_OrgParam.copy();
+    Main.m_param.save();
     TestLogger.close();
   }
 
