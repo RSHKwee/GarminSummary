@@ -1,4 +1,4 @@
-package kwee.garminSummary.main;
+package kwee.garminSummary.gui;
 
 import java.io.File;
 import java.io.IOException;

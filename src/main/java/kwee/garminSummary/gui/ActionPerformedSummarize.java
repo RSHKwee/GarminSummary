@@ -10,7 +10,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
-import kwee.garminSummary.main.Summary;
 import kwee.library.TxtBestand;
 
 public class ActionPerformedSummarize extends SwingWorker<Void, String> implements MyAppendable {

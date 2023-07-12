@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import junit.framework.TestCase;
+import kwee.garminSummary.gui.Summary;
 import kwee.library.FileUtils;
 import kwee.library.TxtBestand;
 
