@@ -1,17 +1,20 @@
-package kwee.garminSummary.main;
+package kwee.garminSummary.gui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import junit.framework.TestCase;
-import kwee.garminSummary.gui.Summary;
 import kwee.library.FileUtils;
 import kwee.library.TxtBestand;
 
 public class SummaryTest extends TestCase {
+  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+
   private String c_GPXFile = "362.gpx";
   private String c_ExpFile = "sum_gen.csv";
   private String c_ExpFile2 = "a_sum_gen.csv";
@@ -78,6 +81,7 @@ public class SummaryTest extends TestCase {
     TxtBestand.DumpBestand(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_Regels, false);
     boolean bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile);
     if (!bstat) {
+      LOGGER.log(Level.INFO, "Backup result used: " + m_ExpFile2);
       bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile2);
     }
     assertTrue(bstat);

@@ -2,6 +2,7 @@ package kwee.garminSummary.gui;
 
 import java.io.File;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
@@ -19,7 +20,7 @@ import kwee.library.FileUtils;
 import kwee.logger.TestLogger;
 
 public class GUILayoutTest extends TestCase {
-  // private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private FrameFixture frame;
   Object lock = GUILayout.lock;
 
@@ -102,6 +103,7 @@ public class GUILayoutTest extends TestCase {
     synchronized (lock) {
       boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_ExpFile, m_ExpFile);
       if (!bstat) {
+        LOGGER.log(Level.INFO, "Backup result used: " + m_ExpFile2);
         bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_ExpFile, m_ExpFile2);
       }
       assertTrue(bstat);
@@ -131,10 +133,10 @@ public class GUILayoutTest extends TestCase {
     synchronized (lock) {
       boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_GenFile, m_ExpFile);
       if (!bstat) {
+        LOGGER.log(Level.INFO, "Backup result used: " + m_ExpFile2);
         bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_GenFile, m_ExpFile2);
       }
       assertTrue(bstat);
     }
   }
-
 }
