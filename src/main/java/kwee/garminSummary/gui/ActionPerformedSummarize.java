@@ -73,28 +73,28 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
    */
   @Override
   protected Void doInBackground() throws Exception {
-    synchronized (lock) {
-      Summary v_sum = new Summary(m_pbarTracks, m_ProgressLabel, m_pbarSegemnts);
-      ArrayList<String> v_Regels = new ArrayList<String>();
-      v_Regels.add(v_sum.Header());
-      m_ProcessedFiles = -1;
-      m_NumberFiles = m_GpxFiles.length;
-      m_pbarFiles.setMaximum(m_NumberFiles);
-      m_pbarFiles.setVisible(true);
-      m_FileProgressLabel.setVisible(true);
-      verwerkProgressFiles();
+    Summary v_sum = new Summary(m_pbarTracks, m_ProgressLabel, m_pbarSegemnts);
+    m_ProcessedFiles = -1;
+    m_NumberFiles = m_GpxFiles.length;
+    m_pbarFiles.setMaximum(m_NumberFiles);
+    m_pbarFiles.setVisible(true);
+    m_FileProgressLabel.setVisible(true);
+    verwerkProgressFiles();
 
-      // Process GPX files one by one
+    // Process GPX files one by one
+    synchronized (lock) {
+      ArrayList<String> v_Regels = new ArrayList<String>();
       for (int i = 0; i < m_GpxFiles.length; i++) {
         v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i]));
         verwerkProgressFiles();
       }
-      TxtBestand.DumpBestand(m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName, v_Regels, m_Append);
-
-      m_pbarFiles.setValue(0);
-      m_pbarFiles.setVisible(false);
-      m_FileProgressLabel.setVisible(false);
+      TxtBestand tbst = new TxtBestand(m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName, v_sum.Header());
+      tbst.DumpBestand(v_Regels, m_Append);
     }
+    m_pbarFiles.setValue(0);
+    m_pbarFiles.setVisible(false);
+    m_FileProgressLabel.setVisible(false);
+
     return null;
   }
 
@@ -105,6 +105,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
   protected void done() {
     LOGGER.log(Level.INFO, "");
     LOGGER.log(Level.INFO, "Processing is done.");
+    cancel(true);
   }
 
   /**

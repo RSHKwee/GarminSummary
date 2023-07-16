@@ -371,7 +371,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
     // Define output folder & filename
     JCheckBox chkbAddToFile = new JCheckBox("Add to file");
-    chkbAddToFile.setName("Add to file");
+    chkbAddToFile.setName("Addtofile");
 
     JButton btnOutputFolder = new JButton("Output folder");
     btnOutputFolder.setName("Output folder");
@@ -429,18 +429,6 @@ public class GUILayout extends JPanel implements ItemListener {
             txtOutputFilename.getText(), m_Append, m_ProgressBarFiles, lblFileProgressLabel, m_ProgressBarTracks,
             lblProgressLabel, m_ProgressBarSegments);
         act.execute();
-        // act.waitLatch();
-        /*
-         * @formatter:on
-        CountDownLatch latch = act.getLatch();
-        try {
-          latch.await();
-        } catch (InterruptedException e1) {
-          // TODO Auto-generated catch block
-          e1.printStackTrace();
-        }
-        @formatter:off
-        */
       }
     });
     panel.add(btnSummarize, "cell 1 4");

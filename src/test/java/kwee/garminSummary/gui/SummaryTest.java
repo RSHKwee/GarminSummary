@@ -77,8 +77,10 @@ public class SummaryTest extends TestCase {
     Summary l_Summary = new Summary(m_GPXFile, m_pbarTracks, m_Progresslabel, m_pbarSegments);
     FileUtils.checkCreateDirectory(m_Directory + "\\" + m_DirGen);
 
+    TxtBestand tbest = new TxtBestand(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, l_Summary.Header());
     m_Regels = l_Summary.TripsSummary();
-    TxtBestand.DumpBestand(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_Regels, false);
+    tbest.DumpBestand(m_Regels, false);
+
     boolean bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile);
     if (!bstat) {
       LOGGER.log(Level.INFO, "Backup result used: " + m_ExpFile2);
