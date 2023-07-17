@@ -91,7 +91,7 @@
                 <outputDirectory>${project.basedir}/target</outputDirectory>
                 <resources>                                        
                   <resource>
-                    <directory>./help</directory>
+                    <directory>${project.basedir}/help</directory>
                     <includes>
                       <include>garminSummary.chm</include>
                     </includes>
