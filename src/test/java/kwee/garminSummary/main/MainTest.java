@@ -1,6 +1,7 @@
 package kwee.garminSummary.main;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +40,7 @@ public class MainTest extends TestCase {
   // Generated results in following dirs:
   private String m_gui = "MAIN";
 
+  @Override
   @Before
   public void setUp() throws Exception {
     super.setUp();
@@ -53,6 +55,12 @@ public class MainTest extends TestCase {
     // Launch your application or obtain a reference to an existing Swing frame
     ApplicationLauncher.application(kwee.garminSummary.main.Main.class).start();
 
+    try {
+      TimeUnit.SECONDS.sleep(1);
+    } catch (InterruptedException e) {
+      LOGGER.log(Level.INFO, e.getMessage());
+    }
+
     // Create a FrameFixture instance
     JFrame l_frame = Main.createAndShowGUI();
     l_frame.setName("DEFAULT");
@@ -62,6 +70,7 @@ public class MainTest extends TestCase {
     frame = new FrameFixture(robot, l_frame);
   }
 
+  @Override
   @After
   public void tearDown() throws Exception {
     super.tearDown();
