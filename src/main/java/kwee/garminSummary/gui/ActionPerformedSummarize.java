@@ -31,7 +31,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
   private JLabel m_ProgressLabel;
   private JLabel m_FileProgressLabel;
 
-  Object lock = GUILayout.lock;
+  // Object lock = GUILayout.lock;
 
   /**
    * Constructor, initialize variables.
@@ -82,14 +82,15 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
     verwerkProgressFiles();
 
     // Process GPX files one by one
-    synchronized (lock) {
-      ArrayList<String> v_Regels = new ArrayList<String>();
+    ArrayList<String> v_Regels = new ArrayList<String>();
+    synchronized (GUILayout.lock) {
       for (int i = 0; i < m_GpxFiles.length; i++) {
         v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i]));
         verwerkProgressFiles();
       }
       TxtBestand tbst = new TxtBestand(m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName, v_sum.Header());
       tbst.DumpBestand(v_Regels, m_Append);
+      LOGGER.log(Level.INFO, "File created: " + m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName);
     }
     m_pbarFiles.setValue(0);
     m_pbarFiles.setVisible(false);

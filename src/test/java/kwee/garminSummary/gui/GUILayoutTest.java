@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 
 import org.assertj.swing.core.BasicRobot;
 import org.assertj.swing.core.Robot;
-import org.assertj.swing.core.Settings;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JCheckBoxFixture;
 import org.assertj.swing.fixture.JFileChooserFixture;
@@ -69,12 +68,6 @@ public class GUILayoutTest extends TestCase {
     // Get the robot associated with the FrameFixture
     Robot robot = BasicRobot.robotWithCurrentAwtHierarchy();
 
-    // Customize the robot's settings
-    Settings settings = robot.settings();
-    // settings.timeoutToFindSubMenu(200);
-    settings.idleTimeout(200);
-    // settings.
-
     JFrame l_frame = new JFrame();
     GUILayout guilayout = new GUILayout();
     l_frame.add(guilayout);
@@ -104,7 +97,7 @@ public class GUILayoutTest extends TestCase {
     String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
-    FileUtils.checkCreateDirectory(m_OutputDir + "\\" + m_gui);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui);
 
     JFileChooserFixture fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir));
@@ -113,7 +106,7 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("Output folder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "\\" + m_gui + "\\"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui + "\\"));
     fileChooser.approve();
 
     frame.button("Summarise").click();

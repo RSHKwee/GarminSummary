@@ -33,12 +33,13 @@ public class Main {
    * Create the GUI and show it. For thread safety, this method should be invoked
    * from the event-dispatching thread.
    */
-  private static void createAndShowGUI() {
+  public static JFrame createAndShowGUI() {
     // Set the look and feel.
     initLookAndFeel();
 
     // Create and set up the window.
     JFrame frame = new JFrame(m_MenuTitel + " (" + m_creationtime + ")");
+    frame.setName("mainMenu");
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
     frame.addWindowListener(new WindowListener() {
@@ -102,6 +103,7 @@ public class Main {
     GUILayout scenGUI = new GUILayout();
     scenGUI.setOpaque(true);
     frame.setContentPane(scenGUI);
+    frame.setName("GUILayout");
 
     // Display the window.
     frame.validate();
@@ -111,6 +113,7 @@ public class Main {
     frame.setVisible(true);
 
     LOGGER.log(Level.INFO, " Garmin track summary version : " + m_creationtime);
+    return frame;
   }
 
   /**
@@ -171,9 +174,10 @@ public class Main {
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
     javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      @SuppressWarnings("unused")
       @Override
       public void run() {
-        createAndShowGUI();
+        JFrame frame = createAndShowGUI();
       }
     });
   }
