@@ -7,6 +7,9 @@ import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
+import org.assertj.swing.core.BasicRobot;
+import org.assertj.swing.core.Robot;
+import org.assertj.swing.core.Settings;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JCheckBoxFixture;
 import org.assertj.swing.fixture.JFileChooserFixture;
@@ -26,7 +29,6 @@ public class GUILayoutTest extends TestCase {
   private FrameFixture frame;
   Object lock = GUILayout.lock;
 
-//  public UserSetting m_param = Main.m_param;
   private UserSetting m_OrgParam = new UserSetting();
   private String m_OutputDir;
 
@@ -60,17 +62,23 @@ public class GUILayoutTest extends TestCase {
 
     File ll_file = FileUtils.GetResourceFile(c_GPXFile);
     m_OutputDir = ll_file.getParent();
+    Main.m_param.set_LogDir(m_OutputDir + "//");
+    Main.m_param.set_toDisk(false);
     Main.m_param.save();
 
-    // Start GUI, with prepared Usersettings
-    if (frame != null) {
-      frame.cleanUp();
-    }
+    // Get the robot associated with the FrameFixture
+    Robot robot = BasicRobot.robotWithCurrentAwtHierarchy();
+
+    // Customize the robot's settings
+    Settings settings = robot.settings();
+    // settings.timeoutToFindSubMenu(200);
+    settings.idleTimeout(200);
+    // settings.
 
     JFrame l_frame = new JFrame();
     GUILayout guilayout = new GUILayout();
     l_frame.add(guilayout);
-    frame = new FrameFixture(l_frame);
+    frame = new FrameFixture(robot, l_frame);
     frame.show();
 
     TestLogger.setup(Level.INFO);
