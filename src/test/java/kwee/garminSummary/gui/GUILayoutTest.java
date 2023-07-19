@@ -13,6 +13,7 @@ import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JCheckBoxFixture;
 import org.assertj.swing.fixture.JFileChooserFixture;
 import org.assertj.swing.fixture.JTextComponentFixture;
+import org.assertj.swing.launcher.ApplicationLauncher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,16 +66,21 @@ public class GUILayoutTest extends TestCase {
     Main.m_param.set_toDisk(false);
     Main.m_param.save();
 
+    // Launch your application or obtain a reference to an existing Swing frame
+    ApplicationLauncher.application(kwee.garminSummary.main.Main.class).start();
+    try {
+      TimeUnit.SECONDS.sleep(1);
+    } catch (InterruptedException e) {
+      LOGGER.log(Level.INFO, e.getMessage());
+    }
+
+    // Create a FrameFixture instance
+    JFrame l_frame = Main.createAndShowGUI();
+    l_frame.setName("DEFAULT");
+
     // Get the robot associated with the FrameFixture
     Robot robot = BasicRobot.robotWithCurrentAwtHierarchy();
-
-    JFrame l_frame = new JFrame();
-    GUILayout guilayout = new GUILayout();
-    l_frame.add(guilayout);
     frame = new FrameFixture(robot, l_frame);
-    frame.show();
-
-    TestLogger.setup(Level.INFO);
   }
 
   @Override
