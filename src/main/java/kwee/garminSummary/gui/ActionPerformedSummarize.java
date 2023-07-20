@@ -88,8 +88,11 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
         v_Regels.addAll(v_sum.TripsSummary(m_GpxFiles[i]));
         verwerkProgressFiles();
       }
-      TxtBestand tbst = new TxtBestand(m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName, v_sum.Header());
+      String l_file = m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName;
+      TxtBestand tbst = new TxtBestand(l_file, v_sum.Header());
       tbst.DumpBestand(v_Regels, m_Append);
+
+      SortTrips.sortTrips(l_file);
       LOGGER.log(Level.INFO, "File created: " + m_OutputFolder.getAbsolutePath() + "\\" + m_OutFileName);
     }
     m_pbarFiles.setValue(0);
