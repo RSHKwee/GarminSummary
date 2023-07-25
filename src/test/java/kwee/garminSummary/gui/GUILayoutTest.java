@@ -249,7 +249,6 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile);
       boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui3 + "\\" + c_GenFile, l_ExpFile);
       if (!bstat) {
         LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
@@ -308,7 +307,6 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile);
       boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui4 + "\\" + c_GenFile, l_ExpFile);
       if (!bstat) {
         LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
