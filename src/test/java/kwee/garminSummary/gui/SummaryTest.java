@@ -75,16 +75,16 @@ public class SummaryTest extends TestCase {
 
   public void testTripsSummary() {
     Summary l_Summary = new Summary(m_GPXFile, m_pbarTracks, m_Progresslabel, m_pbarSegments);
-    FileUtils.checkCreateDirectory(m_Directory + "\\" + m_DirGen);
+    FileUtils.checkCreateDirectory(m_Directory + "/" + m_DirGen);
 
-    TxtBestand tbest = new TxtBestand(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, l_Summary.Header());
+    TxtBestand tbest = new TxtBestand(m_Directory + "/" + m_DirGen + "/" + c_GenFile, l_Summary.Header());
     m_Regels = l_Summary.TripsSummary();
     tbest.DumpBestand(m_Regels, false);
 
-    boolean bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile);
+    boolean bstat = FileUtils.FileContentsEquals(m_Directory + "/" + m_DirGen + "/" + c_GenFile, m_ExpFile);
     if (!bstat) {
       LOGGER.log(Level.INFO, "Backup result used: " + m_ExpFile2);
-      bstat = FileUtils.FileContentsEquals(m_Directory + "\\" + m_DirGen + "\\" + c_GenFile, m_ExpFile2);
+      bstat = FileUtils.FileContentsEquals(m_Directory + "/" + m_DirGen + "/" + c_GenFile, m_ExpFile2);
     }
     assertTrue(bstat);
   }

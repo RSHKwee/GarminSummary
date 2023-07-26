@@ -69,7 +69,7 @@ public class GUILayout extends JPanel implements ItemListener {
   static final String m_HelpFile = "garminSummary.chm";
 
   // Variables
-  private String m_LogDir = "c:\\";
+  private String m_LogDir = "c:/";
   private boolean m_OutputFolderModified = false;
   private JTextArea output;
 
@@ -187,7 +187,7 @@ public class GUILayout extends JPanel implements ItemListener {
           if (option == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             LOGGER.log(Level.INFO, "Log folder: " + file.getAbsolutePath());
-            m_LogDir = file.getAbsolutePath() + "\\";
+            m_LogDir = file.getAbsolutePath() + "/";
             m_param.set_LogDir(m_LogDir);
             m_param.set_toDisk(true);
             m_toDisk = selected;

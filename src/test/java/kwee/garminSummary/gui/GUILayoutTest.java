@@ -60,11 +60,12 @@ public class GUILayoutTest extends TestCase {
 
     File ll_file = FileUtils.GetResourceFile(c_GPXFile);
     m_OutputDir = ll_file.getParent();
-    Main.m_param.set_LogDir(m_OutputDir + "//");
+    Main.m_param.set_LogDir(m_OutputDir + "/");
     Main.m_param.set_toDisk(false);
     Main.m_param.save();
 
-    // Launch your application or obtain a reference to an existing Swing frame
+    // Launch your application or obtain a reference to an existing Swing frame and
+    // wait asecond.
     ApplicationLauncher.application(kwee.garminSummary.main.Main.class).start();
     try {
       TimeUnit.SECONDS.sleep(1);
@@ -110,16 +111,16 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("Output folder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui + "\\"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui + "/"));
     fileChooser.approve();
 
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_ExpFile, l_ExpFile);
+      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui + "/" + c_ExpFile, l_ExpFile);
       if (!bstat) {
         LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui + "\\" + c_ExpFile, l_ExpFile2);
+        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui + "/" + c_ExpFile, l_ExpFile2);
       }
       assertTrue(bstat);
     }
@@ -134,7 +135,7 @@ public class GUILayoutTest extends TestCase {
     String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
-    FileUtils.checkCreateDirectory(m_OutputDir + "\\" + m_gui1);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui1);
 
     JFileChooserFixture fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir));
@@ -143,7 +144,7 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("Output folder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "\\" + m_gui1 + "\\"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui1 + "/"));
     fileChooser.approve();
 
     JTextComponentFixture outputfile = frame.textBox("Outputfilename");
@@ -152,10 +153,10 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui1 + "\\" + c_GenFile, l_ExpFile);
+      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui1 + "/" + c_GenFile, l_ExpFile);
       if (!bstat) {
         LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui1 + "\\" + c_GenFile, l_ExpFile2);
+        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui1 + "/" + c_GenFile, l_ExpFile2);
       }
       assertTrue(bstat);
     }
@@ -170,19 +171,20 @@ public class GUILayoutTest extends TestCase {
     String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
-    FileUtils.checkCreateDirectory(m_OutputDir + "\\" + m_gui2);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui2);
 
     JFileChooserFixture fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir));
+
     // Select multiple files
-    File file1 = new File(m_OutputDir + "\\" + c_GPXFile2);
-    File file2 = new File(m_OutputDir + "\\" + c_GPXFile);
+    File file1 = new File(m_OutputDir + "/" + c_GPXFile2);
+    File file2 = new File(m_OutputDir + "/" + c_GPXFile);
     fileChooser.selectFiles(file1, file2);
     fileChooser.approve();
 
     frame.button("Output folder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "\\" + m_gui2 + "\\"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui2 + "/"));
     fileChooser.approve();
 
     JTextComponentFixture outputfile = frame.textBox("Outputfilename");
@@ -191,10 +193,10 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui2 + "\\" + c_GenFile, l_ExpFile);
+      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui2 + "/" + c_GenFile, l_ExpFile);
       if (!bstat) {
         LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui2 + "\\" + c_GenFile, l_ExpFile2);
+        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui2 + "/" + c_GenFile, l_ExpFile2);
       }
       assertTrue(bstat);
     }
@@ -207,7 +209,7 @@ public class GUILayoutTest extends TestCase {
 
     File l_File2 = FileUtils.GetResourceFile(m_gui3 + m_DirExpSuffix + "/" + c_ExpFile4);
     String l_ExpFile2 = l_File2.getAbsolutePath();
-    FileUtils.checkCreateDirectory(m_OutputDir + "\\" + m_gui3);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui3);
 
     frame.button("GPX File(s)").click();
     JFileChooserFixture fileChooser = frame.fileChooser();
@@ -217,7 +219,7 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("Output folder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "\\" + m_gui3 + "\\"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui3 + "/"));
     fileChooser.approve();
 
     JTextComponentFixture outputfile = frame.textBox("Outputfilename");
@@ -249,10 +251,10 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui3 + "\\" + c_GenFile, l_ExpFile);
+      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui3 + "/" + c_GenFile, l_ExpFile);
       if (!bstat) {
         LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui3 + "\\" + c_GenFile, l_ExpFile2);
+        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui3 + "/" + c_GenFile, l_ExpFile2);
       }
       assertTrue(bstat);
     }
@@ -265,7 +267,7 @@ public class GUILayoutTest extends TestCase {
 
     File l_File2 = FileUtils.GetResourceFile(m_gui4 + m_DirExpSuffix + "/" + c_ExpFile4);
     String l_ExpFile2 = l_File2.getAbsolutePath();
-    FileUtils.checkCreateDirectory(m_OutputDir + "\\" + m_gui4);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui4);
 
     frame.button("GPX File(s)").click();
     JFileChooserFixture fileChooser = frame.fileChooser();
@@ -275,7 +277,7 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("Output folder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "\\" + m_gui4 + "\\"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui4 + "/"));
     fileChooser.approve();
 
     JTextComponentFixture outputfile = frame.textBox("Outputfilename");
@@ -307,10 +309,10 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui4 + "\\" + c_GenFile, l_ExpFile);
+      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui4 + "/" + c_GenFile, l_ExpFile);
       if (!bstat) {
         LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "\\" + m_gui4 + "\\" + c_GenFile, l_ExpFile2);
+        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui4 + "/" + c_GenFile, l_ExpFile2);
       }
       assertTrue(bstat);
     }
