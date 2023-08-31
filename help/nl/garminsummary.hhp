@@ -1,0 +1,19 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=garminSummary.chm
+Contents file=Table of Contents.hhc
+Default topic=Introduction.htm
+Display compile progress=No
+Index file=Index.hhk
+Language=0x413 Nederlands (Nederland)
+Title=ING to OFX Convertor
+
+
+[FILES]
+Introduction.htm
+OpeningMenu.htm
+SettingsMenu.htm
+
+
+[INFOTYPES]
+

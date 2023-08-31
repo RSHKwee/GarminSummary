@@ -27,12 +27,14 @@ public class UserSetting {
   private String c_LogDir = "LogDir";
   private String c_InputFolder = "InputFolder";
   private String c_Append = "Append";
+  private String c_Language = "Language";
 
   private String m_Level = c_LevelValue;
   private String m_LookAndFeel;
   private String m_OutputFolder = "";
   private String m_LogDir = "";
   private String m_InputFolder = "";
+  private String m_Language = "nl";
 
   private boolean m_ConfirmOnExit = false;
   private boolean m_toDisk = false;
@@ -51,6 +53,7 @@ public class UserSetting {
     m_toDisk = pref.getBoolean(c_toDisk, false);
     m_ConfirmOnExit = pref.getBoolean(c_ConfirmOnExit, false);
     m_Append = pref.getBoolean(c_Append, false);
+    m_Language = pref.get(c_Language, "nl");
 
     m_LookAndFeel = pref.get(c_LookAndFeel, c_LookAndFeelVal);
     m_OutputFolder = pref.get(c_OutputFolder, "");
@@ -79,6 +82,10 @@ public class UserSetting {
     return m_InputFolder;
   }
 
+  public String get_Language() {
+    return m_Language;
+  }
+
   public Level get_Level() {
     return Level.parse(m_Level);
   }
@@ -102,6 +109,10 @@ public class UserSetting {
   public void set_OutputFolder(File a_OutputFolder) {
     pref.put(c_OutputFolder, a_OutputFolder.getAbsolutePath());
     m_OutputFolder = a_OutputFolder.getAbsolutePath();
+  }
+
+  public void set_Language(String m_Language) {
+    this.m_Language = m_Language;
   }
 
   public void set_InputFolder(File a_InputFolder) {
@@ -144,6 +155,7 @@ public class UserSetting {
       pref.put(c_InputFolder, m_InputFolder);
       pref.put(c_Level, m_Level);
       pref.put(c_LogDir, m_LogDir);
+      pref.put(c_Language, m_Language);
 
       pref.flush();
     } catch (BackingStoreException e) {
@@ -158,6 +170,7 @@ public class UserSetting {
     l_line = l_line + c_ConfirmOnExit + ": " + m_ConfirmOnExit + "\n";
     l_line = l_line + c_InputFolder + ": " + m_InputFolder + "\n";
     l_line = l_line + c_Append + ": " + m_Append + "\n";
+    l_line = l_line + c_Language + ": " + m_Language + "\n";
 
     l_line = l_line + c_LookAndFeel + ": " + m_LookAndFeel + "\n";
     l_line = l_line + c_OutputFolder + ": " + m_OutputFolder + "\n";
@@ -183,6 +196,7 @@ public class UserSetting {
     l_UserSetting.set_OutputFolder(new File(m_OutputFolder));
     l_UserSetting.set_Level(Level.parse(m_Level));
     l_UserSetting.set_LogDir(m_LogDir);
+    l_UserSetting.set_Language(m_Language);
 
     return l_UserSetting;
   }

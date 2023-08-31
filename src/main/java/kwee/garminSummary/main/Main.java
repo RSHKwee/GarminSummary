@@ -13,6 +13,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import kwee.garminSummary.gui.GUILayout;
+import kwee.library.ApplicationMessages;
 import kwee.library.JarInfo;
 
 /**
@@ -23,7 +24,6 @@ import kwee.library.JarInfo;
 
 public class Main {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
-  static String m_MenuTitel = "Garmin GPX Summary";
   static public String m_creationtime;
   static String m_LookAndFeel = "Nimbus";
   public static UserSetting m_param = new UserSetting();
@@ -34,11 +34,14 @@ public class Main {
    * from the event-dispatching thread.
    */
   public static JFrame createAndShowGUI() {
+    ApplicationMessages bundle = ApplicationMessages.getInstance();
+    bundle.changeLanguage(m_param.get_Language());
+
     // Set the look and feel.
     initLookAndFeel();
 
     // Create and set up the window.
-    JFrame frame = new JFrame(m_MenuTitel + " (" + m_creationtime + ")");
+    JFrame frame = new JFrame(bundle.getMessage("AppTitel", m_creationtime));
     frame.setName("mainMenu");
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -47,8 +50,8 @@ public class Main {
       public void windowClosing(WindowEvent e) {
         JFrame frame = (JFrame) e.getSource();
         if (m_ConfirmOnExit) {
-          int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit the application?",
-              "Exit Application", JOptionPane.YES_NO_OPTION);
+          int result = JOptionPane.showConfirmDialog(frame, bundle.getMessage("ConfirmQuestion"), "Exit Application",
+              JOptionPane.YES_NO_OPTION);
 
           if (result == JOptionPane.YES_OPTION) {
             m_param.save();
@@ -96,11 +99,11 @@ public class Main {
       ImageIcon icon = new ImageIcon(iconURL);
       frame.setIconImage(icon.getImage());
     } catch (Exception e) {
-      LOGGER.log(Level.FINE, "Garmin Logo not found.");
+      LOGGER.log(Level.FINE, bundle.getMessage("LogoNotFound"));
     }
 
     // Create and set up the content pane.
-    GUILayout scenGUI = new GUILayout();
+    GUILayout scenGUI = new GUILayout(frame);
     scenGUI.setOpaque(true);
     frame.setContentPane(scenGUI);
     frame.setName("GUILayout");
@@ -112,7 +115,7 @@ public class Main {
     frame.setLocation(50, 50);
     frame.setVisible(true);
 
-    LOGGER.log(Level.INFO, " Garmin track summary version : " + m_creationtime);
+    LOGGER.log(Level.INFO, bundle.getMessage("AppTitel", m_creationtime));
     return frame;
   }
 

@@ -62,6 +62,7 @@ public class GUILayoutTest extends TestCase {
     m_OutputDir = ll_file.getParent();
     Main.m_param.set_LogDir(m_OutputDir + "/");
     Main.m_param.set_toDisk(false);
+    Main.m_param.set_Language("nl");
     Main.m_param.save();
 
     // Launch your application or obtain a reference to an existing Swing frame and
@@ -109,7 +110,7 @@ public class GUILayoutTest extends TestCase {
     fileChooser.fileNameTextBox().setText(c_GPXFile); // Set the desired file name
     fileChooser.approve();
 
-    frame.button("Output folder").click();
+    frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui + "/"));
     fileChooser.approve();
@@ -142,12 +143,12 @@ public class GUILayoutTest extends TestCase {
     fileChooser.fileNameTextBox().setText(c_GPXFile); // Set the desired file name
     fileChooser.approve();
 
-    frame.button("Output folder").click();
+    frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui1 + "/"));
     fileChooser.approve();
 
-    JTextComponentFixture outputfile = frame.textBox("Outputfilename");
+    JTextComponentFixture outputfile = frame.textBox("Output filename");
     outputfile.setText(c_GenFile);
 
     frame.button("Summarise").click();
@@ -182,12 +183,12 @@ public class GUILayoutTest extends TestCase {
     fileChooser.selectFiles(file1, file2);
     fileChooser.approve();
 
-    frame.button("Output folder").click();
+    frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui2 + "/"));
     fileChooser.approve();
 
-    JTextComponentFixture outputfile = frame.textBox("Outputfilename");
+    JTextComponentFixture outputfile = frame.textBox("Output filename");
     outputfile.setText(c_GenFile);
 
     frame.button("Summarise").click();
@@ -217,12 +218,12 @@ public class GUILayoutTest extends TestCase {
     fileChooser.fileNameTextBox().setText(c_GPXFile2); // Set the desired file name
     fileChooser.approve();
 
-    frame.button("Output folder").click();
+    frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui3 + "/"));
     fileChooser.approve();
 
-    JTextComponentFixture outputfile = frame.textBox("Outputfilename");
+    JTextComponentFixture outputfile = frame.textBox("Output filename");
     outputfile.setText(c_GenFile);
 
     frame.button("Summarise").click();
@@ -241,7 +242,7 @@ public class GUILayoutTest extends TestCase {
       fileChooser.approve();
     }
 
-    outputfile = frame.textBox("Outputfilename");
+    outputfile = frame.textBox("Output filename");
     outputfile.setText(c_GenFile);
     outputfile.click();
 
@@ -275,12 +276,12 @@ public class GUILayoutTest extends TestCase {
     fileChooser.fileNameTextBox().setText(c_GPXFile); // Set the desired file name
     fileChooser.approve();
 
-    frame.button("Output folder").click();
+    frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui4 + "/"));
     fileChooser.approve();
 
-    JTextComponentFixture outputfile = frame.textBox("Outputfilename");
+    JTextComponentFixture outputfile = frame.textBox("Output filename");
     outputfile.setText(c_GenFile);
 
     frame.button("Summarise").click();
@@ -299,7 +300,7 @@ public class GUILayoutTest extends TestCase {
       fileChooser.approve();
     }
 
-    outputfile = frame.textBox("Outputfilename");
+    outputfile = frame.textBox("Output filename");
     outputfile.setText(c_GenFile);
     outputfile.click();
 

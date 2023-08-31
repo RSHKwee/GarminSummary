@@ -38,7 +38,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; \
 Source: ".\target\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "readme.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
-Source: ".\help\garminsummary.chm"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\help\en\garminsummary.chm"; DestDir: "{app}\help\en"; Flags: ignoreversion
+Source: ".\help\nl\garminsummary.chm"; DestDir: "{app}\help\nl"; Flags: ignoreversion
 DestDir: {app}\jre; Source: ..\jre\*;   Flags: recursesubdirs ; Check: JreNotPresent
 
 [Icons]

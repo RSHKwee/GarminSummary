@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +41,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import kwee.garminSummary.main.Main;
 import kwee.garminSummary.main.UserSetting;
 import kwee.library.AboutWindow;
+import kwee.library.ApplicationMessages;
 import kwee.library.ShowPreferences;
 /**
  * Garmin GUI
@@ -60,6 +62,7 @@ public class GUILayout extends JPanel implements ItemListener {
   static final String c_CopyrightYear = "2023";
   private static String c_reponame = "GarminSummary";
   public static final Object lock = new Object();
+  private ApplicationMessages bundle = ApplicationMessages.getInstance();
 
   // Loglevels: OFF SEVERE WARNING INFO CONFIG FINE FINER FINEST ALL
   static final String[] c_levels = { "OFF", "SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST", "ALL" };
@@ -81,6 +84,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
   // Preferences
   private UserSetting m_param = Main.m_param;
+  private String m_Language = "nl";
 
   private File m_InputFolder;
   private File m_OutputFolder;
@@ -88,20 +92,26 @@ public class GUILayout extends JPanel implements ItemListener {
   private boolean m_toDisk = false;
   private boolean m_Append = false;
   private Level m_Level = Level.INFO;
+  private int i = 0;
+  private JFrame m_Frame;
 
   /**
    * Define GUI layout
    * 
    */
-  public GUILayout() {
+  public GUILayout(JFrame frame) {
+    m_Frame = frame;
+    bundle.changeLanguage(m_param.get_Language());
+
     // GUI items
     JMenuBar menuBar = new JMenuBar();
-    JMenuItem mntmLoglevel = new JMenuItem("Loglevel");
+    JMenuItem mntmLoglevel = new JMenuItem(bundle.getMessage("Loglevel"));
+    JMenuItem mntmLanguages = new JMenuItem(bundle.getMessage("Languages"));
     mntmLoglevel.setName("Loglevel");
     menuBar.setName("menu");
 
     JTextField txtOutputFilename = new JTextField();
-    txtOutputFilename.setName("Outputfilename");
+    txtOutputFilename.setName("Output filename");
     JLabel lblOutputFolder = new JLabel("");
 
     // Initialize parameters
@@ -117,13 +127,14 @@ public class GUILayout extends JPanel implements ItemListener {
     m_Level = m_param.get_Level();
     m_toDisk = m_param.is_toDisk();
     m_LogDir = m_param.get_LogDir();
+    m_Language = m_param.get_Language();
 
     // Define Layout
     setLayout(new BorderLayout(0, 0));
     add(menuBar, BorderLayout.NORTH);
 
     // Define Setting menu in menu bar:
-    JMenu mnSettings = new JMenu("Settings");
+    JMenu mnSettings = new JMenu(bundle.getMessage("Settings"));
     mnSettings.setName("Settings");
     menuBar.add(mnSettings);
 
@@ -132,10 +143,10 @@ public class GUILayout extends JPanel implements ItemListener {
     mntmLoglevel.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        JFrame frame = new JFrame("Loglevel");
+        JFrame frame = new JFrame(bundle.getMessage("Loglevel"));
         String level = "";
-        level = (String) JOptionPane.showInputDialog(frame, "Loglevel?", "INFO", JOptionPane.QUESTION_MESSAGE, null,
-            c_levels, m_Level.toString());
+        level = (String) JOptionPane.showInputDialog(frame, bundle.getMessage("Loglevel") + "?", "INFO",
+            JOptionPane.QUESTION_MESSAGE, null, c_levels, m_Level.toString());
         if (level != null) {
           m_Level = Level.parse(level.toUpperCase());
           m_param.set_Level(m_Level);
@@ -146,8 +157,8 @@ public class GUILayout extends JPanel implements ItemListener {
     mnSettings.add(mntmLoglevel);
 
     // Add item Look and Feel
-    JMenu menu = new JMenu("Look and Feel");
-    menu.setName("Look and Feel");
+    JMenu menu = new JMenu(bundle.getMessage("LookAndFeel"));
+    menu.setName("LookandFeel");
     menu.setHorizontalAlignment(SwingConstants.LEFT);
     mnSettings.add(menu);
 
@@ -172,9 +183,37 @@ public class GUILayout extends JPanel implements ItemListener {
       menu.add(item);
     }
 
+    // Language setting
+    mntmLanguages.setHorizontalAlignment(SwingConstants.LEFT);
+    mntmLanguages.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JFrame frame = new JFrame(bundle.getMessage("Language"));
+        String language = "nl";
+        Set<String> l_languages = bundle.getTranslations();
+        String[] la_languages = new String[l_languages.size()];
+        i = 0;
+        l_languages.forEach(lang -> {
+          la_languages[i] = lang;
+          i++;
+        });
+
+        language = (String) JOptionPane.showInputDialog(frame, bundle.getMessage("Language") + "?", "nl",
+            JOptionPane.QUESTION_MESSAGE, null, la_languages, m_Language);
+        if (language != null) {
+          m_Language = language;
+          m_param.set_Language(m_Language);
+          m_param.save();
+          bundle.changeLanguage(language);
+          restartGUI();
+        }
+      }
+    });
+    mnSettings.add(mntmLanguages);
+
     // Option Logging to Disk
-    JCheckBoxMenuItem mntmLogToDisk = new JCheckBoxMenuItem("Create logfiles");
-    mntmLogToDisk.setName("Create logfiles");
+    JCheckBoxMenuItem mntmLogToDisk = new JCheckBoxMenuItem(bundle.getMessage("CreateLogfiles"));
+    mntmLogToDisk.setName("CreateLogfiles");
     mntmLogToDisk.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -186,7 +225,7 @@ public class GUILayout extends JPanel implements ItemListener {
           int option = fileChooser.showOpenDialog(GUILayout.this);
           if (option == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            LOGGER.log(Level.INFO, "Log folder: " + file.getAbsolutePath());
+            LOGGER.log(Level.INFO, bundle.getMessage("LogFolder", file.getAbsolutePath()));
             m_LogDir = file.getAbsolutePath() + "/";
             m_param.set_LogDir(m_LogDir);
             m_param.set_toDisk(true);
@@ -207,7 +246,7 @@ public class GUILayout extends JPanel implements ItemListener {
     mnSettings.add(mntmLogToDisk);
 
     // Option Preferences
-    JMenuItem mntmPreferences = new JMenuItem("Preferences");
+    JMenuItem mntmPreferences = new JMenuItem(bundle.getMessage("Preferences"));
     mntmPreferences.setName("Preferences");
     mntmPreferences.addActionListener(new ActionListener() {
       @Override
@@ -225,12 +264,12 @@ public class GUILayout extends JPanel implements ItemListener {
     menuBar.add(mnHelpAbout);
 
     // Help
-    JMenuItem mntmHelp = new JMenuItem("Help");
+    JMenuItem mntmHelp = new JMenuItem(bundle.getMessage("Help"));
     mntmHelp.setName("Help");
     mntmHelp.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        File helpFile = new File(m_HelpFile);
+        File helpFile = new File("help\\" + m_Language + "\\" + m_HelpFile);
 
         if (helpFile.exists()) {
           try {
@@ -240,14 +279,14 @@ public class GUILayout extends JPanel implements ItemListener {
             e1.printStackTrace();
           }
         } else {
-          LOGGER.log(Level.INFO, "Help file not found " + helpFile.getAbsolutePath());
+          LOGGER.log(Level.INFO, bundle.getMessage("HelpFileNotFound", helpFile.getAbsolutePath()));
         }
       }
     });
     mnHelpAbout.add(mntmHelp);
 
     // About
-    JMenuItem mntmAbout = new JMenuItem("About");
+    JMenuItem mntmAbout = new JMenuItem(bundle.getMessage("About"));
     mntmAbout.setName("About");
     mntmAbout.addActionListener(new ActionListener() {
       @Override
@@ -306,7 +345,7 @@ public class GUILayout extends JPanel implements ItemListener {
     panel.setPreferredSize(new Dimension(350, 290));
 
     // Choose GPX File(s)
-    JLabel lblGPXFile = new JLabel("Select one or more GPX files");
+    JLabel lblGPXFile = new JLabel(bundle.getMessage("SelectGPX"));
     lblGPXFile.setEnabled(false);
     lblGPXFile.setHorizontalAlignment(SwingConstants.RIGHT);
     panel.add(lblGPXFile, "cell 1 0");
@@ -326,7 +365,7 @@ public class GUILayout extends JPanel implements ItemListener {
         if (m_InputFolder != null) {
           fileChooser.setSelectedFile(m_InputFolder);
         }
-        FileFilter filter = new FileNameExtensionFilter("GPX File", "gpx");
+        FileFilter filter = new FileNameExtensionFilter(bundle.getMessage("GPXFile"), "gpx");
         fileChooser.setFileFilter(filter);
         if (m_GpxFiles != null) {
           if (m_GpxFiles.length >= 1) {
@@ -370,11 +409,11 @@ public class GUILayout extends JPanel implements ItemListener {
     panel.add(btnGPXFile, "cell 0 0");
 
     // Define output folder & filename
-    JCheckBox chkbAddToFile = new JCheckBox("Add to file");
+    JCheckBox chkbAddToFile = new JCheckBox(bundle.getMessage("AddToFile"));
     chkbAddToFile.setName("Addtofile");
 
-    JButton btnOutputFolder = new JButton("Output folder");
-    btnOutputFolder.setName("Output folder");
+    JButton btnOutputFolder = new JButton(bundle.getMessage("OutputFolder"));
+    btnOutputFolder.setName("OutputFolder");
     btnOutputFolder.setHorizontalAlignment(SwingConstants.RIGHT);
     btnOutputFolder.addActionListener(new ActionListener() {
       @Override
@@ -385,7 +424,7 @@ public class GUILayout extends JPanel implements ItemListener {
         int option = fileChooser.showOpenDialog(GUILayout.this);
         if (option == JFileChooser.APPROVE_OPTION) {
           File file = fileChooser.getSelectedFile();
-          LOGGER.log(Level.INFO, "Output folder: " + file.getAbsolutePath());
+          LOGGER.log(Level.INFO, bundle.getMessage("OutputFolderSelected", file.getAbsolutePath()));
           lblOutputFolder.setText(file.getAbsolutePath());
           m_OutputFolder = new File(file.getAbsolutePath());
           m_param.set_OutputFolder(m_OutputFolder);
@@ -414,7 +453,7 @@ public class GUILayout extends JPanel implements ItemListener {
         boolean selected = chkbAddToFile.isSelected();
         m_Append = selected;
         m_param.set_Append(selected);
-        LOGGER.log(Level.CONFIG, "Append to file:" + Boolean.toString(selected));
+        LOGGER.log(Level.CONFIG, bundle.getMessage("AppendToFile", Boolean.toString(selected)));
       }
     });
     panel.add(chkbAddToFile, "cell 1 3");
@@ -450,6 +489,14 @@ public class GUILayout extends JPanel implements ItemListener {
     bottomHalf.setMinimumSize(new Dimension(500, 100));
     bottomHalf.setPreferredSize(new Dimension(500, 300));
     splitPane.add(bottomHalf);
+  }
+
+  private void restartGUI() {
+    // Dispose of the current GUI window or frame
+    m_Frame.dispose();
+
+    // Recreate the main GUI window or frame
+    m_Frame = Main.createAndShowGUI();
   }
 
   /**

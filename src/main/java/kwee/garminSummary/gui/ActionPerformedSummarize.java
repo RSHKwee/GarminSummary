@@ -10,10 +10,13 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
+import kwee.library.ApplicationMessages;
 import kwee.library.TxtBestand;
 
 public class ActionPerformedSummarize extends SwingWorker<Void, String> implements MyAppendable {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private ApplicationMessages bundle = ApplicationMessages.getInstance();
+
   // Variables
   private JProgressBar m_pbarFiles;
   private JProgressBar m_pbarTracks;
@@ -93,7 +96,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
       tbst.DumpBestand(v_Regels, m_Append);
 
       SortTrips.sortTrips(l_file);
-      LOGGER.log(Level.INFO, "File created: " + m_OutputFolder.getAbsolutePath() + "/" + m_OutFileName);
+      LOGGER.log(Level.INFO, bundle.getMessage("FileCreated", m_OutputFolder.getAbsolutePath(), m_OutFileName));
     }
     m_pbarFiles.setValue(0);
     m_pbarFiles.setVisible(false);
@@ -121,7 +124,7 @@ public class ActionPerformedSummarize extends SwingWorker<Void, String> implemen
       m_pbarFiles.setValue(m_ProcessedFiles);
       Double v_prog = ((double) m_ProcessedFiles / (double) m_NumberFiles) * 100;
       Integer v_iprog = v_prog.intValue();
-      m_FileProgressLabel.setText(v_iprog.toString() + "% (" + m_ProcessedFiles + " of " + m_NumberFiles + " files)");
+      m_FileProgressLabel.setText(bundle.getMessage("Progress", v_iprog, m_ProcessedFiles, m_NumberFiles));
     } catch (Exception e) {
       // Do nothing
     }

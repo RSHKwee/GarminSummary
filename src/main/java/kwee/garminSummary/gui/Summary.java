@@ -21,6 +21,7 @@ import io.jenetics.jpx.TrackSegment;
 import io.jenetics.jpx.WayPoint;
 import io.jenetics.jpx.geom.Geoid;
 import kwee.library.Address;
+import kwee.library.ApplicationMessages;
 import kwee.library.NominatimAPI;
 import kwee.library.TimeConversion;
 
@@ -33,6 +34,7 @@ import kwee.library.TimeConversion;
 public class Summary {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private String C_Separator = ";";
+  private ApplicationMessages bundle = ApplicationMessages.getInstance();
 
   private ArrayList<String> m_Regels = new ArrayList<String>();
   private File m_GPXFile;
@@ -114,7 +116,7 @@ public class Summary {
 
       List<Track> v_tracks = gpx.getTracks();
       m_NumberTracks = v_tracks.size();
-      LOGGER.log(Level.INFO, "Process GPX-File: " + m_GPXFile + " with content of " + m_NumberTracks + " tracks.");
+      LOGGER.log(Level.INFO, bundle.getMessage("ProcessGPXFileTracks", m_GPXFile.getAbsolutePath(), m_NumberTracks));
       m_ProcessedTracks = -1;
       m_pbarTracks.setMaximum(m_NumberTracks);
       m_pbarTracks.setVisible(true);

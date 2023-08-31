@@ -88,17 +88,35 @@
                 <goal>copy-resources</goal>
               </goals>
               <configuration>
-                <outputDirectory>${project.basedir}/target</outputDirectory>
+                <outputDirectory>${project.basedir}/target/help/en</outputDirectory>
                 <resources>                                        
                   <resource>
-                    <directory>${project.basedir}/help</directory>
+                    <directory>${project.basedir}/help/en</directory>
                     <includes>
-                      <include>garminSummary.chm</include>
+                      <include>garminsummary.chm</include>
                     </includes>
                   </resource>
                 </resources>
               </configuration>
             </execution> 
+            <execution>
+              <id>helpfilenl</id>
+              <phase>package</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.basedir}/target/help/nl</outputDirectory>
+                <resources>                                        
+                  <resource>
+                    <directory>${project.basedir}/help/nl</directory>
+                    <includes>
+                      <include>garminsummary.chm</include>
+                    </includes>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>         
             <execution>
               <id>copy-test-resources</id>
               <phase>generate-test-resources</phase>
