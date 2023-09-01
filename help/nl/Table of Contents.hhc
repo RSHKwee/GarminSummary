@@ -17,7 +17,7 @@
 		<param name="Local" value="OpeningMenu.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Instelling menu">
+		<param name="Name" value="Instellingen menu">
 		<param name="Local" value="SettingsMenu.htm">
 		</OBJECT>
 </UL>

@@ -93,7 +93,7 @@
                   <resource>
                     <directory>${project.basedir}/help/en</directory>
                     <includes>
-                      <include>garminsummary.chm</include>
+                      <include>garminSummary.chm</include>
                     </includes>
                   </resource>
                 </resources>
@@ -111,7 +111,7 @@
                   <resource>
                     <directory>${project.basedir}/help/nl</directory>
                     <includes>
-                      <include>garminsummary.chm</include>
+                      <include>garminSummary.chm</include>
                     </includes>
                   </resource>
                 </resources>
@@ -217,13 +217,26 @@
               </goals>          
               <configuration>
                 <executable>HelpChm.cmd</executable>
-                <workingDirectory>help</workingDirectory>
+                <workingDirectory>help/en</workingDirectory>
                 <arguments>
                   <argument>garminSummary.hhp</argument>
                 </arguments>
               </configuration>          
             </execution>
-            
+      	        <execution>
+              <id>GarminSumHelpNl</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>exec</goal>
+              </goals>          
+              <configuration>
+                <executable>HelpChm.cmd</executable>
+                <workingDirectory>help/nl</workingDirectory>
+                <arguments>
+                  <argument>garminSummary.hhp</argument>
+                </arguments>
+              </configuration>          
+            </execution>         
             <execution>
               <id>innoSetup</id>
               <phase>package</phase>
