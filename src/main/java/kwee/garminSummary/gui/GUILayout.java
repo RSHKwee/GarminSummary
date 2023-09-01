@@ -350,7 +350,7 @@ public class GUILayout extends JPanel implements ItemListener {
     lblGPXFile.setHorizontalAlignment(SwingConstants.RIGHT);
     panel.add(lblGPXFile, "cell 1 0");
 
-    JButton btnSummarize = new JButton("Summarise");
+    JButton btnSummarize = new JButton(bundle.getMessage("Summarise"));
     JButton btnGPXFile = new JButton("GPX File(s)");
     btnSummarize.setName("Summarise");
     btnGPXFile.setName("GPX File(s)");

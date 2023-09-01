@@ -221,7 +221,7 @@ public class Summary {
       m_pbarTracks.setValue(m_ProcessedTracks);
       Double v_prog = ((double) m_ProcessedTracks / (double) m_NumberTracks) * 100;
       Integer v_iprog = v_prog.intValue();
-      m_ProgresTextTracks = v_iprog.toString() + "% (" + m_ProcessedTracks + " of " + m_NumberTracks + " tracks)";
+      m_ProgresTextTracks = bundle.getMessage("ProgressTracksFollow", v_iprog, m_ProcessedTracks, m_NumberTracks);
       m_ProgressLabel.setText(m_ProgresTextSegments + " | " + m_ProgresTextTracks);
     } catch (Exception e) {
       // Do nothing...
@@ -237,8 +237,8 @@ public class Summary {
       m_pbarSegments.setValue(m_ProcessedSegments);
       Double v_prog = ((double) m_ProcessedSegments / (double) m_NumberSegments) * 100;
       Integer v_iprog = v_prog.intValue();
-      m_ProgresTextSegments = v_iprog.toString() + "% (" + m_ProcessedSegments + " of " + m_NumberSegments
-          + " segments)";
+      m_ProgresTextSegments = bundle.getMessage("ProgressSegmentsFollow", v_iprog, m_ProcessedSegments,
+          m_NumberSegments);
       m_ProgressLabel.setText(m_GPXFile.getName() + " " + m_ProgresTextSegments + " | " + m_ProgresTextTracks);
     } catch (Exception e) {
       // Do nothing

@@ -9,15 +9,15 @@
 </OBJECT>
 <UL>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Introduction">
+		<param name="Name" value="Inleiding">
 		<param name="Local" value="Introduction.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Opening menu">
+		<param name="Name" value="Hoofdmenu">
 		<param name="Local" value="OpeningMenu.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Settings menu">
+		<param name="Name" value="Instelling menu">
 		<param name="Local" value="SettingsMenu.htm">
 		</OBJECT>
 </UL>
