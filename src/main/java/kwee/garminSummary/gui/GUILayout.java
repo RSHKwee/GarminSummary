@@ -40,14 +40,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import kwee.garminSummary.main.Main;
 import kwee.garminSummary.main.UserSetting;
-import kwee.library.AboutWindow;
 import kwee.library.ApplicationMessages;
-import kwee.library.ShowPreferences;
+import kwee.library.swing.AboutWindow;
+import kwee.library.swing.ShowPreferences;
+import kwee.library.swing.TextAreaHandler;
 /**
  * Garmin GUI
  */
 import kwee.logger.MyLogger;
-import kwee.logger.TextAreaHandler;
 import net.miginfocom.swing.MigLayout;
 
 /**
