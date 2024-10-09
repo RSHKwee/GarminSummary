@@ -223,7 +223,7 @@
                 </arguments>
               </configuration>          
             </execution>
-      	        <execution>
+      	    <execution>
               <id>GarminSumHelpNl</id>
               <phase>process-resources</phase>
               <goals>

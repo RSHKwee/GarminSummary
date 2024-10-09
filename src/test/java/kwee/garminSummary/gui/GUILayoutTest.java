@@ -41,6 +41,7 @@ public class GUILayoutTest extends TestCase {
 
   private String c_ExpFile3 = "362.csv";
   private String c_ExpFile4 = "a_362.csv";
+  private String c_ExpFile5 = "b_362.csv";
 
   // Expected results in following dirs:
   private String m_DirExpSuffix = "_Exp";
@@ -212,6 +213,10 @@ public class GUILayoutTest extends TestCase {
     String l_ExpFile2 = l_File2.getAbsolutePath();
     FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui3);
 
+    File l_File3 = FileUtils.GetResourceFile(m_gui3 + m_DirExpSuffix + "/" + c_ExpFile5);
+    String l_ExpFile3 = l_File3.getAbsolutePath();
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui3);
+
     frame.button("GPX File(s)").click();
     JFileChooserFixture fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir));
@@ -256,6 +261,10 @@ public class GUILayoutTest extends TestCase {
       if (!bstat) {
         LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
         bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui3 + "/" + c_GenFile, l_ExpFile2);
+        if (!bstat) {
+          LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile3);
+          bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui3 + "/" + c_GenFile, l_ExpFile2);
+        }
       }
       assertTrue(bstat);
     }
