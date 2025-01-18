@@ -1,4 +1,4 @@
-; -- ing2ofx.iss --
+; -- garminsummary.iss --
 ;
 #define MyAppName "garminsummary"
 #define MyAppVersion GetVersionNumbersString('target\garminsummary.exe')

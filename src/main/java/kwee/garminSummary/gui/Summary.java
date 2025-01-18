@@ -1,6 +1,7 @@
 package kwee.garminSummary.gui;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.Duration;
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import io.jenetics.jpx.GPX;
+import io.jenetics.jpx.GPX.Reader.Mode;
 import io.jenetics.jpx.Length;
 import io.jenetics.jpx.Point;
 import io.jenetics.jpx.Track;
@@ -112,7 +114,10 @@ public class Summary {
 
     GPX gpx;
     try {
-      gpx = GPX.reader(GPX.Version.V11).read(m_GPXFile);
+      FileInputStream in = new FileInputStream(m_GPXFile);
+      gpx = GPX.Reader.of(Mode.LENIENT).read(in);
+
+//      gpx = GPX.Reader(GPX.Version.V11).read(m_GPXFile);
 
       List<Track> v_tracks = gpx.getTracks();
       m_NumberTracks = v_tracks.size();
