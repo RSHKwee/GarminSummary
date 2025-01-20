@@ -7,7 +7,7 @@
   <packaging>jar</packaging>
   
   <prerequisites>
-    <maven>3.6.3</maven>
+    <maven>${maven.min.version}</maven>
   </prerequisites>
   
   <parent>
@@ -17,12 +17,21 @@
 	<relativePath>../pom.xml</relativePath>
   </parent>
   
+  <properties>
+    <io-jenitics-gpx.version>3.2.1</io-jenitics-gpx.version>
+  </properties>
+  
   <name>garminSummary</name>
   <dependencies>  
     <dependency>
 	  <groupId>kwee.library</groupId>
 	  <artifactId>library</artifactId>
 	  <version>${kweeLibrary.version}</version>
+	</dependency>
+    <dependency>
+	  <groupId>io.jenetics</groupId>
+	  <artifactId>jpx</artifactId>
+	  <version>${io-jenitics-gpx.version}</version>
 	</dependency>
   </dependencies>
   
@@ -37,7 +46,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.5.0</version> <!-- Gebruik een geschikte versie van de plugin -->
+          <version>${maven-enforcer-plugin.version}</version> <!-- Gebruik een geschikte versie van de plugin -->
           <executions>
             <execution>
               <id>enforce-maven-version</id>
@@ -47,7 +56,7 @@
               <configuration>
                 <rules>
                  <requireMavenVersion>
-                   <version>[3.6.3,)</version> <!-- Minimale Maven-versie vereist -->
+                   <version>${maven.min.version}</version> <!-- Minimale Maven-versie vereist -->
                   </requireMavenVersion>
                 </rules>
                 <fail>false</fail> <!-- Stop de build bij niet-naleving -->
@@ -57,7 +66,7 @@
         </plugin>      
         <plugin>
   	  	  <artifactId>maven-assembly-plugin</artifactId>
-    	  <version>3.7.1</version>      
+    	  <version>${maven-assembly-plugin.version}</version>      
  	  	  <executions>
             <execution>
   	  		  <phase>package</phase>
