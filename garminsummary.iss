@@ -4,6 +4,7 @@
 #define MyAppVersion GetVersionNumbersString('target\garminsummary.exe')
 #define MyAppExeName "garminsummary.exe"
 #define MyIconFile "src\main\resources\GarminLogo.ico"
+#define MyJavaMinVersion = 22
 
 [Setup]
 AppName={#MyAppName}
@@ -100,8 +101,12 @@ begin
   begin
     Delete(S, 1, 2)
   end;
+  
   P := Pos('.', S);
-  SetLength(S, P - 1);
+  if P > 0 then
+  begin
+    SetLength(S, P - 1);
+  end;
   Log(Format('Major version: %s', [S]));
 
   Result := StrToIntDef(S, 0);
@@ -111,7 +116,7 @@ function JreNotPresent: Boolean;
 begin
   if jreNotChecked then
   begin
-    if (GetJavaMajorVersion() > 16) then
+    if (GetJavaMajorVersion() >= {#MyJavaMinVersion}) then
     begin
       L_jreNotPresent := false;
       Log('Java jre is present.');
