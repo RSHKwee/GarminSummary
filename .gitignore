@@ -10,3 +10,10 @@ MANIFEST.MF
 *.chm
 jre/
 Nieuwe map/
+Library.iss
+GarminSummary/HelpChm.cmd
+GarminSummary/innosetup.cmd
+GarminSummary/Library.iss
+ing2ofx/HelpChm.cmd
+ing2ofx/innosetup.cmd
+ing2ofx/Library.iss
