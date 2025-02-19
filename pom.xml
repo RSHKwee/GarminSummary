@@ -103,10 +103,10 @@
                 <goal>copy-resources</goal>
               </goals>
               <configuration>
-                <outputDirectory>${project.basedir}/GarminSummary</outputDirectory>
+                <outputDirectory>${project.basedir}</outputDirectory>
                 <resources>                                        
                   <resource>
-                    <directory>.</directory>
+                    <directory>..\BuildTools</directory>
                     <includes>
                       <include>HelpChm.cmd</include>
                       <include>innosetup.cmd</include>
