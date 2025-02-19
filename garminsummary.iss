@@ -1,5 +1,8 @@
 ; -- garminsummary.iss --
 ;
+
+#include "Library.iss"
+
 #define MyAppName "garminsummary"
 #define MyAppVersion GetVersionNumbersString('target\garminsummary.exe')
 #define MyAppExeName "garminsummary.exe"
@@ -7,6 +10,9 @@
 #define MyJavaMinVersion = 22
 
 [Setup]
+; SetupLogging=yes
+PrivilegesRequired=poweruser
+
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher=RSH Kwee
@@ -19,13 +25,11 @@ DefaultGroupName={#MyAppName}
 UninstallDisplayIcon={app}\{#MyAppExeName}
 InfoBeforeFile=readme.md
 OutputDir=target
-OutputBaseFilename={#MyAppName}_v{#MyAppVersion}_jre_setup
+OutputBaseFilename={#MyAppName}_v{#MyAppVersion}_setup
 UninstallFilesDir={app}\uninst
 ; Tell Windows Explorer to reload the environment
 ChangesEnvironment=yes
 SetupIconFile={#MyIconFile}
-; SetupLogging=yes
-; PrivilegesRequired=poweruser
 
 [Registry]
 Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "JAVA_HOME"; \
@@ -48,14 +52,16 @@ Name: "{commonstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Code]
+const
+  MyJavaMinVersion = {#MyJavaMinVersion};
+
 var
-  jreNotChecked : Boolean;
   FinishedInstall: Boolean;
-  L_jreNotPresent: boolean;
 
 function InitializeSetup(): Boolean;
 begin
   Log('InitializeSetup called');
+  G_JavaMinVersion := MyJavaMinVersion;
   Result := true;
   jreNotChecked := true;
   L_jreNotPresent := true;
@@ -64,69 +70,6 @@ end;
 procedure InitializeWizard;
 begin
   Log('InitializeWizard called');
-end;
-
-function GetJavaMajorVersion(): integer;
-var
-  TempFile: string;
-  ResultCode: Integer;
-  S: AnsiString;
-  P: Integer;
-begin
-  Result := 0;
-
-  { execute java -version and redirect output to a temp file }
-  TempFile := ExpandConstant('{tmp}\javaversion.txt');
-  if (not ExecAsOriginalUser(ExpandConstant('{cmd}'), '/c java -version 2> "' + TempFile + '"', '',SW_HIDE, ewWaitUntilTerminated, ResultCode)) 
-    or (ResultCode <> 0) then
-  begin
-    Log('Failed to execute java -version');
-    exit;
-  end;
-
-  { read file into variable S }
-  LoadStringFromFile(TempFile, S)
-  DeleteFile(TempFile);
-  Log(Format('java -version output: ' + #13#10 + '%s', [S]));
-
-  { extract version (between quotes) }
-  P := Pos('"', S);
-  Delete(S, 1, P);
-  P := Pos('"', S);
-  SetLength(S, P - 1);
-  Log(Format('Extracted version: %s', [S]));
-
-  { extract major }
-  if Copy(S, 1, 2) = '1.' then
-  begin
-    Delete(S, 1, 2)
-  end;
-  
-  P := Pos('.', S);
-  if P > 0 then
-  begin
-    SetLength(S, P - 1);
-  end;
-  Log(Format('Major version: %s', [S]));
-
-  Result := StrToIntDef(S, 0);
-end;
-
-function JreNotPresent: Boolean;
-begin
-  if jreNotChecked then
-  begin
-    if (GetJavaMajorVersion() >= {#MyJavaMinVersion}) then
-    begin
-      L_jreNotPresent := false;
-      Log('Java jre is present.');
-    end else begin
-      L_jreNotPresent := true;
-      Log('Java jre is not present, define JAVA_HOME.');
-    end;
-    jreNotChecked := false;
-  end;
-  Result := L_jreNotPresent;
 end;
 
 <event('InitializeWizard')>
@@ -185,11 +128,5 @@ function PrepareToInstall(var NeedsRestart: Boolean): String;
 begin
   Log('PrepareToInstall() called');
   Result := '';
-end;
-
-function MyConst(Param: String): String;
-begin
-  Log('MyConst(''' + Param + ''') called');
-  Result := ExpandConstant('{autopf}');
 end;
 
