@@ -98,7 +98,7 @@
           <executions>       
             <execution>
               <id>CopyToolsGarmin</id>
-              <phase>process-resources</phase>
+              <phase>initialize</phase>
               <goals>
                 <goal>copy-resources</goal>
               </goals>
@@ -278,7 +278,7 @@
           <executions>
    	        <execution>
               <id>GarminSumHelp</id>
-              <phase>generate-resources</phase>
+              <phase>compile</phase>
               <goals>
                 <goal>exec</goal>
               </goals>          
@@ -292,7 +292,7 @@
             </execution>
       	    <execution>
               <id>GarminSumHelpNl</id>
-              <phase>generate-resources</phase>
+              <phase>compile</phase>
               <goals>
                 <goal>exec</goal>
               </goals>          
