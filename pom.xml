@@ -374,7 +374,7 @@
           <version>${maven-antrun-pluginversion}</version>
           <executions>
             <execution>
-              <phase>package</phase>
+              <phase>install</phase>
               <goals>
                 <goal>run</goal>
               </goals>
