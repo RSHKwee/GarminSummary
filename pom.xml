@@ -103,13 +103,32 @@
                 <goal>copy-resources</goal>
               </goals>
               <configuration>
-                <outputDirectory>${project.basedir}</outputDirectory>
+                <outputDirectory>${project.basedir}\BuildTools</outputDirectory>
                 <resources>                                        
                   <resource>
                     <directory>..\BuildTools</directory>
                     <includes>
                       <include>HelpChm.cmd</include>
                       <include>innosetup.cmd</include>
+                    </includes>
+                    <filtering>true</filtering>
+                  </resource>
+                </resources>
+                <encoding>${project.build.sourceEncoding}</encoding>
+              </configuration>
+            </execution>
+             <execution>
+              <id>CopyToolsGarmin2</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.basedir}</outputDirectory>
+                <resources>                                        
+                  <resource>
+                    <directory>..\BuildTools</directory>
+                    <includes>
                       <include>Library.iss</include>
                     </includes>
                     <filtering>true</filtering>
@@ -278,12 +297,12 @@
           <executions>
    	        <execution>
               <id>GarminSumHelp</id>
-              <phase>compile</phase>
+              <phase>generate-resources</phase>
               <goals>
                 <goal>exec</goal>
               </goals>          
               <configuration>
-                <executable>HelpChm.cmd</executable>
+                <executable>BuildTools\HelpChm.cmd</executable>
                 <workingDirectory>help/en</workingDirectory>
                 <arguments>
                   <argument>garminSummary.hhp</argument>
@@ -292,12 +311,12 @@
             </execution>
       	    <execution>
               <id>GarminSumHelpNl</id>
-              <phase>compile</phase>
+              <phase>generate-resources</phase>
               <goals>
                 <goal>exec</goal>
               </goals>          
               <configuration>
-                <executable>HelpChm.cmd</executable>
+                <executable>BuildTools\HelpChm.cmd</executable>
                 <workingDirectory>help/nl</workingDirectory>
                 <arguments>
                   <argument>garminSummary.hhp</argument>
@@ -311,7 +330,7 @@
                 <goal>exec</goal>
               </goals>          
               <configuration>
-                <executable>innosetup.cmd</executable>
+                <executable>BuildTools\innosetup.cmd</executable>
                 <workingDirectory>...</workingDirectory>
                 <arguments>
                   <argument>garminsummary.iss</argument>
@@ -350,7 +369,24 @@
             -->
           </executions>
         </plugin>
-
+        <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>${maven-antrun-pluginversion}</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+                <configuration>
+                  <target>
+                    <delete dir="${project.basedir}\BuildTools"/>
+                    <delete file="${project.basedir}\Library.iss"/>
+                  </target>
+                </configuration>
+             </execution>
+          </executions>
+        </plugin>  
       </plugins>
  <!--   </pluginManagement> -->
   </build>
