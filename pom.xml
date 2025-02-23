@@ -4,17 +4,13 @@
 
   <groupId>kwee</groupId>
   <artifactId>garminsummary</artifactId>
-  <version>1.1.0.2</version>
+  <version>1.1.0.3</version>
   <packaging>jar</packaging>
-  
-  <prerequisites>
-    <maven>${maven.min.version}</maven>
-  </prerequisites>
   
   <parent>
 	<groupId>kwee</groupId>
 	<artifactId>aggregator</artifactId>
-	<version>1.1.0.2</version>
+	<version>1.1.0.3</version>
 	<relativePath>../pom.xml</relativePath>
   </parent>
   
@@ -89,13 +85,12 @@
             <finalName>garminsummary</finalName>
           </configuration>
         </plugin>
-        
-       	<!-- Distribute tools v -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>${maven-resources-plugin.version}</version>
-          <executions>       
+          <executions>
+            <!-- Distribute tools v -->
             <execution>
               <id>CopyToolsGarmin</id>
               <phase>initialize</phase>
@@ -117,7 +112,7 @@
                 <encoding>${project.build.sourceEncoding}</encoding>
               </configuration>
             </execution>
-             <execution>
+            <execution>
               <id>CopyToolsGarmin2</id>
               <phase>initialize</phase>
               <goals>
@@ -136,16 +131,8 @@
                 </resources>
                 <encoding>${project.build.sourceEncoding}</encoding>
               </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      
-	    <!-- Distribute readme.md v -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>${maven-resources-plugin.version}</version>
-          <executions>
+            </execution>    
+	        <!-- Distribute readme.md v -->            
             <execution>
               <id>readme-md</id>
               <phase>process-resources</phase>
