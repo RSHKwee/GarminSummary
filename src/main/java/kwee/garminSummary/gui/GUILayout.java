@@ -59,7 +59,7 @@ import net.miginfocom.swing.MigLayout;
 public class GUILayout extends JPanel implements ItemListener {
   private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
   private static final long serialVersionUID = 1L;
-  static final String c_CopyrightYear = "2023";
+  static final String c_CopyrightYear = "2025";
   private static String c_reponame = "GarminSummary";
   public static final Object lock = new Object();
   private ApplicationMessages bundle = ApplicationMessages.getInstance();
