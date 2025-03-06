@@ -5,8 +5,10 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import kwee.logger.MyLogger;
+
 public class TestFunctions {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   public File GetResourceFile(String a_file) {
     File l_File = null;

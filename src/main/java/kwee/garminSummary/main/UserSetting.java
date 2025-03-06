@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import kwee.logger.MyLogger;
+
 /**
  * User setting persistence.
  * 
@@ -13,7 +15,7 @@ import java.util.prefs.Preferences;
  *
  */
 public class UserSetting {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
   public static String NodePrefName = "kwee.garminSummary";
 
   private String c_Level = "Level";

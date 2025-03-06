@@ -12,9 +12,10 @@ import javax.swing.SwingWorker;
 
 import kwee.library.ApplicationMessages;
 import kwee.library.TxtBestand;
+import kwee.logger.MyLogger;
 
 public class ActionPerformedSummarize extends SwingWorker<Void, String> implements MyAppendable {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
   private ApplicationMessages bundle = ApplicationMessages.getInstance();
 
   // Variables

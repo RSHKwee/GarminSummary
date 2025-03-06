@@ -26,6 +26,7 @@ import kwee.library.Address;
 import kwee.library.ApplicationMessages;
 import kwee.library.NominatimAPI;
 import kwee.library.TimeConversion;
+import kwee.logger.MyLogger;
 
 /**
  * 
@@ -34,7 +35,7 @@ import kwee.library.TimeConversion;
  *
  */
 public class Summary {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
   private String C_Separator = ";";
   private ApplicationMessages bundle = ApplicationMessages.getInstance();
 

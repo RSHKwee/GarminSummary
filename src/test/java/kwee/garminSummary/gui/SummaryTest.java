@@ -11,9 +11,10 @@ import javax.swing.JProgressBar;
 import junit.framework.TestCase;
 import kwee.library.FileUtils;
 import kwee.library.TxtBestand;
+import kwee.logger.MyLogger;
 
 public class SummaryTest extends TestCase {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
 
   private String c_GPXFile = "362.gpx";
   private String c_ExpFile = "sum_gen.csv";

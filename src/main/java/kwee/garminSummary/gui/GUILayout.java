@@ -3,6 +3,7 @@ package kwee.garminSummary.gui;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -57,9 +58,8 @@ import net.miginfocom.swing.MigLayout;
  *
  */
 public class GUILayout extends JPanel implements ItemListener {
-  private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+  private static final Logger LOGGER = MyLogger.getLogger();
   private static final long serialVersionUID = 1L;
-  static final String c_CopyrightYear = "2025";
   private static String c_reponame = "GarminSummary";
   public static final Object lock = new Object();
   private ApplicationMessages bundle = ApplicationMessages.getInstance();
@@ -85,6 +85,7 @@ public class GUILayout extends JPanel implements ItemListener {
   // Preferences
   private UserSetting m_param = Main.m_param;
   private String m_Language = "nl";
+  private String c_CopyrightYear =  Main.c_CopyrightYear;
 
   private File m_InputFolder;
   private File m_OutputFolder;
@@ -102,6 +103,7 @@ public class GUILayout extends JPanel implements ItemListener {
   public GUILayout(JFrame frame) {
     m_Frame = frame;
     bundle.changeLanguage(m_param.get_Language());
+    Font customFont = new Font("Arial", Font.PLAIN, 14);
 
     // GUI items
     JMenuBar menuBar = new JMenuBar();
@@ -306,6 +308,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
     topHalf.setMinimumSize(new Dimension(1, 1));
     topHalf.setPreferredSize(new Dimension(1, 1));
+    topHalf.setFont(customFont);
     splitPane.add(topHalf);
 
     JPanel bottomHalf = new JPanel();
@@ -323,6 +326,7 @@ public class GUILayout extends JPanel implements ItemListener {
       if (handler instanceof TextAreaHandler) {
         TextAreaHandler textAreaHandler = (TextAreaHandler) handler;
         output = textAreaHandler.getTextArea();
+        output.setFont(customFont);
       }
     }
 
@@ -335,12 +339,13 @@ public class GUILayout extends JPanel implements ItemListener {
     JPanel panel = new JPanel();
     outputPane.setColumnHeaderView(panel);
     panel.setLayout(new MigLayout("", "[129px][65px,grow][111px,grow][105px]", "[23px][][][][][][][][][][]"));
+    panel.setFont(customFont);
     outputPane.setColumnHeaderView(panel);
     outputPane.setSize(300, 500);
-
+    
     panel.setLayout(
         new MigLayout("", "[46px,grow][][grow][205px,grow]", "[23px][23px][23px][23px][23px][23px][][][][]"));
-
+    panel.setFont(customFont);
     panel.setMinimumSize(new Dimension(350, 300));
     panel.setPreferredSize(new Dimension(350, 290));
 
@@ -488,6 +493,7 @@ public class GUILayout extends JPanel implements ItemListener {
 
     bottomHalf.setMinimumSize(new Dimension(500, 100));
     bottomHalf.setPreferredSize(new Dimension(500, 300));
+    bottomHalf.setFont(customFont);
     splitPane.add(bottomHalf);
   }
 
