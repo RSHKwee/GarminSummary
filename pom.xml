@@ -15,6 +15,8 @@
   </parent>
   
   <properties>
+    <project.description>Summary Garmin trips</project.description>
+ 
     <io-jenitics-gpx.version>3.2.1</io-jenitics-gpx.version>
   </properties>
   
@@ -140,7 +142,7 @@
                 <goal>copy-resources</goal>
               </goals>
               <configuration>
-                <outputDirectory>${project.basedir}/target</outputDirectory>
+                <outputDirectory>${project.build.directory}</outputDirectory>
                 <resources>                                        
                   <resource>
                     <directory>.</directory>
@@ -161,7 +163,7 @@
                 <goal>copy-resources</goal>
               </goals>
               <configuration>
-                <outputDirectory>${project.basedir}/target/help/en</outputDirectory>
+                <outputDirectory>${project.build.directory}/help/en</outputDirectory>
                 <resources>                                        
                   <resource>
                     <directory>${project.basedir}/help/en</directory>
@@ -179,7 +181,7 @@
                 <goal>copy-resources</goal>
               </goals>
               <configuration>
-                <outputDirectory>${project.basedir}/target/help/nl</outputDirectory>
+                <outputDirectory>${project.build.directory}/help/nl</outputDirectory>
                 <resources>                                        
                   <resource>
                     <directory>${project.basedir}/help/nl</directory>
@@ -223,21 +225,16 @@
               </goals>
               <configuration>
                 <headerType>console</headerType>
-                <jar>target/garminSummary-jar-with-dependencies.jar</jar>
-                <outfile>target/garminSummary.exe</outfile>
-                <downloadUrl>http://java.com/download</downloadUrl>
+                <jar>${project.build.directory}/garminSummary-jar-with-dependencies.jar</jar>
+                <outfile>${project.build.directory}/garminSummary.exe</outfile>
+                <downloadUrl>https://cdn.azul.com/zulu/bin/zulu22.32.21-ca-crac-jdk22.0.2-win_x64.zip</downloadUrl>
                 <classPath>
                   <mainClass>kwee.garminSummary.main.Main</mainClass>
                 </classPath>
-                <icon>src/main/resources/GarminLogo.ico</icon>
                 <jre>
-                  <bundledJre64Bit>true</bundledJre64Bit>
-  	              <path>%JAVA_HOME%;%PATH%</path>
-                  <bundledJreAsFallback>true</bundledJreAsFallback>
-                  <minVersion>1.8.0</minVersion>
-                  <jdkPreference>preferJre</jdkPreference>
-                  <runtimeBits>64</runtimeBits>
+	              <path>%java_home%</path>
                 </jre>
+                <icon>src/main/resources/GarminLogo.ico</icon>
                 <versionInfo>
                   <fileVersion>${project.version}</fileVersion>
                   <txtFileVersion>${project.version}</txtFileVersion>
@@ -261,11 +258,27 @@
           <version>${jsign-maven-plugin.version}</version>
           <executions>
             <execution>
+              <id>sign</id>
               <goals>
                 <goal>sign</goal>
               </goals>
               <configuration>
-                <file>target/garminSummary.exe</file>
+                <file>${project.build.directory}/garminSummary.exe</file>
+                <name>Garmin Summary</name>
+                <url>https://github.com/RSHKwee/garminsummary</url>
+                <keystore>keystore.jks</keystore>
+                <alias>RSHK</alias>
+                <storepass>GW93ayi0j2CfeJx9VoSo</storepass>
+              </configuration>
+            </execution>
+            <execution>
+              <id>signin</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+              <configuration>
+                <file>${project.build.directory}/garminSummary_v${project.version}_setup.exe</file>
                 <name>Garmin Summary</name>
                 <url>https://github.com/RSHKwee/garminsummary</url>
                 <keystore>keystore.jks</keystore>
@@ -312,7 +325,7 @@
             </execution>         
             <execution>
               <id>innoSetup</id>
-              <phase>install</phase>
+              <phase>post-integration-test</phase>
              <goals>
                 <goal>exec</goal>
               </goals>          
@@ -375,7 +388,6 @@
           </executions>
         </plugin>  
       </plugins>
- <!--   </pluginManagement> -->
   </build>
   <distributionManagement>
     <!-- Upload to Github v-->
