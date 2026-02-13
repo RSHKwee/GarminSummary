@@ -16,7 +16,6 @@
   
   <properties>
     <project.description>Summary Garmin trips</project.description>
- 
     <io-jenitics-gpx.version>3.2.1</io-jenitics-gpx.version>
   </properties>
   
