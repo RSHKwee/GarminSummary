@@ -4,13 +4,13 @@
 
   <groupId>kwee</groupId>
   <artifactId>garminsummary</artifactId>
-  <version>1.1.0.3</version>
+  <version>${revision}</version>
   <packaging>jar</packaging>
   
   <parent>
 	<groupId>kwee</groupId>
 	<artifactId>aggregator</artifactId>
-	<version>1.1.0.3</version>
+	<version>${revision}</version>
 	<relativePath>../pom.xml</relativePath>
   </parent>
   
@@ -23,7 +23,7 @@
     <dependency>
 	  <groupId>kwee</groupId>
 	  <artifactId>library</artifactId>
-	  <version>${kweeLibrary.version}</version>
+	  <version>${revision}</version>
 	</dependency>
     <dependency>
 	  <groupId>io.jenetics</groupId>
