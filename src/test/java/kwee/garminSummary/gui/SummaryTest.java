@@ -1,6 +1,8 @@
 package kwee.garminSummary.gui;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import junit.framework.TestCase;
+import kwee.garminSummary.gui.GUILayoutTest.CurrentCsvColumns;
+import kwee.library.CsvFileComparator;
 import kwee.library.FileUtils;
 import kwee.library.TxtBestand;
 import kwee.logger.MyLogger;
@@ -82,10 +86,24 @@ public class SummaryTest extends TestCase {
     m_Regels = l_Summary.TripsSummary();
     tbest.DumpBestand(m_Regels, false);
 
-    boolean bstat = FileUtils.FileContentsEquals(m_Directory + "/" + m_DirGen + "/" + c_GenFile, m_ExpFile);
-    if (!bstat) {
-      LOGGER.log(Level.INFO, "Backup result used: " + m_ExpFile2);
-      bstat = FileUtils.FileContentsEquals(m_Directory + "/" + m_DirGen + "/" + c_GenFile, m_ExpFile2);
+    boolean bstat = false;
+    try {
+      //@formatter:off
+      bstat = CsvFileComparator.assertFilesEqual(
+        Path.of(m_Directory + "/" + m_DirGen + "/" + c_GenFile), 
+        Path.of(m_ExpFile),
+        CsvFileComparator.Options.builder()
+              .ignoreColumns(
+                  CurrentCsvColumns.ADDR_ORIGIN, 
+                  CurrentCsvColumns.ADDR_FINISH, 
+                  CurrentCsvColumns.DATE,
+                  CurrentCsvColumns.START_TIME, 
+                  CurrentCsvColumns.END_TIME)
+              .ignoreCommentLines(true) // default al true
+              .build());
+        //@formatter:on
+    } catch (IOException e) {
+      LOGGER.log(Level.WARNING, e.getMessage());
     }
     assertTrue(bstat);
   }

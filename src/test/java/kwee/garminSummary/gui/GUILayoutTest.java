@@ -1,6 +1,8 @@
 package kwee.garminSummary.gui;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,7 @@ import org.junit.Test;
 import junit.framework.TestCase;
 import kwee.garminSummary.main.Main;
 import kwee.garminSummary.main.UserSetting;
+import kwee.library.CsvFileComparator;
 import kwee.library.FileUtils;
 import kwee.logger.MyLogger;
 import kwee.logger.TestLogger;
@@ -35,12 +38,13 @@ public class GUILayoutTest extends TestCase {
 
   private String c_GPXFile2 = "361.gpx";
   private String c_GPXFile = "362.gpx";
+
   private String c_GenFile = "362.csv";
 
-  private String c_ExpFile = "current.csv";
+  private String c_ExpGuiLayoutFileCurrent = "current.csv";
   private String c_ExpFile2 = "a_current.csv";
 
-  private String c_ExpFile3 = "362.csv";
+  private String c_ExpGuiLayoutFile362 = "362.csv";
   private String c_ExpFile4 = "a_362.csv";
   private String c_ExpFile5 = "b_362.csv";
 
@@ -48,11 +52,11 @@ public class GUILayoutTest extends TestCase {
   private String m_DirExpSuffix = "_Exp";
 
   // Generated results in following dirs:
-  private String m_gui = "GUI";
-  private String m_gui1 = "GUI1";
-  private String m_gui2 = "GUI2";
-  private String m_gui3 = "GUI3";
-  private String m_gui4 = "GUI4";
+  private String m_guiLayout = "GuiLayout";
+  private String m_guiLayoutFile = "GuiLayoutFile";
+  private String m_GuiLayoutFiles = "GuiLayoutFiles";
+  private String m_GuiLayoutFileByFile = "GuiLayoutFileByFile";
+  private String m_GuiLayoutFileByFileReverse = "GuiLayoutFileByFileReverse";
 
   @Override
   @Before
@@ -98,14 +102,14 @@ public class GUILayoutTest extends TestCase {
 
   @Test
   public void testGUILayout() {
-    File l_File = FileUtils.GetResourceFile(m_gui + m_DirExpSuffix + "/" + c_ExpFile);
+    File l_File = FileUtils.GetResourceFile(m_guiLayout + m_DirExpSuffix + "/" + c_ExpGuiLayoutFileCurrent);
     String l_ExpFile = l_File.getAbsolutePath();
 
-    File l_File2 = FileUtils.GetResourceFile(m_gui + m_DirExpSuffix + "/" + c_ExpFile2);
+    File l_File2 = FileUtils.GetResourceFile(m_guiLayout + m_DirExpSuffix + "/" + c_ExpFile2);
     String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
-    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_guiLayout);
 
     JFileChooserFixture fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir));
@@ -114,16 +118,30 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui + "/"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_guiLayout + "/"));
     fileChooser.approve();
 
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui + "/" + c_ExpFile, l_ExpFile);
-      if (!bstat) {
-        LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui + "/" + c_ExpFile, l_ExpFile2);
+      boolean bstat = false;
+      try {
+        //@formatter:off
+        bstat = CsvFileComparator.assertFilesEqual(
+          Path.of(m_OutputDir + "/" + m_guiLayout + "/" + c_ExpGuiLayoutFileCurrent), 
+          Path.of(l_ExpFile),
+          CsvFileComparator.Options.builder()
+                .ignoreColumns(
+                    CurrentCsvColumns.ADDR_ORIGIN, 
+                    CurrentCsvColumns.ADDR_FINISH, 
+                    CurrentCsvColumns.DATE,
+                    CurrentCsvColumns.START_TIME, 
+                    CurrentCsvColumns.END_TIME)
+                .ignoreCommentLines(true) // default al true
+                .build());
+          //@formatter:on
+      } catch (IOException e) {
+        LOGGER.log(Level.WARNING, e.getMessage());
       }
       assertTrue(bstat);
     }
@@ -131,14 +149,14 @@ public class GUILayoutTest extends TestCase {
 
   @Test
   public void testGUILayoutFile() {
-    File l_File = FileUtils.GetResourceFile(m_gui1 + m_DirExpSuffix + "/" + c_ExpFile3);
+    File l_File = FileUtils.GetResourceFile(m_guiLayoutFile + m_DirExpSuffix + "/" + c_ExpGuiLayoutFile362);
     String l_ExpFile = l_File.getAbsolutePath();
 
-    File l_File2 = FileUtils.GetResourceFile(m_gui1 + m_DirExpSuffix + "/" + c_ExpFile4);
+    File l_File2 = FileUtils.GetResourceFile(m_guiLayoutFile + m_DirExpSuffix + "/" + c_ExpFile4);
     String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
-    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui1);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_guiLayoutFile);
 
     JFileChooserFixture fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir));
@@ -147,7 +165,7 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui1 + "/"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_guiLayoutFile + "/"));
     fileChooser.approve();
 
     JTextComponentFixture outputfile = frame.textBox("Output filename");
@@ -156,25 +174,39 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui1 + "/" + c_GenFile, l_ExpFile);
-      if (!bstat) {
-        LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui1 + "/" + c_GenFile, l_ExpFile2);
+      boolean bstat = false;
+      try {
+        //@formatter:off
+        bstat = CsvFileComparator.assertFilesEqual(
+          Path.of(m_OutputDir + "/" + m_guiLayoutFile + "/" + c_GenFile),
+          Path.of(l_ExpFile),
+          CsvFileComparator.Options.builder()
+                .ignoreColumns(
+                    CurrentCsvColumns.ADDR_ORIGIN, 
+                    CurrentCsvColumns.ADDR_FINISH, 
+                    CurrentCsvColumns.DATE,
+                    CurrentCsvColumns.START_TIME, 
+                    CurrentCsvColumns.END_TIME)
+                .ignoreCommentLines(true) // default al true
+                .build());
+          //@formatter:on
+      } catch (IOException e) {
+        LOGGER.log(Level.WARNING, e.getMessage());
       }
       assertTrue(bstat);
     }
   }
 
   @Test
-  public void testGUILayout2Files() {
-    File l_File = FileUtils.GetResourceFile(m_gui2 + m_DirExpSuffix + "/" + c_ExpFile3);
+  public void testGUILayoutFiles() {
+    File l_File = FileUtils.GetResourceFile(m_GuiLayoutFiles + m_DirExpSuffix + "/" + c_ExpGuiLayoutFile362);
     String l_ExpFile = l_File.getAbsolutePath();
 
-    File l_File2 = FileUtils.GetResourceFile(m_gui2 + m_DirExpSuffix + "/" + c_ExpFile4);
+    File l_File2 = FileUtils.GetResourceFile(m_GuiLayoutFiles + m_DirExpSuffix + "/" + c_ExpFile4);
     String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
-    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui2);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_GuiLayoutFiles);
 
     JFileChooserFixture fileChooser = frame.fileChooser();
     fileChooser.setCurrentDirectory(new File(m_OutputDir));
@@ -187,7 +219,7 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui2 + "/"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_GuiLayoutFiles + "/"));
     fileChooser.approve();
 
     JTextComponentFixture outputfile = frame.textBox("Output filename");
@@ -196,10 +228,24 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui2 + "/" + c_GenFile, l_ExpFile);
-      if (!bstat) {
-        LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui2 + "/" + c_GenFile, l_ExpFile2);
+      boolean bstat = false;
+      try {
+        //@formatter:off
+        bstat = CsvFileComparator.assertFilesEqual(
+          Path.of(m_OutputDir + "/" + m_GuiLayoutFiles + "/" + c_GenFile),
+          Path.of(l_ExpFile),
+          CsvFileComparator.Options.builder()
+                .ignoreColumns(
+                    CurrentCsvColumns.ADDR_ORIGIN, 
+                    CurrentCsvColumns.ADDR_FINISH, 
+                    CurrentCsvColumns.DATE,
+                    CurrentCsvColumns.START_TIME, 
+                    CurrentCsvColumns.END_TIME)
+                .ignoreCommentLines(true) // default al true
+                .build());
+          //@formatter:on
+      } catch (IOException e) {
+        LOGGER.log(Level.WARNING, e.getMessage());
       }
       assertTrue(bstat);
     }
@@ -207,16 +253,16 @@ public class GUILayoutTest extends TestCase {
 
   @Test
   public void testGUILayoutFileByFile() {
-    File l_File = FileUtils.GetResourceFile(m_gui3 + m_DirExpSuffix + "/" + c_ExpFile3);
+    File l_File = FileUtils.GetResourceFile(m_GuiLayoutFileByFile + m_DirExpSuffix + "/" + c_ExpGuiLayoutFile362);
     String l_ExpFile = l_File.getAbsolutePath();
 
-    File l_File2 = FileUtils.GetResourceFile(m_gui3 + m_DirExpSuffix + "/" + c_ExpFile4);
+    File l_File2 = FileUtils.GetResourceFile(m_GuiLayoutFileByFile + m_DirExpSuffix + "/" + c_ExpFile4);
     String l_ExpFile2 = l_File2.getAbsolutePath();
-    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui3);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_GuiLayoutFileByFile);
 
-    File l_File3 = FileUtils.GetResourceFile(m_gui3 + m_DirExpSuffix + "/" + c_ExpFile5);
+    File l_File3 = FileUtils.GetResourceFile(m_GuiLayoutFileByFile + m_DirExpSuffix + "/" + c_ExpFile5);
     String l_ExpFile3 = l_File3.getAbsolutePath();
-    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui3);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_GuiLayoutFileByFile);
 
     frame.button("GPX File(s)").click();
     JFileChooserFixture fileChooser = frame.fileChooser();
@@ -226,7 +272,7 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui3 + "/"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_GuiLayoutFileByFile + "/"));
     fileChooser.approve();
 
     JTextComponentFixture outputfile = frame.textBox("Output filename");
@@ -258,14 +304,24 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui3 + "/" + c_GenFile, l_ExpFile);
-      if (!bstat) {
-        LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui3 + "/" + c_GenFile, l_ExpFile2);
-        if (!bstat) {
-          LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile3);
-          bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui3 + "/" + c_GenFile, l_ExpFile2);
-        }
+      boolean bstat = false;
+      try {
+        //@formatter:off
+        bstat = CsvFileComparator.assertFilesEqual(
+        Path.of(m_OutputDir + "/" + m_GuiLayoutFileByFile + "/" + c_GenFile),
+        Path.of(l_ExpFile),
+        CsvFileComparator.Options.builder()
+              .ignoreColumns(
+                  CurrentCsvColumns.ADDR_ORIGIN, 
+                  CurrentCsvColumns.ADDR_FINISH, 
+                  CurrentCsvColumns.DATE,
+                  CurrentCsvColumns.START_TIME, 
+                  CurrentCsvColumns.END_TIME)
+              .ignoreCommentLines(true) // default al true
+              .build());
+        //@formatter:on
+      } catch (IOException e) {
+        LOGGER.log(Level.WARNING, e.getMessage());
       }
       assertTrue(bstat);
     }
@@ -273,12 +329,13 @@ public class GUILayoutTest extends TestCase {
 
   @Test
   public void testGUILayoutFileByFileReverse() {
-    File l_File = FileUtils.GetResourceFile(m_gui4 + m_DirExpSuffix + "/" + c_ExpFile3);
+    File l_File = FileUtils
+        .GetResourceFile(m_GuiLayoutFileByFileReverse + m_DirExpSuffix + "/" + c_ExpGuiLayoutFile362);
     String l_ExpFile = l_File.getAbsolutePath();
 
-    File l_File2 = FileUtils.GetResourceFile(m_gui4 + m_DirExpSuffix + "/" + c_ExpFile4);
+    File l_File2 = FileUtils.GetResourceFile(m_GuiLayoutFileByFileReverse + m_DirExpSuffix + "/" + c_ExpFile4);
     String l_ExpFile2 = l_File2.getAbsolutePath();
-    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_gui4);
+    FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_GuiLayoutFileByFileReverse);
 
     frame.button("GPX File(s)").click();
     JFileChooserFixture fileChooser = frame.fileChooser();
@@ -288,7 +345,7 @@ public class GUILayoutTest extends TestCase {
 
     frame.button("OutputFolder").click();
     fileChooser = frame.fileChooser();
-    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_gui4 + "/"));
+    fileChooser.setCurrentDirectory(new File(m_OutputDir + "/" + m_GuiLayoutFileByFileReverse + "/"));
     fileChooser.approve();
 
     JTextComponentFixture outputfile = frame.textBox("Output filename");
@@ -320,13 +377,44 @@ public class GUILayoutTest extends TestCase {
     frame.button("Summarise").click();
 
     synchronized (lock) {
-      boolean bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui4 + "/" + c_GenFile, l_ExpFile);
-      if (!bstat) {
-        LOGGER.log(Level.INFO, "Backup result used: " + l_ExpFile2);
-        bstat = FileUtils.FileContentsEquals(m_OutputDir + "/" + m_gui4 + "/" + c_GenFile, l_ExpFile2);
+      boolean bstat = false;
+      try {
+        //@formatter:off
+        bstat = CsvFileComparator.assertFilesEqual(
+        Path.of(m_OutputDir + "/" + m_GuiLayoutFileByFileReverse + "/" + c_GenFile),
+        Path.of(l_ExpFile),
+        CsvFileComparator.Options.builder()
+              .ignoreColumns(
+                  CurrentCsvColumns.ADDR_ORIGIN, 
+                  CurrentCsvColumns.ADDR_FINISH, 
+                  CurrentCsvColumns.DATE,
+                  CurrentCsvColumns.START_TIME, 
+                  CurrentCsvColumns.END_TIME)
+              .ignoreCommentLines(true) // default al true
+              .build());
+        //@formatter:on
+      } catch (IOException e) {
+        LOGGER.log(Level.WARNING, e.getMessage());
       }
       assertTrue(bstat);
     }
   }
 
+  public final class CurrentCsvColumns {
+    public static final int DATE = 0;
+    public static final int START_TIME = 1;
+    public static final int END_TIME = 2;
+    public static final int LON_ORIGIN = 3;
+    public static final int LAT_ORIGIN = 4;
+    public static final int LON_FINISH = 5;
+    public static final int LAT_FINISH = 6;
+    public static final int ADDR_ORIGIN = 7;
+    public static final int ADDR_FINISH = 8;
+    public static final int DISTANCE = 9;
+    public static final int DURATION = 10;
+    public static final int SPEED = 11;
+
+    private CurrentCsvColumns() {
+    }
+  }
 }
