@@ -5,18 +5,15 @@
   <groupId>kwee</groupId>
   <artifactId>garminsummary</artifactId>
   <version>${revision}</version>
+  <description>Summary Garmin trips</description>
   <packaging>jar</packaging>
-  
+ 
   <parent>
 	<groupId>kwee</groupId>
 	<artifactId>aggregator</artifactId>
 	<version>${revision}</version>
 	<relativePath>../pom.xml</relativePath>
   </parent>
-  
-  <properties>
-    <project.description>Summary Garmin trips</project.description>
-  </properties>
   
   <name>garminSummary</name>
   <dependencies>  
