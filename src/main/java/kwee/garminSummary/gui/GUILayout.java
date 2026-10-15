@@ -1,7 +1,6 @@
 package kwee.garminSummary.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -42,6 +41,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import kwee.garminSummary.main.Main;
 import kwee.garminSummary.main.UserSetting;
 import kwee.library.ApplicationMessages;
+import kwee.library.ChmOpener;
 import kwee.library.swing.AboutWindow;
 import kwee.library.swing.ShowPreferences;
 import kwee.library.swing.TextAreaHandler;
@@ -85,7 +85,7 @@ public class GUILayout extends JPanel implements ItemListener {
   // Preferences
   private UserSetting m_param = Main.m_param;
   private String m_Language = "nl";
-  private String c_CopyrightYear =  Main.c_CopyrightYear;
+  private String c_CopyrightYear = Main.c_CopyrightYear;
 
   private File m_InputFolder;
   private File m_OutputFolder;
@@ -275,14 +275,14 @@ public class GUILayout extends JPanel implements ItemListener {
 
         if (helpFile.exists()) {
           try {
-            // Open the help file with the default viewer
-            Desktop.getDesktop().open(helpFile);
-          } catch (IOException e1) {
-            e1.printStackTrace();
+            ChmOpener.openChm(helpFile);
+          } catch (Exception e1) {
+            LOGGER.log(Level.INFO, e1.getMessage());
           }
         } else {
           LOGGER.log(Level.INFO, bundle.getMessage("HelpFileNotFound", helpFile.getAbsolutePath()));
         }
+
       }
     });
     mnHelpAbout.add(mntmHelp);
@@ -342,7 +342,7 @@ public class GUILayout extends JPanel implements ItemListener {
     panel.setFont(customFont);
     outputPane.setColumnHeaderView(panel);
     outputPane.setSize(300, 500);
-    
+
     panel.setLayout(
         new MigLayout("", "[46px,grow][][grow][205px,grow]", "[23px][23px][23px][23px][23px][23px][][][][]"));
     panel.setFont(customFont);
