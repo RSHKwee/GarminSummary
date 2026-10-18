@@ -1,5 +1,9 @@
 package kwee.garminSummary.gui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,19 +14,21 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import kwee.garminSummary.gui.GUILayoutTest.CurrentCsvColumns;
 import kwee.library.CsvFileComparator;
 import kwee.library.FileUtils;
 import kwee.library.TxtBestand;
 import kwee.logger.MyLogger;
 
-public class SummaryTest extends TestCase {
+public class SummaryTest {
   private static final Logger LOGGER = MyLogger.getLogger();
 
   private String c_GPXFile = "362.gpx";
   private String c_ExpFile = "sum_gen.csv";
-  private String c_ExpFile2 = "a_sum_gen.csv";
   private String c_GenFile = "sum_gen.csv";
 
   private JProgressBar m_pbarTracks = new JProgressBar();
@@ -35,49 +41,48 @@ public class SummaryTest extends TestCase {
 
   private String m_DirGen = "Summary";
   private String m_ExpFile = "";
-  private String m_ExpFile2 = "";
   private String m_DirExp = "Summary_Exp";
 
-  @Override
+  @BeforeEach
   protected void setUp() throws Exception {
-    super.setUp();
-
     m_GPXFile = FileUtils.GetResourceFile(c_GPXFile);
     m_Directory = m_GPXFile.getParent();
 
     File lfile2 = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile);
     m_ExpFile = lfile2.getAbsolutePath();
-
-    File lfile3 = FileUtils.GetResourceFile(m_DirExp + "/" + c_ExpFile2);
-    m_ExpFile2 = lfile3.getAbsolutePath();
   }
 
-  @Override
+  @AfterEach
   protected void tearDown() throws Exception {
-    super.tearDown();
   }
 
+  @Test
   public void testSummaryJProgressBarJLabelJProgressBar() {
     Summary v_sum = new Summary(m_pbarTracks, m_Progresslabel, m_pbarSegments);
     assertNotNull(v_sum);
   }
 
+  @Test
   public void testSummaryFileJProgressBarJLabelJProgressBar() {
     Summary v_sum = new Summary(m_GPXFile, m_pbarTracks, m_Progresslabel, m_pbarSegments);
     assertNotNull(v_sum);
   }
 
+  @Test
   public void testTripsSummaryFile() {
-    m_Regels = m_Summary.TripsSummary();
-    assertEquals(m_Regels.size(), 0);
+    Summary l_Summary = new Summary(m_GPXFile, m_pbarTracks, m_Progresslabel, m_pbarSegments);
+    m_Regels = l_Summary.TripsSummary();
+    assertEquals(m_Regels.size(), 8);
   }
 
+  @Test
   public void testHeader() {
     String l_header = m_Summary.Header();
     String l_Expected = "Date;Origin;Finish;Longitude(origin);Latitude(origin);Longitude(finish);Latitude(finish);Address origin;Address finish;Distance (km);Duration;Avr speed (km/h)";
     assertTrue(l_header.equalsIgnoreCase(l_Expected));
   }
 
+  @Test
   public void testTripsSummary() {
     Summary l_Summary = new Summary(m_GPXFile, m_pbarTracks, m_Progresslabel, m_pbarSegments);
     FileUtils.checkCreateDirectory(m_Directory + "/" + m_DirGen);

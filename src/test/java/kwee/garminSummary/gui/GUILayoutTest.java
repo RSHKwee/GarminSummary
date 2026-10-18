@@ -1,5 +1,7 @@
 package kwee.garminSummary.gui;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -16,11 +18,10 @@ import org.assertj.swing.fixture.JCheckBoxFixture;
 import org.assertj.swing.fixture.JFileChooserFixture;
 import org.assertj.swing.fixture.JTextComponentFixture;
 import org.assertj.swing.launcher.ApplicationLauncher;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
 import kwee.garminSummary.main.Main;
 import kwee.garminSummary.main.UserSetting;
 import kwee.library.CsvFileComparator;
@@ -28,7 +29,7 @@ import kwee.library.FileUtils;
 import kwee.logger.MyLogger;
 import kwee.logger.TestLogger;
 
-public class GUILayoutTest extends TestCase {
+public class GUILayoutTest {
   private static final Logger LOGGER = MyLogger.getLogger();
   private FrameFixture frame;
   Object lock = GUILayout.lock;
@@ -42,11 +43,7 @@ public class GUILayoutTest extends TestCase {
   private String c_GenFile = "362.csv";
 
   private String c_ExpGuiLayoutFileCurrent = "current.csv";
-  private String c_ExpFile2 = "a_current.csv";
-
   private String c_ExpGuiLayoutFile362 = "362.csv";
-  private String c_ExpFile4 = "a_362.csv";
-  private String c_ExpFile5 = "b_362.csv";
 
   // Expected results in following dirs:
   private String m_DirExpSuffix = "_Exp";
@@ -58,10 +55,8 @@ public class GUILayoutTest extends TestCase {
   private String m_GuiLayoutFileByFile = "GuiLayoutFileByFile";
   private String m_GuiLayoutFileByFileReverse = "GuiLayoutFileByFileReverse";
 
-  @Override
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
-    super.setUp();
     m_OrgParam = Main.m_param.copy();
 
     File ll_file = FileUtils.GetResourceFile(c_GPXFile);
@@ -89,10 +84,8 @@ public class GUILayoutTest extends TestCase {
     frame = new FrameFixture(robot, l_frame);
   }
 
-  @Override
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
-    super.tearDown();
     this.frame.cleanUp();
 
     Main.m_param = m_OrgParam.copy();
@@ -104,9 +97,6 @@ public class GUILayoutTest extends TestCase {
   public void testGUILayout() {
     File l_File = FileUtils.GetResourceFile(m_guiLayout + m_DirExpSuffix + "/" + c_ExpGuiLayoutFileCurrent);
     String l_ExpFile = l_File.getAbsolutePath();
-
-    File l_File2 = FileUtils.GetResourceFile(m_guiLayout + m_DirExpSuffix + "/" + c_ExpFile2);
-    String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
     FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_guiLayout);
@@ -151,9 +141,6 @@ public class GUILayoutTest extends TestCase {
   public void testGUILayoutFile() {
     File l_File = FileUtils.GetResourceFile(m_guiLayoutFile + m_DirExpSuffix + "/" + c_ExpGuiLayoutFile362);
     String l_ExpFile = l_File.getAbsolutePath();
-
-    File l_File2 = FileUtils.GetResourceFile(m_guiLayoutFile + m_DirExpSuffix + "/" + c_ExpFile4);
-    String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
     FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_guiLayoutFile);
@@ -201,9 +188,6 @@ public class GUILayoutTest extends TestCase {
   public void testGUILayoutFiles() {
     File l_File = FileUtils.GetResourceFile(m_GuiLayoutFiles + m_DirExpSuffix + "/" + c_ExpGuiLayoutFile362);
     String l_ExpFile = l_File.getAbsolutePath();
-
-    File l_File2 = FileUtils.GetResourceFile(m_GuiLayoutFiles + m_DirExpSuffix + "/" + c_ExpFile4);
-    String l_ExpFile2 = l_File2.getAbsolutePath();
 
     frame.button("GPX File(s)").click();
     FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_GuiLayoutFiles);
@@ -256,12 +240,7 @@ public class GUILayoutTest extends TestCase {
     File l_File = FileUtils.GetResourceFile(m_GuiLayoutFileByFile + m_DirExpSuffix + "/" + c_ExpGuiLayoutFile362);
     String l_ExpFile = l_File.getAbsolutePath();
 
-    File l_File2 = FileUtils.GetResourceFile(m_GuiLayoutFileByFile + m_DirExpSuffix + "/" + c_ExpFile4);
-    String l_ExpFile2 = l_File2.getAbsolutePath();
     FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_GuiLayoutFileByFile);
-
-    File l_File3 = FileUtils.GetResourceFile(m_GuiLayoutFileByFile + m_DirExpSuffix + "/" + c_ExpFile5);
-    String l_ExpFile3 = l_File3.getAbsolutePath();
     FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_GuiLayoutFileByFile);
 
     frame.button("GPX File(s)").click();
@@ -333,8 +312,6 @@ public class GUILayoutTest extends TestCase {
         .GetResourceFile(m_GuiLayoutFileByFileReverse + m_DirExpSuffix + "/" + c_ExpGuiLayoutFile362);
     String l_ExpFile = l_File.getAbsolutePath();
 
-    File l_File2 = FileUtils.GetResourceFile(m_GuiLayoutFileByFileReverse + m_DirExpSuffix + "/" + c_ExpFile4);
-    String l_ExpFile2 = l_File2.getAbsolutePath();
     FileUtils.checkCreateDirectory(m_OutputDir + "/" + m_GuiLayoutFileByFileReverse);
 
     frame.button("GPX File(s)").click();
