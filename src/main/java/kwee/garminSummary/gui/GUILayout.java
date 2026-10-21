@@ -487,8 +487,8 @@ public class GUILayout extends JPanel implements ItemListener {
     m_ProgressBarFiles.setVisible(false);
     m_ProgressBarTracks.setVisible(false);
     m_ProgressBarSegments.setVisible(false);
-    panel.add(m_ProgressBarSegments, "south");
     panel.add(m_ProgressBarTracks, "south");
+    panel.add(m_ProgressBarSegments, "south");
     panel.add(m_ProgressBarFiles, "south");
 
     bottomHalf.setMinimumSize(new Dimension(500, 100));
