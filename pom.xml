@@ -2,7 +2,6 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>kwee</groupId>
   <artifactId>garminsummary</artifactId>
   <version>${revision}</version>
   <description>Summary Garmin trips</description>
@@ -27,6 +26,16 @@
 	  <artifactId>jpx</artifactId>
 	  <version>${io-jenitics-gpx.version}</version>
 	</dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>${org-apache-poi-poi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${org-apache-poi-ooxml.version}</version>
+    </dependency>	
   </dependencies>
   
   <build>

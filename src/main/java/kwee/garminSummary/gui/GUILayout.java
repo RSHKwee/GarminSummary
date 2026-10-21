@@ -1,5 +1,8 @@
 package kwee.garminSummary.gui;
 
+/**
+ * Garmin GUI
+ */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -45,9 +48,6 @@ import kwee.library.ChmOpener;
 import kwee.library.swing.AboutWindow;
 import kwee.library.swing.ShowPreferences;
 import kwee.library.swing.TextAreaHandler;
-/**
- * Garmin GUI
- */
 import kwee.logger.MyLogger;
 import net.miginfocom.swing.MigLayout;
 
